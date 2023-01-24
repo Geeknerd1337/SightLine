@@ -1,9 +1,15 @@
 
 
-export default function ExampleButton(){
+//Example button props
+interface ExampleButtonProps {
+    text: string;
+    onClick?: () => void;
+}
+
+export default function ExampleButton(props: ExampleButtonProps){
     return(
-        <button className="bg-gray-400">
-            Hello world, I am a button!
+        <button onClick={props.onClick} className="bg-gray-400">
+            {props.text}
         </button>
     )
 }
