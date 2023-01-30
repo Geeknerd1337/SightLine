@@ -1,4 +1,5 @@
 import ExampleButton from "@/components/ExampleButton"
+import RoundedCard from "@/components/RoundedCard"
 import { useState, useEffect } from "react"
 
 export default function HomeView(){
@@ -17,6 +18,9 @@ export default function HomeView(){
                     setCount(count + 1);
                 }
             } />
+
+            <RoundedCard text = 'Hello'/>
         </div>
     )
+
 }
