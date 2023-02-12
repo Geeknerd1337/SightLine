@@ -3,7 +3,10 @@ import cv2 as cv2
 import time
 from array import *
 
-video = cv2.VideoCapture('Bloodwave.mp4')
+#install opencv
+#pip install opencv-contrib-python
+
+video = cv2.VideoCapture('lightstest.mp4')
 count = 0
 fps = int(video.get(cv2.CAP_PROP_FPS))
 
