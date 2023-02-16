@@ -6,7 +6,17 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      flexGrow: {
+        2: '2'
+      },
+      fontSize: {
+        '4.5xl': '2.7465rem'
+      },
+      inset: {
+        34: '8.5rem'
+      }
+    },
   },
   plugins: [],
 }

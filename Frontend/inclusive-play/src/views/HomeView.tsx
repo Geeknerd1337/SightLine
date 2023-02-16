@@ -1,26 +1,58 @@
-import ExampleButton from "@/components/ExampleButton"
+/** @format */
+
 import RoundedCard from "@/components/RoundedCard"
-import { useState, useEffect } from "react"
 
-export default function HomeView(){
-    const [count, setCount] = useState(0);
+// * home page
+export default function HomeView() {
+	// * display
 
-    useEffect(() => {
-        console.log("Count changed to " + count);
-    }
-    , [count])
+	// * data
 
-    
-    return(
-        <div className="flex m-4 gap-4 flex-col bg-white text-black justify-center items-center h-full w-full">
-            <ExampleButton text={count.toString()} onClick={
-                () => {
-                    setCount(count + 1);
-                }
-            } />
+	// * data functions
 
-            <RoundedCard text = 'Hello'/>
-        </div>
-    )
+	// * render functions
+	const renderSubHeader = () => {
+		return <div className="flex-auto" />
+	}
 
+	const renderLeftColumn = () => {
+		return (
+			<div className="flex-auto flex flex-col">
+				<RoundedCard className="p-4"></RoundedCard>
+				<RoundedCard className="p-4" />
+				<RoundedCard className="p-4" />
+			</div>
+		)
+	}
+	const renderMiddleColumn = () => {
+		return (
+			<>
+				<div className="absolute top-34 text-4.5xl font-bold">Dashboard</div>
+				<RoundedCard>
+					<div className="p-4 font-semibold text-3xl">Analysis</div>
+					<RoundedCard className="flex drop-shadow-mg h-1/2 p-4 p-top" />
+				</RoundedCard>
+			</>
+		)
+	}
+	const renderRightColumn = () => {
+		return (
+			<>
+				<RoundedCard />
+			</>
+		)
+	}
+
+	// * primary render
+	return (
+		<>
+			<div className="h-20">{renderSubHeader()}</div>
+			<div className="flex-1 flex m-8 gap-8 flex-row text-black">
+				<div className="w-72 flex flex-col ">{renderLeftColumn()}</div>
+				<div className="flex-auto flex flex-col grow-2">{renderMiddleColumn()}</div>
+				<div className="flex-auto flex flex-col">{renderRightColumn()}</div>
+				{/* <RoundedCard text="Hello" /> */}
+			</div>
+		</>
+	)
 }
