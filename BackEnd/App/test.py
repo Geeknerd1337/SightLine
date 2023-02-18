@@ -8,8 +8,16 @@ import BlueLight as bl
 #install opencv
 #pip install opencv-contrib-python
 
-#video variable and get fps from it
-video = cv2.VideoCapture('test.mp4')
+
+
+# Try and catch for video not opening
+try:
+    video = cv2.VideoCapture('lightstest.mp4')
+except:
+    print("Video not found")
+
+
+
 count = 0
 fps = int(video.get(cv2.CAP_PROP_FPS))
 
@@ -25,7 +33,7 @@ pointsInSecond = array('i', [])
 if (video.isOpened()== False):
     print("Error opening video file")
 
-bl.getBlueLight(video)
+
 
 while video.isOpened():
     #read a frame
