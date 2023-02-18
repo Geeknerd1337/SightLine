@@ -3,11 +3,13 @@ import cv2 as cv2
 import time
 from array import *
 
+import BlueLight as bl
+
 #install opencv
 #pip install opencv-contrib-python
 
 #video variable and get fps from it
-video = cv2.VideoCapture('lightstest.mp4')
+video = cv2.VideoCapture('test.mp4')
 count = 0
 fps = int(video.get(cv2.CAP_PROP_FPS))
 
@@ -23,6 +25,8 @@ pointsInSecond = array('i', [])
 if (video.isOpened()== False):
     print("Error opening video file")
 
+bl.getBlueLight(video)
+
 while video.isOpened():
     #read a frame
     ret,frame = video.read()
@@ -30,7 +34,7 @@ while video.isOpened():
     if ret == True:
         #ret, frame = cv2.threshold(frame, 220, 255, cv2.THRESH_BINARY)
         #change frame to colour space with luma attribute
-        frame = cv2.cvtColor(frame, cv2.COLOR_RGB2YCrCb)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2YCrCb)
         #cv2.imshow('window-name', frame)
         #split frame into parts
         luma,a,b = cv2.split(frame)
