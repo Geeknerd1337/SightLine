@@ -24,8 +24,8 @@ export default function HomeView() {
 				text-gray-600">Select File</button>
 				
 				{/* <RoundedCard className="p-4"></RoundedCard> */}
-				<RoundedCard className="p-4" />
-				<RoundedCard className="p-4" />
+				<RoundedCard className="flex flex-auto p-4" />
+				<RoundedCard className="flex flex-auto p-4" />
 			</div>
 		)
 	}
@@ -33,17 +33,17 @@ export default function HomeView() {
 		return (
 			<>
 				<div className="absolute top-34 text-4.5xl font-bold">Dashboard</div>
-				<RoundedCard>
+				<RoundedCard className="flex flex-auto">
 					
 					
 					<div className="flex p-4 font-semibold text-3xl justify-items-start flex-row">
-						<RoundedCard className="flex border bg-orange-300 pr-4" />
+						<RoundedCard className="flex flex-auto bg-orange-300 pr-4" />
 						
 						Analysis
 					
 					</div>
 					
-					<RoundedCard className="flex drop-shadow-mg h-1/2 p-4 p-top" />
+					<RoundedCard className="flex flex-auto drop-shadow-mg h-1/2 p-4 p-top" />
 					
 					
 				</RoundedCard>
@@ -54,7 +54,7 @@ export default function HomeView() {
 	const renderRightColumn = () => {
 		return (
 			<>
-				<RoundedCard />
+				<RoundedCard className="flex flex-auto"/>
 			</>
 		)
 	}
