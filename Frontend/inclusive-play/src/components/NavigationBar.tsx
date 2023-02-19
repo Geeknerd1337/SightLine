@@ -14,7 +14,7 @@ export default function NavigationBar(props: NavigationBarProps) {
 
 	// * render functions
 	const renderButton = (index: number, name: string) => {
-		let css = pageIndex == index ? "flex-auto bg-fuchsia-100" : "flex-auto"
+		let css = pageIndex == index ? "flex-auto bg-purple-100" : "flex-auto"
 
 		return (
 			<button
