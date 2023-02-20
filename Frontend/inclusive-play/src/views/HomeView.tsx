@@ -18,14 +18,15 @@ export default function HomeView() {
 	const renderLeftColumn = () => {
 		return (
 			<div className="flex-auto flex flex-col">
-				{/* <select className="mx-4 mb-3 py-2 drop-shadow-md rounded-md bg-purple-300 font-bold text-gray-600"></select>	 */}
+				<button
+					className="mx-4 mb-3 py-2 drop-shadow-md rounded-md bg-purple-300 font-bold
+				text-gray-600"
+				>
+					Select File
+				</button>
 
-				<button className="mx-4 mb-3 py-2 drop-shadow-md rounded-md bg-purple-300 font-bold
-				text-gray-600">Select File</button>
-				
-				{/* <RoundedCard className="p-4"></RoundedCard> */}
-				<RoundedCard className="flex flex-auto p-4" />
-				<RoundedCard className="flex flex-auto p-4" />
+				<RoundedCard />
+				<RoundedCard />
 			</div>
 		)
 	}
@@ -33,21 +34,11 @@ export default function HomeView() {
 		return (
 			<>
 				<div className="absolute top-34 text-4.5xl font-bold">Dashboard</div>
-				<RoundedCard className="flex flex-auto">
-					
-					
-					<div className="flex p-4 font-semibold text-3xl justify-items-start flex-row">
-						<RoundedCard className="flex flex-auto bg-orange-300 pr-4" />
-						
-						Analysis
-					
-					</div>
-					
+				<RoundedCard className="flex flex-auto flex-col">
+					<div className="flex p-4 font-semibold text-3xl justify-items-start flex-row">Analysis</div>
+					<RoundedCard className="flex flex-auto bg-orange-300 pr-4"/>
 					<RoundedCard className="flex flex-auto drop-shadow-mg h-1/2 p-4 p-top" />
-					
-					
 				</RoundedCard>
-				
 			</>
 		)
 	}
