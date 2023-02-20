@@ -52,11 +52,7 @@ export default function HomeView() {
 		)
 	}
 	const renderRightColumn = () => {
-		return (
-			<>
-				<RoundedCard className="flex flex-auto"/>
-			</>
-		)
+		return <RoundedCard flex />
 	}
 
 	// * primary render
