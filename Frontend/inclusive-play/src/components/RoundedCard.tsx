@@ -12,7 +12,7 @@ interface CardProps {
 export default function RoundedCard(props: CardProps) {
 	// internal functions
 	let constructClassName = () => {
-		let className = "rounded-md p-4 drop-shadow-md bg-slate-300"
+		let className = "rounded-md p-4 drop-shadow-md bg-white"
 		if (props.className) className += " " + props.className
 		if (props.flex) className += " flex flex-auto flex-col"
 		return className
