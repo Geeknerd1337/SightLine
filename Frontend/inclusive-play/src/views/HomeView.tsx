@@ -1,6 +1,7 @@
 /** @format */
 
 import RoundedCard from "@/components/RoundedCard"
+import DropDownButton from "@/components/DropDownButton"
 
 // * home page
 export default function HomeView() {
@@ -18,17 +19,14 @@ export default function HomeView() {
 	const renderLeftColumn = () => {
 		return (
 			<div className="flex-auto flex flex-col">
-				<button
-					className="mx-3 mb-3 py-2 text-xl drop-shadow-md rounded-md bg-purple-300 font-bold
-					text-gray-600"
-				>
-					Select File
-				</button>
+
+				<DropDownButton></DropDownButton>
+				
 
 				<RoundedCard className="m-3" />
 				<RoundedCard className="m-3" >
 					<div className="flex pb-4 font-semibold text-2xl justify-items-start flex-row">
-						<RoundedCard className="bg-purple-300 mr-3 p-2.5 md:filter-none"/>	
+						<RoundedCard className="bg-red-300 mr-3 p-2.5 md:filter-none"/>	
 						Links
 					</div>
 				</RoundedCard>

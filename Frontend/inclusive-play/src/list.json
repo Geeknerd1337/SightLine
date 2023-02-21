@@ -1,0 +1,10 @@
+[
+    {
+        "title": "Upload from Google Drive",
+        "icon": "GDsmall.png"
+    },
+    {
+        "title": "Upload from Dropbox",
+        "icon": "DBsmall.png"
+    }
+]
