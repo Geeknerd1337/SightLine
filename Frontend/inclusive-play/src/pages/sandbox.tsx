@@ -1,5 +1,4 @@
 import { useState } from "react";
-import multer from "multer";
 
 export default function App() {
   const [file, setFile] = useState<any>(null);

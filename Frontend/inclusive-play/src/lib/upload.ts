@@ -1,4 +1,4 @@
-import formidable from "formidable-serverless";
+const formidable = require("formidable-serverless");
 import { createReadStream } from "fs";
 import { IncomingMessage } from "http";
 import { NextApiRequest, NextApiResponse } from "next";
