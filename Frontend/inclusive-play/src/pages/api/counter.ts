@@ -9,7 +9,7 @@ export default function handler(req: any, res: any) {
   console.log("Current path: " + process.cwd());
   console.log("A----------A");
 
-  const pythonProcess = spawn("python3", ["src/lib/counter.py"]);
+  const pythonProcess = spawn("python", ["src/lib/counter.py"]);
   pythonProcess.stdin.write(JSON.stringify({ num }) + "\n");
 
   let data = "";
