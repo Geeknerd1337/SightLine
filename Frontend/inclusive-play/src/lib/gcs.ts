@@ -2,7 +2,7 @@ import { Storage } from "@google-cloud/storage";
 
 const cloudStorage = new Storage({
   projectId: "inclusive-play",
-  keyFilename: "src/lib/secrets/sight-line-storage.json",
+  credentials: JSON.parse(process.env.SIGHT_LINE_SERVICE as string),
 });
 
 const bucket = cloudStorage.bucket("sightline_videos");
