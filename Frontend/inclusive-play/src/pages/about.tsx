@@ -2,14 +2,14 @@
 
 import Metadata from "@/components/Metadata"
 import NavigationBar from "@/components/NavigationBar"
-import HomeView from "@/views/HomeView"
+import AboutView from "@/views/AboutView"
 
-// * Home page, wraps "Home View"
-export default function App() {
+// * About page, wraps "About View"
+export default function About() {
 	return (
 		<Metadata>
 			<NavigationBar />
-			<HomeView />
+			<AboutView />
 		</Metadata>
 	)
 }

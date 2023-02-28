@@ -1,30 +1,27 @@
 /** @format */
 import React from "react"
+import Link from "next/link"
 
-interface NavigationBarProps {
-	setIndex: Function // parent pageIndex
-}
+import { useRouter } from "next/router"
 
+interface NavigationBarProps {}
+
+// * allows navigation between primary pages
 export default function NavigationBar(props: NavigationBarProps) {
-	const [pageIndex, setPageIndex] = React.useState(0)
-
-	React.useEffect(() => {
-    props.setIndex(pageIndex)
-  }, [pageIndex])
+	// * router
+	const router = useRouter()
 
 	// * render functions
-	const renderButton = (index: number, name: string) => {
-		let css = pageIndex == index ? "flex-auto bg-purple-100" : "flex-auto"
+	const renderButton = (name: string, url: string, isHome: boolean) => {
+		let css = router.asPath == url ? "flex-1 bg-fuchsia-100 align-middle" : "flex-1"
 
 		return (
-			<button
-				onClick={(e) => {
-					setPageIndex(index)
-				}}
-				className={css}
+			<Link
+				className={"flex flex-1"}
+				href={url}
 			>
-				{name}
-			</button>
+				<button className={css}>{name}</button>
+			</Link>
 		)
 	}
 
@@ -33,16 +30,9 @@ export default function NavigationBar(props: NavigationBarProps) {
 		<div className="w-full bg-white flex flex-row h-24 justify-between">
 			<div className="flex-0 text-4.5xl font-bold flex items-center pl-6 italic">SightLine</div>
 			<div className="flex w-56 text-2xl font-semibold flex-row">
-				{renderButton(0, "Home")}
-				{renderButton(1, "About")}
+				{renderButton("Home", "/", true)}
+				{renderButton("About", "/about", false)}
 			</div>
 		</div>
 	)
-}
-
-{
-	/* <label class="switch">
-  <input type="checkbox">
-  <span class="slider round"></span>
-</label> */
 }

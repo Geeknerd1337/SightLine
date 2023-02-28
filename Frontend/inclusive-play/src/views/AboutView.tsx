@@ -1,6 +1,5 @@
 /** @format */
 
-
 // * home page
 export default function AboutView() {
 	// * display
