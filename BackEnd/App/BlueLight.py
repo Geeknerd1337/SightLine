@@ -3,6 +3,8 @@ import cv2 as cv2
 
 from array import *
 
+x = 0
+
 # test function because opencv is a bitch about hue range
 def rgb_to_hsv(r, g, b):
     r, g, b = r/255.0, g/255.0, b/255.0
@@ -72,3 +74,5 @@ def getBlueLight(video):
             break
 
     print(blueLightInImage)
+
+getBlueLight(x)

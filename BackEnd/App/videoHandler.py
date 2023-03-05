@@ -1,5 +1,7 @@
 import cv2 as cv2
 from flashAnalyzer import FlashAnalyzer
+from contrastAnalyzer import ContrastAnalyzer
+from bluelightAnalyzer import BlueLightAnalyzer
 
 import numpy as np
 
@@ -21,6 +23,8 @@ class VideoHandler:
 
         #Add a flash Analyzer
         self.analyzers.append(FlashAnalyzer(self.fps))
+        self.analyzers.append(ContrastAnalyzer())
+        self.analyzers.append(BlueLightAnalyzer())
         self.analyzeVideo(self.video)
 
     def analyzeVideo(self,video):
