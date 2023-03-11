@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { method1 } from "../../lib/upload";
+// import { method1 } from "src/lib/upload";
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,7 +10,7 @@ export default async function handler(
     return;
   }
 
-  method1(req, res);
+//   method1(req, res);
 }
 
 export const config = {

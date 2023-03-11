@@ -35,7 +35,7 @@ export default function HomeView() {
 						{links.map((link, i) => (
 							<div className="flex items-center justify-between p-1" key={i}>
 								<AiOutlineLink className="mr-1"/>
-								<li className="font-semibold text-lg hover:text-purple-400"><a href={link.URL} target="_blank">{link.title}</a></li>	
+								<li className="font-semibold text-lg hover:text-purple-400"><a href={link.URL}>{link.title}</a></li>	
 							</div>
 						))}
 					</ul>
