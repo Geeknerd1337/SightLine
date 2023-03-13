@@ -32,7 +32,8 @@ class VideoHandler:
         if (self.video.isOpened()== False):
             print("Error opening video file")
 
-        while video.isOpened():
+        #while video.isOpened():
+        for i in range(1):
             #read a frame
             ret,frame = video.read()
             #if it worked

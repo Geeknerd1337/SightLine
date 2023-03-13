@@ -39,7 +39,7 @@ class BlueLightAnalyzer(FrameAnalyzer):
             countBLpixels += 1
             cv2.rectangle(frame, (c,r), (c,r), (255, 255, 255), 1)
 
-        cv2.imshow("Image", frame)
+        #cv2.imshow("Image", frame)
         cv2.waitKey(10)
         #print(countBLpixels)
 
