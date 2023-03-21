@@ -1,4 +1,7 @@
-[
+[   {
+        "title": "Upload from Device",
+        "icon": "comp.png"
+    },
     {
         "title": "Upload from Google Drive",
         "icon": "GDsmall.png"
