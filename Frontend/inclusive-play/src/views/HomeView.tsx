@@ -2,6 +2,7 @@
 
 import RoundedCard from "@/components/RoundedCard"
 import DropDownButton from "@/components/DropDownButton"
+import BarChart from "@/components/BarChart"
 import links from "@/links.json"
 import { AiOutlineLink } from "react-icons/ai"
 
@@ -47,13 +48,19 @@ export default function HomeView() {
 		return (
 			<>
 				<div className="absolute top-34 text-4.5xl font-bold">Dashboard</div>
+				
 				<RoundedCard flex>
 					<div className="flex pb-4 font-semibold text-2xl justify-items-start flex-row">
 						<RoundedCard className="bg-orange-300 mr-3 p-2.5 md:filter-none"/>	
 						Analysis
 					</div>
-					
-					<RoundedCard className="border flex flex-auto drop-shadow-mg h-1/2 p-4 p-top" />
+
+					<RoundedCard flex className="border">
+						<div style={{width: "99%", height: "99%"}}>
+							<BarChart></BarChart>
+						</div>
+					</RoundedCard>
+
 				</RoundedCard>
 			</>
 		)
@@ -67,7 +74,7 @@ export default function HomeView() {
 						Grade Breakdown
 					</div>
 
-					<RoundedCard className="border flex flex-auto drop-shadow-mg h-1/2 p-4 p-top">
+					<RoundedCard flex className="border">
 						<p></p>
 					</RoundedCard>
 
