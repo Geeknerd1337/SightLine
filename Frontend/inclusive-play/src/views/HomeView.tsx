@@ -89,7 +89,7 @@ export default function HomeView() {
 		<>
 			<div className="h-20">{renderSubHeader()}</div>
 			<div className="flex-1 flex m-8 gap-6 flex-row text-black">
-				<div className="hidden lg:flex w-74 flex-col">{renderLeftColumn()}</div>
+				<div className="hidden lg:flex flex-col">{renderLeftColumn()}</div>
 				<div className="flex-auto flex flex-col grow-2">{renderMiddleColumn()}</div>
 				<div className="w-96 flex flex-col">{renderRightColumn()}</div>
 			</div>
