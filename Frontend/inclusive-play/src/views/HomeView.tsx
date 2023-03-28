@@ -75,7 +75,8 @@ export default function HomeView() {
 					</div>
 
 					<RoundedCard flex className="border">
-						<p></p>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis sunt odio neque natus at numquam, 
+							iusto quibusdam exercitationem ex enim asperiores nesciunt temporibus officiis sint magni minima cum amet. Quod.</p>
 					</RoundedCard>
 
 				</RoundedCard>
@@ -88,9 +89,9 @@ export default function HomeView() {
 		<>
 			<div className="h-20">{renderSubHeader()}</div>
 			<div className="flex-1 flex m-8 gap-6 flex-row text-black">
-				<div className="w-74 flex flex-col">{renderLeftColumn()}</div>
+				<div className="hidden lg:flex w-74 flex-col">{renderLeftColumn()}</div>
 				<div className="flex-auto flex flex-col grow-2">{renderMiddleColumn()}</div>
-				<div className="flex-auto flex flex-col">{renderRightColumn()}</div>
+				<div className="w-96 flex flex-col">{renderRightColumn()}</div>
 			</div>
 		</>
 	)
