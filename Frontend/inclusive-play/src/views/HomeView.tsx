@@ -55,7 +55,7 @@ export default function HomeView() {
 						Analysis
 					</div>
 
-					<RoundedCard flex className="border">
+					<RoundedCard flex className="border items-end">
 						<div style={{width: "99%", height: "99%"}}>
 							<BarChart></BarChart>
 						</div>
