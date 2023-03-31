@@ -2,14 +2,33 @@
 # yarn lockfile v1
 
 
-formidable-serverless@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/formidable-serverless/-/formidable-serverless-1.1.1.tgz#2b668d6e92d5222794a48ed485bcf7cd47efebfb"
-  integrity sha512-IUVI2m7d46YnWRZ9RG+wvmLoX0tTrk9P6oFc53QVjM9k0XhqzeyjwDi05PLvpGNKbyLvB3gfsAc+Lk6efM3FGQ==
-  dependencies:
-    formidable "^1.2.2"
+"freckle@>= 0.0.1":
+  "integrity" "sha512-+x+LoiQ4IDln6qgVyXEHAvu2uD/mRqdezrbx8tpwGwvEWH2gCho4eoe3uKzV4PAzBUjtViSbYLkilMRFy69B5g=="
+  "resolved" "https://registry.npmjs.org/freckle/-/freckle-0.0.2.tgz"
+  "version" "0.0.2"
 
-formidable@^1.2.2:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/formidable/-/formidable-1.2.6.tgz#d2a51d60162bbc9b4a055d8457a7c75315d1a168"
-  integrity sha512-KcpbcpuLNOwrEjnbpMC0gS+X8ciDoZE1kkqzat4a8vrprf+s9pKNQ/QIwWfbfs4ltgmFl3MD177SNTkve3BwGQ==
+"minimist@~0.0.1":
+  "integrity" "sha512-iotkTvxc+TwOm5Ieim8VnSNvCDjCK9S8G3scJ50ZthspSxa7jx50jkhYduuAtAjvfDUwSgOwf8+If99AlOEhyw=="
+  "resolved" "https://registry.npmjs.org/minimist/-/minimist-0.0.10.tgz"
+  "version" "0.0.10"
+
+"optimist@>= 0.1.5":
+  "integrity" "sha512-snN4O4TkigujZphWLN0E//nQmm7790RYaE53DdL7ZYwee2D8DDo9/EyYiKUfN3rneWUjhJnueija3G9I2i0h3g=="
+  "resolved" "https://registry.npmjs.org/optimist/-/optimist-0.6.1.tgz"
+  "version" "0.6.1"
+  dependencies:
+    "minimist" "~0.0.1"
+    "wordwrap" "~0.0.2"
+
+"pip@^0.0.1":
+  "integrity" "sha512-DMoVWIlQTKcVZAnTZXt4QXPkuA9EFDUhksMOI8OLXIBq3i+W+lFCE+kr5pGDb0vy0f+WZvq0M0Pg7a8K+vNxPA=="
+  "resolved" "https://registry.npmjs.org/pip/-/pip-0.0.1.tgz"
+  "version" "0.0.1"
+  dependencies:
+    "freckle" ">= 0.0.1"
+    "optimist" ">= 0.1.5"
+
+"wordwrap@~0.0.2":
+  "integrity" "sha512-1tMA907+V4QmxV7dbRvb4/8MaRALK6q9Abid3ndMYnbyo8piisCmeONVqVSXqQA3KaP4SLt5b7ud6E2sqP8TFw=="
+  "resolved" "https://registry.npmjs.org/wordwrap/-/wordwrap-0.0.3.tgz"
+  "version" "0.0.3"
