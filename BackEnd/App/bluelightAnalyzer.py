@@ -16,8 +16,8 @@ class BlueLightAnalyzer(FrameAnalyzer):
 
     def analyzeFrame(self, frame):
         #test on assured image
-        img = cv2.imread("test.png")
-        frame = img
+        #img = cv2.imread("test.png")
+        #frame = img
         #number of blue light pixels in the frame
         countBLpixels = 0
  
@@ -39,7 +39,7 @@ class BlueLightAnalyzer(FrameAnalyzer):
             countBLpixels += 1
             cv2.rectangle(frame, (c,r), (c,r), (255, 255, 255), 1)
 
-        #cv2.imshow("Image", frame)
+        cv2.imshow("Image", frame)
         cv2.waitKey(10)
         #print(countBLpixels)
 
