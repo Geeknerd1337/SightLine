@@ -149,7 +149,7 @@ class ContrastAnalyzer(FrameAnalyzer):
     def processResults(self):
         #print every rgb duo, which tests they're relevant for, and which standards they pass
 
-        for x in self.ratios:
+        """for x in self.ratios:
             print(x[0], x[1], "\nRelevant Tests: ")
 
             if x[3] == "PD" or x[3] == "PDT" and x[4] == "PD" or x[4] == "PDT":
@@ -175,5 +175,5 @@ class ContrastAnalyzer(FrameAnalyzer):
             else:
                 print("AAA Small FAIL | ")
 
-            print("\n\n")
+            print("\n\n") """
 
