@@ -29,7 +29,8 @@ export default function Sandbox() {
       );
 
       const data: SandboxResponse = await response.json();
-      setResult(data.result);
+      const datainMb = data.result / 1000000;
+      setResult(datainMb);
       console.log(data.analysis);
     } catch (error) {
       console.error(error);
@@ -47,7 +48,7 @@ export default function Sandbox() {
       <button onClick={handleIncrement} disabled={!videoFile}>
         Perform Analysis
       </button>
-      {result !== null && <p>Result: {result}</p>}
+      {result !== null && <p>Result: {result}mb</p>}
     </div>
   );
 }
