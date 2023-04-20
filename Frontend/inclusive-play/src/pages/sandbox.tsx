@@ -19,7 +19,7 @@ export default function Sandbox() {
         {
           method: "POST",
           headers: {
-            "x-api-key": process.env.AWS_KEY,
+            "x-api-key": process.env.AWS_KEY ? process.env.AWS_KEY : "",
             "Content-Type": "multipart/form-data",
           },
           body: formData,
