@@ -36,11 +36,11 @@ export default function FileUploadButton(props: FileUploadButtonProps) {
 			<input
 				type="file"
 				name="upload"
-				onChange={uploadClient}
+
 			/>
 			<button
 				type="submit"
-				onClick={uploadServer}
+
 			>
 				Upload
 			</button>
