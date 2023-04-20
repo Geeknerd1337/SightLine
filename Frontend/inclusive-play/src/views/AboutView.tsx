@@ -55,18 +55,16 @@ export default function AboutView() {
 
 					<ul className="flex flex-col items-start">
 						{team.map((person, i) => (
-							<div className="flex flex-col items-start justify-between p-1" key={i}>
-								<BsPersonCircle className="mr-1 text-4xl text-gray-400"/>
-								<h3 className="p-2 text-xl font-bold">
-									{person.title}
-								</h3>
-								<span>
-									{person.email}
-								</span>
+							<div className="flex items-center pb-4" key={i}>
+								<BsPersonCircle className="mr-4 text-5xl text-gray-400" />
+								
+								<div className="flex flex-col">
+									<h3 className="text-xl font-bold">{person.title}</h3>
+									<span>{person.email}</span>
+								</div>
 							</div>
 						))}
 					</ul>
-
 				</RoundedCard>
 			</>
 		) 
@@ -80,7 +78,7 @@ export default function AboutView() {
 			<div className="flex-1 flex m-8 gap-6 flex-row text-black">
 				<div className="flex flex-col">{renderLeftColumn()}</div>
 				<div className="flex-auto flex flex-col grow-2">{renderMiddleColumn()}</div>
-				<div className="w-1/3 h-1/3 flex flex-col">{renderRightColumn()}</div>
+				<div className="w-1/4 h-1/3 flex flex-col">{renderRightColumn()}</div>
 			</div>
 			
 		</>

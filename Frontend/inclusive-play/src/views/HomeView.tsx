@@ -82,7 +82,7 @@ export default function HomeView() {
 
 					<RoundedCard flex className="border">
 						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis sunt odio neque natus at numquam, 
-							iusto quibusdam exercitationem ex enim asperiores nesciunt temporibus officiis sint magni minima cum amet. Quod.</p>
+						iusto quibusdam exercitationem ex enim asperiores nesciunt temporibus officiis sint magni minima cum amet. Quod.</p>
 					</RoundedCard>
 				</RoundedCard>
 			</>
