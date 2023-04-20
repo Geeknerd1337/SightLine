@@ -1,5 +1,4 @@
 import { useState } from "react";
-import keys from "../lib/secrets/keys.json";
 
 interface SandboxResponse {
   result: number;
@@ -20,7 +19,7 @@ export default function Sandbox() {
         {
           method: "POST",
           headers: {
-            "x-api-key": keys["aws-counter-function-key"],
+            "x-api-key": process.env.AWS_KEY,
             "Content-Type": "multipart/form-data",
           },
           body: formData,
