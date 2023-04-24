@@ -84,7 +84,7 @@ export default function Sandbox() {
       lastFrame = Math.floor(i * 20);
 
       //Wait for the next frame
-      await new Promise((resolve) => setTimeout(resolve, 50));
+      await new Promise((resolve) => setTimeout(resolve, 25));
     }
 
     // update the state with the list of luminance values
