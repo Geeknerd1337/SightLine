@@ -55,13 +55,11 @@ export default function Sandbox() {
     canvas.height = videoRef.current!.videoHeight;
 
     const frames = videoRef.current!.duration * 20;
+    let lastFrame = -1;
 
     // loop through each frame of the video
     const values: number[] = [];
     for (let i = 0; i < frames; i++) {
-      // set the video time to the current frame
-      videoRef.current!.currentTime = i / 20;
-
       // draw the current frame onto the canvas
       canvas.getContext("2d")!.drawImage(videoRef.current!, 0, 0);
 
@@ -73,8 +71,11 @@ export default function Sandbox() {
       // add the luminance to the list of values
       values.push(luminance);
 
+      // set the video time to the current frame
+      videoRef.current!.currentTime = i / 20;
+
       //Wait for the next frame
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 25));
     }
 
     // update the state with the list of luminance values
