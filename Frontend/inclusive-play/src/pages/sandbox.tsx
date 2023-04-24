@@ -35,7 +35,17 @@ export default function Sandbox() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [luminanceValues, setLuminanceValues] = useState<number[]>([]);
 
-  const handleVideoLoad = async () => {
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    // load the video file
+    const videoUrl = URL.createObjectURL(file);
+    videoRef.current!.src = videoUrl;
+
     // wait for the video to be loaded
     await videoRef.current?.play();
 
@@ -44,11 +54,13 @@ export default function Sandbox() {
     canvas.width = videoRef.current!.videoWidth;
     canvas.height = videoRef.current!.videoHeight;
 
+    const frames = videoRef.current!.duration * 20;
+
     // loop through each frame of the video
     const values: number[] = [];
-    for (let i = 0; i < videoRef.current!.duration; i += 1 / 30) {
+    for (let i = 0; i < frames; i++) {
       // set the video time to the current frame
-      videoRef.current!.currentTime = i;
+      videoRef.current!.currentTime = i / 20;
 
       // draw the current frame onto the canvas
       canvas.getContext("2d")!.drawImage(videoRef.current!, 0, 0);
@@ -56,8 +68,13 @@ export default function Sandbox() {
       // get the luminance of the current frame
       const luminance = getFrameLuminance(canvas);
 
+      console.log("Frame: " + i + " Luminance: " + luminance);
+
       // add the luminance to the list of values
       values.push(luminance);
+
+      //Wait for the next frame
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
     // update the state with the list of luminance values
@@ -66,13 +83,16 @@ export default function Sandbox() {
 
   return (
     <>
-      <video ref={videoRef} onLoadedData={handleVideoLoad}>
-        <source src="/path/to/video.mp4" type="video/mp4" />
+      <input type="file" accept="video/*" onChange={handleFileUpload} />
+      <video ref={videoRef} style={{}} controls>
+        <source src="" type="video/mp4" />
       </video>
       <canvas ref={canvasRef} style={{}} />
       <ul>
         {luminanceValues.map((value, i) => (
-          <li key={i}>{value.toFixed(2)}</li>
+          <li key={i}>
+            Frame:{i}: {value.toFixed(2)}
+          </li>
         ))}
       </ul>
     </>
