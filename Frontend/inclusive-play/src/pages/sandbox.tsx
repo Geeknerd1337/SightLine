@@ -30,6 +30,66 @@ const getFrameLuminance = (canvas: HTMLCanvasElement): number => {
   return avgLuminance;
 };
 
+const getMidpoints = (values: any) =>{
+  let count = 0
+
+  const midpoints: number[] = [];
+
+  //find the spots where the luminance is between the last and next values
+  for (let i = 1; i < values.length - 1; i++){
+      let brighterThanNext = (values[i] >= values[i + 1]);
+      let brighterThanPrev = (values[i] >= values[i - 1]);
+      let darkerThanNext = (values[i] <= values[i + 1]);
+      let darkerThanPrev = (values[i] <= values[i - 1]);
+
+      if(brighterThanNext && brighterThanPrev || darkerThanNext && darkerThanPrev){
+        midpoints.push(i)
+      }
+  }
+
+  return midpoints
+}
+
+const checkFlashes = (values: any, midpoints: any, fps:number) =>{
+
+  let flashNum = 0;
+
+  //check how many flashes there are in a second
+  for (let i = 0; i < midpoints.length - 1; i++){
+    let j = 0;
+    let inTime = true;
+    
+    if (flashNum > 6) {
+      break;
+    }
+    else {
+      flashNum = 0;
+    }
+
+    while (inTime){
+      j += 1;
+
+      if ((i + j) < midpoints.length) {
+        //if the this point is still in the second
+        if ((midpoints[i + j] - midpoints[i]) <= fps){
+        //if it counts as a flash
+          if (Math.abs(values[midpoints[i + j]] - values[midpoints[i]]) > 20){
+            flashNum += 1;
+          }
+        }
+        else {
+          inTime = false;
+        }
+      }
+      else {
+        break;
+      }
+    }
+  }
+
+  return flashNum;
+}
+
 export default function Sandbox() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -87,6 +147,15 @@ export default function Sandbox() {
       await new Promise((resolve) => setTimeout(resolve, 25));
     }
 
+    //SEE IF WE CAN FIND FPS FROM VIDEO
+    const fps = 30;
+
+    const midpoints = getMidpoints(values);
+    const flashNum = checkFlashes(values, midpoints, fps);
+
+    document.getElementById("flash")!.innerHTML = "Number of flashes: " + flashNum.toString();
+
+
     // update the state with the list of luminance values
     setLuminanceValues(values);
   };
@@ -105,6 +174,7 @@ export default function Sandbox() {
           </li>
         ))}
       </ul>
+      <p id="flash"></p>
     </>
   );
 }
