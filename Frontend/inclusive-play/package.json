@@ -14,8 +14,9 @@
 	"dependencies": {
 		"@google-cloud/storage": "^6.9.3",
 		"@next/font": "13.1.2",
-		"@nivo/bar": "^0.80.0",
-		"@nivo/core": "^0.80.0",
+		"@nivo/bar": "0.80.0",
+		"@nivo/core": "0.80.0",
+		"@nivo/line": "0.80.0",
 		"@react-navigation/native": "^6.1.5",
 		"@types/node": "18.11.18",
 		"@types/react": "18.0.26",

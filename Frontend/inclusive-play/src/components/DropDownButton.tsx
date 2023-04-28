@@ -6,8 +6,8 @@ import list from "@/list.json"
 export default function DropDownButton() {
     const [isOpen, setIsOpen] = useState(false)
 
-    return <div className="relative flex flex-col items-center h-[300px] rounded-md mx-3">
-        <button onClick={() => setIsOpen((prev) => !prev)} className="bg-purple-300 p-4 w-full flex items-center justify-between font-bold text-lg rounded-md">
+    return <div className="relative flex flex-col h-[300px] rounded-md mx-3">
+        <button onClick={() => setIsOpen((prev) => !prev)} className="bg-purple-300 p-4 w-full flex items-center justify-around font-bold text-lg rounded-md">
             <AiOutlineFileAdd className="h-7 w-7 ml-16 mb-1"/>
             Submit File
             {!isOpen ? (

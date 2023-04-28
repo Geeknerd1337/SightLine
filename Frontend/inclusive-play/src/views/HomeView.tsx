@@ -6,6 +6,7 @@ import BarChart from "@/components/BarChart"
 import links from "@/links.json"
 import { AiOutlineLink } from "react-icons/ai"
 import FileUploadButton from "@/components/FileUploadButton"
+import LineChart from "@/components/LineChart"
 
 // * home page
 export default function HomeView() {
@@ -64,7 +65,8 @@ export default function HomeView() {
 
 					<RoundedCard flex className="border items-end">
 						<div style={{width: "99%", height: "99%"}}>
-							<BarChart></BarChart>
+							{/* <BarChart></BarChart> */}
+							<LineChart></LineChart>
 						</div>
 					</RoundedCard>
 				</RoundedCard>
