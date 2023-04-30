@@ -1,3 +1,52 @@
+//get hue from rgb
+const RGBToHue = (r:number, g:number, b:number):number => {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+  const l = Math.max(r, g, b);
+  const s = l - Math.min(r, g, b);
+  const h = s
+    ? l === r
+      ? (g - b) / s
+      : l === g
+      ? 2 + (b - r) / s
+      : 4 + (r - g) / s
+    : 0;
+  return (60 * h < 0 ? 60 * h + 360 : 60 * h)
+};
+
+const getFrameBlueLight = (canvas: HTMLCanvasElement): number => {
+  // get the canvas context
+  const context = canvas.getContext("2d");
+
+  let numBLpixels = 0;
+
+  if (!context) {
+    return -1;
+  }
+
+  // get the pixel data for the canvas
+  const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+
+  // calculate the average luminance of the frame
+  let sum = 0;
+  for (let i = 0; i < imageData.data.length; i += 4) {
+    const r = imageData.data[i];
+    const g = imageData.data[i + 1];
+    const b = imageData.data[i + 2];
+
+    let hue = RGBToHue(r,g,b);
+
+    if (hue >= 200 && hue <= 211){
+      numBLpixels += 1;
+    }
+
+  }
+
+  return numBLpixels;
+};
+
+
 const getFrameLuminance = (canvas: HTMLCanvasElement): number => {
   // get the canvas context
   const context = canvas.getContext("2d");
@@ -46,41 +95,41 @@ const getMidpoints = (values: any) => {
   return midpoints;
 };
 
-// const checkFlashes = (values: any, midpoints: any, fps: number) => {
-//   let flashNum = 0;
+ const checkFlashes = (values: any, midpoints: any, fps: number) => {
+   let flashNum = 0;
 
-//   //check how many flashes there are in a second
-//   for (let i = 0; i < midpoints.length - 1; i++) {
-//     let j = 0;
-//     let inTime = true;
+   //check how many flashes there are in a second
+   for (let i = 0; i < midpoints.length - 1; i++) {
+     let j = 0;
+     let inTime = true;
 
-//     if (flashNum > 6) {
-//       break;
-//     } else {
-//       flashNum = 0;
-//     }
+     if (flashNum > 6) {
+       break;
+     } else {
+       flashNum = 0;
+     }
 
-//     while (inTime) {
-//       j += 1;
+     while (inTime) {
+       j += 1;
 
-//       if (i + j < midpoints.length) {
-//         //if the this point is still in the second
-//         if (midpoints[i + j] - midpoints[i] <= fps) {
-//           //if it counts as a flash
-//           if (Math.abs(values[midpoints[i + j]] - values[midpoints[i]]) > 20) {
-//             flashNum += 1;
-//           }
-//         } else {
-//           inTime = false;
-//         }
-//       } else {
-//         break;
-//       }
-//     }
-//   }
+       if (i + j < midpoints.length) {
+         //if the this point is still in the second
+         if (midpoints[i + j] - midpoints[i] <= fps) {
+           //if it counts as a flash
+           if (Math.abs(values[midpoints[i + j]] - values[midpoints[i]]) > 20) {
+             flashNum += 1;
+           }
+         } else {
+           inTime = false;
+         }
+       } else {
+         break;
+       }
+     }
+   } 
 
-//   return flashNum;
-// };
+    return flashNum;
+ };
 
 const getFlashArr = (values: any, midpoints: any, fps: number) => {
   let flashNum = 0;
@@ -147,6 +196,7 @@ export const Analyze = async (
 
   // loop through each frame of the video
   const values: number[] = [];
+  const BLvalues: number[] = [];
   for (let i = 0; i < videoRef.current!.duration; i += 1 / 90) {
     const currentFrame = Math.floor(i * 20);
     videoRef.current!.currentTime = i;
@@ -162,6 +212,10 @@ export const Analyze = async (
     // get the luminance of the current frame
     const luminance = getFrameLuminance(canvas);
 
+    const numBLpixels = getFrameBlueLight(canvas);
+
+    BLvalues.push(numBLpixels);
+
     // console.log("Frame: " + currentFrame + " Luminance: " + luminance);
 
     // add the luminance to the list of values
@@ -175,13 +229,12 @@ export const Analyze = async (
     await new Promise((resolve) => setTimeout(resolve, 25));
   }
 
-  //SEE IF WE CAN FIND FPS FROM VIDEO
   const fps = 30;
 
   const midpoints = getMidpoints(values);
   const flashNum = getFlashArr(values, midpoints, fps);
 
-  let returnObj = { luminanceArr: values, flashArr: flashNum };
+  let returnObj = { luminanceArr: values, flasheArr: flashNum };
   console.log(returnObj);
 
   if (callback) callback(returnObj);
