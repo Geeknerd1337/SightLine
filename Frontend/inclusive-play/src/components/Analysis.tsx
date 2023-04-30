@@ -3,29 +3,29 @@ import React from "react";
 
 //Example button props
 interface AnalysisProps {
-  results: object[];
+  results: any;
+}
+
+interface FilteredResultsState {
+  luminosity: { id: string; data: any }[];
+  flashes: { id: string; data: any }[];
 }
 
 export default function Analysis(props: AnalysisProps) {
-  let [filteredResults, setFilteredResults] = React.useState([]);
+  let [filteredResults, setFilteredResults] =
+    React.useState<FilteredResultsState>({
+      luminosity: [],
+      flashes: [],
+    });
 
   React.useEffect(() => {
     console.log("results updated");
     console.log(props.results);
     setFilteredResults({
-      // luminosity: props.results?.map((e) => {
-      //   return { x: e.time, y: e.luminosity };
-      // }),
-      // brightness: props.results?.map((e) => {
-      //   return { x: e.time, y: e.brightness };
-      // }),
-      // blueLight: props.results?.map((e) => {
-      //   return { x: e.time, y: e.blueLight };
-      // }),
       luminosity: [
         {
           id: "luminosity",
-          data: props.results?.luminanceArr?.map((e, i) => {
+          data: props.results?.luminanceArr?.map((e: any, i: any) => {
             return { x: i, y: e };
           }),
         },
@@ -33,7 +33,7 @@ export default function Analysis(props: AnalysisProps) {
       flashes: [
         {
           id: "flashes",
-          data: props.results?.flashArr?.map((e, i) => {
+          data: props.results?.flashArr?.map((e: any, i: any) => {
             return { x: i, y: e };
           }),
         },
