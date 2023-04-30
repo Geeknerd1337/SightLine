@@ -1,69 +1,75 @@
 import React from "react";
-import { ResponsiveLine } from '@nivo/line';
+import { ResponsiveLine } from "@nivo/line";
 
-  const data = [
-    {
-      id: 'Line 1',
-      data: [
-        { x: 'Jan', y: 10 },
-        { x: 'Feb', y: 15 },
-        { x: 'Mar', y: 12 },
-        { x: 'Apr', y: 8 },
-        { x: 'May', y: 13 },
-      ],
-    },
-    {
-      id: 'Line 2',
-      data: [
-        { x: 'Jan', y: 5 },
-        { x: 'Feb', y: 9 },
-        { x: 'Mar', y: 14 },
-        { x: 'Apr', y: 6 },
-        { x: 'May', y: 11 },
-      ],
-    },
-    {
-      id: 'Line 3',
-      data: [
-        { x: 'Jan', y: 7 },
-        { x: 'Feb', y: 11 },
-        { x: 'Mar', y: 8 },
-        { x: 'Apr', y: 14 },
-        { x: 'May', y: 9 },
-      ],
-    },
-  ];
+// const data = [
+//   {
+//     id: "Line 1",
+//     data: [
+//       { x: "Jan", y: 10 },
+//       { x: "Feb", y: 15 },
+//       { x: "Mar", y: 12 },
+//       { x: "Apr", y: 8 },
+//       { x: "May", y: 13 },
+//     ],
+//   },
+//   {
+//     id: "Line 2",
+//     data: [
+//       { x: "Jan", y: 5 },
+//       { x: "Feb", y: 9 },
+//       { x: "Mar", y: 14 },
+//       { x: "Apr", y: 6 },
+//       { x: "May", y: 11 },
+//     ],
+//   },
+//   {
+//     id: "Line 3",
+//     data: [
+//       { x: "Jan", y: 7 },
+//       { x: "Feb", y: 11 },
+//       { x: "Mar", y: 8 },
+//       { x: "Apr", y: 14 },
+//       { x: "May", y: 9 },
+//     ],
+//   },
+// ];
 
-  const theme = {
-    axis: {
-      legend: {
-        text: {
-          fontSize: 20,
-          fontWeight: 'bold',
-          fill: '#333'
-        }
+const theme = {
+  axis: {
+    legend: {
+      text: {
+        fontSize: 20,
+        fontWeight: "bold",
+        fill: "#333",
       },
-      ticks: {
-        line: {
-          stroke: '#555',
-        },
-        text: {
-          fill: '#333',
-          fontSize: 12,
-        }
+    },
+    ticks: {
+      line: {
+        stroke: "#555",
       },
-      domain: {
-        line: {
-          stroke: '#555',
-        }
-      }
-    }
-  }
+      text: {
+        fill: "#333",
+        fontSize: 12,
+      },
+    },
+    domain: {
+      line: {
+        stroke: "#555",
+      },
+    },
+  },
+};
 
-export default function LineChart() {
+interface LineChartProps {
+  data: any;
+  xAxisName: string;
+  yAxisName: string;
+}
+
+export default function LineChart(props: any) {
   return (
     <ResponsiveLine
-      data={data}
+      data={props?.data || []}
       margin={{ top: 50, right: 50, bottom: 50, left: 60 }}
       xScale={{ type: "point" }}
       yScale={{
@@ -75,10 +81,10 @@ export default function LineChart() {
       }}
       theme={theme}
       axisBottom={{
-        tickSize: 5,
+        tickSize: 0,
         tickPadding: 5,
         tickRotation: 0,
-        legend: "X Axis",
+        legend: props?.xAxisName || "X Axis",
         legendOffset: 36,
         legendPosition: "middle",
       }}
@@ -86,19 +92,20 @@ export default function LineChart() {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: "Y Axis",
-        legendOffset: -40,
+        legend: props?.yAxisName || "Y Axis",
+        legendOffset: -50,
         legendPosition: "middle",
       }}
-      curve="cardinal"
+      curve="linear"
       lineWidth={2}
-      enableGridX={true}
+      enableGridX={false}
       colors={{ scheme: "category10" }}
       pointSize={10}
       pointColor={{ from: "color" }}
       pointBorderWidth={2}
-      pointBorderColor={{ from: 'color', modifiers: [ [ 'darker', 0.7 ] ] }}
-      enablePointLabel={true}
+      pointBorderColor={{ from: "color", modifiers: [["darker", 0.7]] }}
+      enablePointLabel={false}
+      enablePoints={false}
       pointLabel="y"
       pointLabelYOffset={-12}
       animate={true}
@@ -133,5 +140,4 @@ export default function LineChart() {
       // ]}
     />
   );
-   
 }
