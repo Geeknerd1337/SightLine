@@ -110,7 +110,7 @@ export default function HomeView() {
                   state={analysisState}
                   setState={setAnalysisState}
                   videoRef={videoRef}
-                  handleUpload={(e) => {
+                  handleUpload={(e): any => {
                     Analyze(e, videoRef, canvasRef, (e) => {
                       setResults(e);
                       setAnalysisState(ANALYSIS_STATE.LOADED);
@@ -131,7 +131,15 @@ export default function HomeView() {
       return <></>;
     };
 
-    const renderButton = (props: object) => {
+    //Renderbutton props
+    interface RenderButtonProps {
+      colorIndex: number;
+      disabled: boolean;
+      onClick: () => void;
+      children: any;
+    }
+
+    const renderButton = (props: RenderButtonProps) => {
       let color;
 
       switch (props?.colorIndex) {

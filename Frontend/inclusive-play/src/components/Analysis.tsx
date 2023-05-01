@@ -26,6 +26,7 @@ export default function Analysis(props: AnalysisProps) {
         {
           id: "luminosity",
           data: props.results?.luminanceArr?.map((e: any, i: any) => {
+            console.log("LUM:", e);
             return { x: i, y: e };
           }),
         },
@@ -34,6 +35,7 @@ export default function Analysis(props: AnalysisProps) {
         {
           id: "flashes",
           data: props.results?.flashArr?.map((e: any, i: any) => {
+            console.log("Flash:", e);
             return { x: i, y: e };
           }),
         },

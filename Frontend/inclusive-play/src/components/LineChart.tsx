@@ -67,6 +67,8 @@ interface LineChartProps {
 }
 
 export default function LineChart(props: any) {
+  console.log("PROPS", props);
+
   return (
     <ResponsiveLine
       data={props?.data || []}
