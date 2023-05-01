@@ -8,7 +8,7 @@ interface FileUploadButtonProps {
   state: number;
   setState: (state: number) => void;
   videoRef: React.RefObject<HTMLVideoElement>;
-  handleUpload?: (e: any) => Promise<number[] | undefined>;
+  handleUpload?: (e: any) => void;
   children?: ReactNode;
 }
 

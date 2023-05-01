@@ -110,8 +110,8 @@ export default function HomeView() {
                   state={analysisState}
                   setState={setAnalysisState}
                   videoRef={videoRef}
-                  handleUpload={(e): any => {
-                    Analyze(e, videoRef, canvasRef, (e) => {
+                  handleUpload={async (e) => {
+                    await Analyze(e, videoRef, canvasRef, (e) => {
                       setResults(e);
                       setAnalysisState(ANALYSIS_STATE.LOADED);
                     });
