@@ -7,15 +7,15 @@ interface AnalysisProps {
 }
 
 interface FilteredResultsState {
-  luminosity: { id: string; data: any }[];
-  flashes: { id: string; data: any }[];
+  luminosity: { id: string; data: any[] }[];
+  flashes: { id: string; data: any[] }[];
 }
 
 export default function Analysis(props: AnalysisProps) {
   let [filteredResults, setFilteredResults] =
     React.useState<FilteredResultsState>({
-      luminosity: [],
-      flashes: [],
+      luminosity: [{ id: "luminosity", data: [] }],
+      flashes: [{ id: "flashes", data: [] }],
     });
 
   React.useEffect(() => {
@@ -50,13 +50,20 @@ export default function Analysis(props: AnalysisProps) {
         className="flex flex-col justify-center items-center border-2 p-4"
         style={{ height: 350 }}
       >
-        {filteredResults?.luminosity?.length > 0 ? (
-          <LineChart
-            data={filteredResults?.luminosity}
-            xAxisName="Frames"
-            yAxisName="Luminance"
-          />
-        ) : null}
+        <LineChart
+          data={
+            filteredResults?.luminosity?.[0]?.data?.length > 0
+              ? filteredResults?.luminosity
+              : [
+                  {
+                    id: "flashes",
+                    data: [],
+                  },
+                ]
+          }
+          xAxisName="Frames"
+          yAxisName="Luminance"
+        />
       </div>
     );
   };
@@ -67,13 +74,20 @@ export default function Analysis(props: AnalysisProps) {
         className="flex flex-col justify-center items-center border-2 p-4"
         style={{ height: 350 }}
       >
-        {filteredResults?.flashes?.length > 0 ? (
-          <LineChart
-            data={filteredResults?.flashes}
-            xAxisName="Time"
-            yAxisName="Flashes"
-          />
-        ) : null}
+        <LineChart
+          data={
+            filteredResults?.flashes?.[0]?.data?.length > 0
+              ? filteredResults?.flashes
+              : [
+                  {
+                    id: "flashes",
+                    data: [],
+                  },
+                ]
+          }
+          xAxisName="Time"
+          yAxisName="Flashes"
+        />
       </div>
     );
   };
