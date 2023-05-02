@@ -64,6 +64,8 @@ interface LineChartProps {
   data: any;
   xAxisName: string;
   yAxisName: string;
+  yMin: number;
+  yMax: number;
 }
 
 export default function LineChart(props: any) {
@@ -76,8 +78,8 @@ export default function LineChart(props: any) {
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
-        min: 0,
-        max: "auto",
+        min: props.yMin || 0,
+        max: props.yMax || "auto",
         stacked: true,
         reverse: false,
       }}

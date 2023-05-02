@@ -41,6 +41,7 @@ export default function HomeView() {
     return (
       <div className="flex pb-4 w-1/4 font-semibold text-2xl justify-items-start flex-row">
         <RoundedCard className={`${color} mr-3 p-2.5 md:filter-none`} />
+        <switch onChange={(e) => console.log(e)}></switch>
         {text}
       </div>
     );
