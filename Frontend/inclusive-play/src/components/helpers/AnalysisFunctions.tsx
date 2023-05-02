@@ -35,7 +35,7 @@ const getFrameBlueLight = (canvas: HTMLCanvasElement): number => {
 
     let hue = RGBToHue(r, g, b);
 
-    if (hue >= 200 && hue <= 211) {
+    if (hue >= 0 && hue <= 255) {
       numBLpixels += 1;
     }
   }
@@ -257,12 +257,12 @@ export const Analyze = async (
     await new Promise((resolve) => setTimeout(resolve, 25));
   }
 
-  BLvalues.push(36);
-
   const fps = 30;
 
   const midpoints = getMidpoints(values);
   const flashNum = checkFlashes(values, midpoints, fps);
+
+  console.log("BLARR: " + BLvalues);
 
   let returnObj = {
     luminanceArr: values,

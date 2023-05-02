@@ -30,7 +30,6 @@ export default function Analysis(props: AnalysisProps) {
         {
           id: "luminosity",
           data: props.results?.luminanceArr?.map((e: any, i: any) => {
-            console.log("LUM:", e);
             return { x: i, y: e };
           }),
         },
@@ -38,7 +37,7 @@ export default function Analysis(props: AnalysisProps) {
       bluelight: [
         {
           id: "bluelight",
-          data: props.results?.BLArr?.map((e: any, i: any) => {
+          data: props.results?.BLarr?.map((e: any, i: any) => {
             console.log("Blue Light Amount:", e);
             return { x: i, y: e };
           }),
@@ -106,6 +105,7 @@ export default function Analysis(props: AnalysisProps) {
   };*/
 
   const renderBlueLight = () => {
+    console.log("DATA: " + filteredResults?.bluelight?.[0]?.data);
     return (
       <div
         className="flex flex-col justify-center items-center border-2 p-4"
