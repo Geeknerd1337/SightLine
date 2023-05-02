@@ -89,6 +89,7 @@ export default function LineChart(props: any) {
         legend: props?.xAxisName || "X Axis",
         legendOffset: 36,
         legendPosition: "middle",
+        tickValues: [],
       }}
       axisLeft={{
         tickSize: 5,
