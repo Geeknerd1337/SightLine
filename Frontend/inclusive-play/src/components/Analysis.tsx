@@ -1,5 +1,7 @@
 import LineChart from "./LineChart";
 import React from "react";
+import { ResponsiveLine } from "@nivo/line";
+import { ResponsiveBar } from "@nivo/bar";
 
 //Example button props
 interface AnalysisProps {
@@ -8,6 +10,7 @@ interface AnalysisProps {
 
 interface FilteredResultsState {
   luminosity: { id: string; data: any[] }[];
+  flashes: { id: string; data: any[] }[];
   bluelight: { id: string; data: any[] }[];
 }
 
@@ -16,6 +19,7 @@ export default function Analysis(props: AnalysisProps) {
     React.useState<FilteredResultsState>({
       luminosity: [{ id: "luminosity", data: [] }],
       bluelight: [{ id: "bluelight", data: [] }],
+      flashes: [{ id: "flashes", data: [] }],
     });
 
   React.useEffect(() => {
@@ -31,13 +35,21 @@ export default function Analysis(props: AnalysisProps) {
           }),
         },
       ],
-      bluelight:
-      [
+      bluelight: [
         {
           id: "bluelight",
           data: props.results?.BLArr?.map((e: any, i: any) => {
             console.log("Blue Light Amount:", e);
             return { x: i, y: e };
+          }),
+        },
+      ],
+      flashes: [
+        {
+          id: "flashes",
+          data: props.results?.FlashArray?.map((e: any, i: any) => {
+            console.log("Flashes:", e);
+            return { x: i, y: e.flashes };
           }),
         },
       ],
@@ -57,7 +69,7 @@ export default function Analysis(props: AnalysisProps) {
               ? filteredResults?.luminosity
               : [
                   {
-                    id: "flashes",
+                    id: "luminosity",
                     data: [],
                   },
                 ]
@@ -93,7 +105,7 @@ export default function Analysis(props: AnalysisProps) {
     );
   };*/
 
-    const renderBlueLight = () => {
+  const renderBlueLight = () => {
     return (
       <div
         className="flex flex-col justify-center items-center border-2 p-4"
@@ -118,10 +130,39 @@ export default function Analysis(props: AnalysisProps) {
   };
 
   const renderFlashes = () => {
+    const data = filteredResults?.flashes[0]?.data.map(
+      (flash: any, index: any) => ({
+        id: `Second ${index + 1}`,
+        value: flash.y,
+      })
+    );
 
     return (
-      <div className="flex flex-col justify-center items-center border-2 p-4">
-        <p id="flashNumP"></p>
+      <div className="flex flex-col justify-center items-center border-2 p-4 h-[350px]">
+        <ResponsiveBar
+          data={data}
+          keys={["value"]}
+          indexBy="id"
+          axisBottom={{
+            tickSize: 0,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: "X Axis",
+            legendOffset: 36,
+            legendPosition: "middle",
+            tickValues: [],
+          }}
+          axisLeft={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: "Y Axis",
+            legendOffset: -50,
+            legendPosition: "middle",
+          }}
+          margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
+          colors={(bar: any) => (bar.value > 3 ? "red" : "green")}
+        />
       </div>
     );
   };

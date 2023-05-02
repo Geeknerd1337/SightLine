@@ -1,5 +1,5 @@
 //get hue from rgb
-const RGBToHue = (r:number, g:number, b:number):number => {
+const RGBToHue = (r: number, g: number, b: number): number => {
   r /= 255;
   g /= 255;
   b /= 255;
@@ -12,7 +12,7 @@ const RGBToHue = (r:number, g:number, b:number):number => {
       ? 2 + (b - r) / s
       : 4 + (r - g) / s
     : 0;
-  return (60 * h < 0 ? 60 * h + 360 : 60 * h)
+  return 60 * h < 0 ? 60 * h + 360 : 60 * h;
 };
 
 const getFrameBlueLight = (canvas: HTMLCanvasElement): number => {
@@ -33,17 +33,15 @@ const getFrameBlueLight = (canvas: HTMLCanvasElement): number => {
     const g = imageData.data[i + 1];
     const b = imageData.data[i + 2];
 
-    let hue = RGBToHue(r,g,b);
+    let hue = RGBToHue(r, g, b);
 
-    if (hue >= 200 && hue <= 211){
+    if (hue >= 200 && hue <= 211) {
       numBLpixels += 1;
     }
-
   }
 
   return numBLpixels;
 };
-
 
 const getFrameLuminance = (canvas: HTMLCanvasElement): number => {
   // get the canvas context
@@ -93,41 +91,41 @@ const getMidpoints = (values: any) => {
   return midpoints;
 };
 
- const checkFlashes = (values: any, midpoints: any, fps: number) => {
-   let flashNum = 0;
+const checkFlashes = (values: any, midpoints: any, fps: number) => {
+  let flashNum = 0;
 
-   //check how many flashes there are in a second
-   for (let i = 0; i < midpoints.length - 1; i++) {
-     let j = 0;
-     let inTime = true;
+  //check how many flashes there are in a second
+  for (let i = 0; i < midpoints.length - 1; i++) {
+    let j = 0;
+    let inTime = true;
 
-     if (flashNum > 6) {
-       break;
-     } else {
-       flashNum = 0;
-     }
+    if (flashNum > 6) {
+      break;
+    } else {
+      flashNum = 0;
+    }
 
-     while (inTime) {
-       j += 1;
+    while (inTime) {
+      j += 1;
 
-       if (i + j < midpoints.length) {
-         //if the this point is still in the second
-         if (midpoints[i + j] - midpoints[i] <= fps) {
-           //if it counts as a flash
-           if (Math.abs(values[midpoints[i + j]] - values[midpoints[i]]) > 20) {
-             flashNum += 1;
-           }
-         } else {
-           inTime = false;
-         }
-       } else {
-         break;
-       }
-     }
-   } 
+      if (i + j < midpoints.length) {
+        //if the this point is still in the second
+        if (midpoints[i + j] - midpoints[i] <= fps) {
+          //if it counts as a flash
+          if (Math.abs(values[midpoints[i + j]] - values[midpoints[i]]) > 20) {
+            flashNum += 1;
+          }
+        } else {
+          inTime = false;
+        }
+      } else {
+        break;
+      }
+    }
+  }
 
-    return flashNum;
- };
+  return flashNum;
+};
 
 const getFlashArr = (values: any, midpoints: any, fps: number) => {
   let flashNum = 0;
@@ -167,6 +165,11 @@ const getFlashArr = (values: any, midpoints: any, fps: number) => {
   return flashes;
 };
 
+//A flash is a data point consisting of a second and the number of flashes in that second
+interface Flash {
+  flashes: number;
+}
+
 export const Analyze = async (
   event: React.ChangeEvent<HTMLInputElement>,
   videoRef: React.RefObject<HTMLVideoElement>,
@@ -195,10 +198,19 @@ export const Analyze = async (
   // loop through each frame of the video
   const values: number[] = [];
   const BLvalues: number[] = [];
+  const Flashes: Flash[] = [];
+
+  let lastFlash = -1;
+  let currentSecond = 0;
+
+  let lastSecond = 0;
+
   for (let i = 0; i < videoRef.current!.duration; i += 1 / 90) {
     const currentFrame = Math.floor(i * 20);
     videoRef.current!.currentTime = i;
     videoRef.current?.pause();
+
+    currentSecond = Math.floor(i);
 
     //console.log("Frame: " + currentFrame + "Old Frame: " + lastFrame);
 
@@ -209,6 +221,23 @@ export const Analyze = async (
 
     // get the luminance of the current frame
     const luminance = getFrameLuminance(canvas);
+
+    //Get the ditance between the luminance and lastflash
+    const distance = Math.abs(luminance - lastFlash);
+
+    if (distance > 20) {
+      //For the current second, increment the number of flashes
+      if (currentSecond === lastSecond) {
+        //Compare the flash length to the current second length
+        if (Flashes.length === 0 || Flashes.length - 1 < currentSecond) {
+          Flashes.push({ flashes: 1 });
+        } else {
+          Flashes[Flashes.length - 1].flashes += 1;
+        }
+      }
+    }
+
+    lastFlash = luminance;
 
     const numBLpixels = getFrameBlueLight(canvas);
 
@@ -222,6 +251,7 @@ export const Analyze = async (
     // set the video time to the current frame
 
     lastFrame = Math.floor(i * 20);
+    lastSecond = currentSecond;
 
     //Wait for the next frame
     await new Promise((resolve) => setTimeout(resolve, 25));
@@ -234,7 +264,11 @@ export const Analyze = async (
   const midpoints = getMidpoints(values);
   const flashNum = checkFlashes(values, midpoints, fps);
 
-  let returnObj = { luminanceArr: values, BLarr: BLvalues};
+  let returnObj = {
+    luminanceArr: values,
+    BLarr: BLvalues,
+    FlashArray: Flashes,
+  };
   console.log(returnObj);
 
   if (callback) callback(returnObj);
