@@ -35,7 +35,7 @@ const getFrameBlueLight = (canvas: HTMLCanvasElement): number => {
 
     let hue = RGBToHue(r, g, b);
 
-    if (hue >= 0 && hue <= 255) {
+    if (hue >= 150 && hue <= 240) {
       numBLpixels += 1;
     }
   }
@@ -192,6 +192,8 @@ export const Analyze = async (
   canvas.width = videoRef.current!.videoWidth;
   canvas.height = videoRef.current!.videoHeight;
 
+  const numPixels = canvas.width * canvas.height;
+
   const frames = videoRef.current!.duration * 20;
   let lastFrame = -1;
 
@@ -241,7 +243,7 @@ export const Analyze = async (
 
     const numBLpixels = getFrameBlueLight(canvas);
 
-    BLvalues.push(numBLpixels);
+    BLvalues.push(Math.floor((numBLpixels / numPixels) * 100));
 
     // console.log("Frame: " + currentFrame + " Luminance: " + luminance);
 

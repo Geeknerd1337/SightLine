@@ -261,7 +261,7 @@ export default function HomeView() {
         <div className="flex-auto flex flex-col grow-2">
           {renderMiddleColumn()}
         </div>
-        <div className="w-96 flex flex-col">{renderRightColumn()}</div>
+        {/* <div className="w-96 flex flex-col">{renderRightColumn()}</div> */}
       </div>
     </>
   );

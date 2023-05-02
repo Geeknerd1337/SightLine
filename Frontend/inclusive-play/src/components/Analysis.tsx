@@ -122,6 +122,7 @@ export default function Analysis(props: AnalysisProps) {
                   },
                 ]
           }
+          min={0}
           xAxisName="Time"
           yAxisName="Blue Light"
         />
@@ -188,7 +189,6 @@ export default function Analysis(props: AnalysisProps) {
       </div>
       <div className="flex-1 grid grid-cols-2 gap-4 w-full">
         {renderFlashes()}
-        {renderResults()}
       </div>
     </div>
   );
