@@ -8,14 +8,14 @@ interface AnalysisProps {
 
 interface FilteredResultsState {
   luminosity: { id: string; data: any[] }[];
-  flashes: { id: string; data: any[] }[];
+  bluelight: { id: string; data: any[] }[];
 }
 
 export default function Analysis(props: AnalysisProps) {
   let [filteredResults, setFilteredResults] =
     React.useState<FilteredResultsState>({
       luminosity: [{ id: "luminosity", data: [] }],
-      flashes: [{ id: "flashes", data: [] }],
+      bluelight: [{ id: "bluelight", data: [] }],
     });
 
   React.useEffect(() => {
@@ -31,11 +31,12 @@ export default function Analysis(props: AnalysisProps) {
           }),
         },
       ],
-      flashes: [
+      bluelight:
+      [
         {
-          id: "flashes",
-          data: props.results?.flashArr?.map((e: any, i: any) => {
-            console.log("Flash:", e);
+          id: "bluelight",
+          data: props.results?.BLArr?.map((e: any, i: any) => {
+            console.log("Blue Light Amount:", e);
             return { x: i, y: e };
           }),
         },
@@ -68,7 +69,7 @@ export default function Analysis(props: AnalysisProps) {
     );
   };
 
-  const renderBrightness = () => {
+  /*const renderBrightness = () => {
     return (
       <div
         className="flex flex-col justify-center items-center border-2 p-4"
@@ -90,12 +91,37 @@ export default function Analysis(props: AnalysisProps) {
         />
       </div>
     );
+  };*/
+
+    const renderBlueLight = () => {
+    return (
+      <div
+        className="flex flex-col justify-center items-center border-2 p-4"
+        style={{ height: 350 }}
+      >
+        <LineChart
+          data={
+            filteredResults?.bluelight?.[0]?.data?.length >= 0
+              ? filteredResults?.bluelight
+              : [
+                  {
+                    id: "blue light",
+                    data: [],
+                  },
+                ]
+          }
+          xAxisName="Time"
+          yAxisName="Blue Light"
+        />
+      </div>
+    );
   };
 
-  const renderBlueLight = () => {
+  const renderFlashes = () => {
+
     return (
       <div className="flex flex-col justify-center items-center border-2 p-4">
-        third graph
+        <p id="flashNumP"></p>
       </div>
     );
   };
@@ -117,10 +143,10 @@ export default function Analysis(props: AnalysisProps) {
     <div className="flex flex-col w-full h-full">
       <div className="flex-1 grid grid-cols-2 gap-4 w-full">
         {renderLuminosity()}
-        {renderBrightness()}
+        {renderBlueLight()}
       </div>
       <div className="flex-1 grid grid-cols-2 gap-4 w-full">
-        {renderBlueLight()}
+        {renderFlashes()}
         {renderResults()}
       </div>
     </div>

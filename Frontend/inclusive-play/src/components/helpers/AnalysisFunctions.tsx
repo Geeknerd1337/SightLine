@@ -28,8 +28,6 @@ const getFrameBlueLight = (canvas: HTMLCanvasElement): number => {
   // get the pixel data for the canvas
   const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
-  // calculate the average luminance of the frame
-  let sum = 0;
   for (let i = 0; i < imageData.data.length; i += 4) {
     const r = imageData.data[i];
     const g = imageData.data[i + 1];
@@ -229,12 +227,14 @@ export const Analyze = async (
     await new Promise((resolve) => setTimeout(resolve, 25));
   }
 
+  BLvalues.push(36);
+
   const fps = 30;
 
   const midpoints = getMidpoints(values);
-  const flashNum = getFlashArr(values, midpoints, fps);
+  const flashNum = checkFlashes(values, midpoints, fps);
 
-  let returnObj = { luminanceArr: values, flasheArr: flashNum };
+  let returnObj = { luminanceArr: values, BLarr: BLvalues};
   console.log(returnObj);
 
   if (callback) callback(returnObj);
