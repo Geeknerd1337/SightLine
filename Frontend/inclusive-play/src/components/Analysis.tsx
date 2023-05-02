@@ -248,31 +248,31 @@ export default function Analysis(props: AnalysisProps) {
   const renderResults = () => {
     let luminaceRating = () => {
       if (rating?.luminosity < 0.3) {
-        return "Good, this video is not bright enough to cause eye strain.";
+        return "Good, this footage is not bright enough to cause eye strain.";
       } else if (rating?.luminosity < 0.6) {
-        return "Fair, this video is bright enough to cause eye strain.";
+        return "Fair, this footage is bright enough to cause eye strain.";
       } else {
-        return "Poor, this video is bright and will cause eye strain.";
+        return "Poor, this footage is bright and will cause eye strain.";
       }
     };
 
     let blueLightRating = () => {
       if (rating?.bluelight < 0.3) {
-        return "Good, this video is not blue enough to cause eye strain.";
+        return "Good, this footage is not blue enough to cause eye strain.";
       } else if (rating?.bluelight < 0.6) {
-        return "Fair, this video is blue enough to cause eye strain.";
+        return "Fair, this footage is blue enough to cause eye strain.";
       } else {
-        return "Poor, this video is quite blue and will cause eye strain.";
+        return "Poor, this footage is quite blue and will cause eye strain.";
       }
     };
 
     let flashRating = () => {
       if (rating?.flashes < 2) {
-        return "Good, this video has no flashes and will not cause seizures.";
+        return "Good, this footage has no flashes and will not cause seizures.";
       } else if (rating?.flashes < 4) {
-        return "Fair, this video has a few flashes and may cause seizures.";
+        return "Fair, this footage has a few flashes and may cause seizures.";
       } else {
-        return "Poor, this video has many flashes and will cause seizures.";
+        return "Poor, this footage has many flashes and will cause seizures.";
       }
     };
 
