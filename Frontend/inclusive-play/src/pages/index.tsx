@@ -1,17 +1,16 @@
 /** @format */
 
-import Metadata from "@/components/Metadata"
-import NavigationBar from "@/components/NavigationBar"
-import HomeView from "@/views/HomeView"
+import Metadata from '@/components/Metadata';
+import NavigationBar from '@/components/NavigationBar';
+import HomeView from '@/views/HomeView';
 
 // * Home page, wraps "Home View"
 export default function App() {
-	return (
-		<Metadata>
-			<NavigationBar />
-			<HomeView />
-		</Metadata>
-	)
+  return (
+    <Metadata>
+      <HomeView />
+    </Metadata>
+  );
 }
 
 // each entry in the "pages" folder ends up as a page with a url of "/{filename}"
