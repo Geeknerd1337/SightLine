@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
+import {Colors } from './colors';
 
 export const Background = styled.div`
-  background-color: #fff011;
+  background-color: ${Colors.Back};
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;

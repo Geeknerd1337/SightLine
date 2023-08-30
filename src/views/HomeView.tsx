@@ -1,14 +1,12 @@
-import { Background } from '@/styles/HomeViewStyles';
-
-export const ANALYSIS_STATE = {
-  INITIAL: 0,
-  LOADING: 1,
-  LOADED: 2,
-  ANALYZING: 3,
-  ANALYZED: 4,
-};
+import { Background } from "@/styles/HomeViewStyles";
+import Intro from "@/components/Intro";
 
 // * home page
 export default function HomeView() {
-  return <Background>Hello world!</Background>;
+  return (
+    <>
+      <Background>Hello world!</Background>
+      <Intro />
+    </>
+  );
 }
