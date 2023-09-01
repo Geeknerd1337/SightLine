@@ -5,6 +5,8 @@ import {
 } from "@/styles/VideoStyles";
 import { useState, useRef } from "react";
 
+import VideoTimeline from "./VideoTimeline";
+
 export default function Video() {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -41,10 +43,11 @@ export default function Video() {
           <UploadLabel>
             Drag and drop a video file here, or click to select a file to
             upload.
-            <input type="file" accept="video/*" onChange={handleFileChange} />
+            <input type="file" accept="video/mp4" onChange={handleFileChange} />
           </UploadLabel>
         )}
       </VideoContainer>
+      {videoFile && <VideoTimeline videoRef={videoRef} canvasRef={canvasRef} />}
     </>
   );
 }

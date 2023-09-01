@@ -12,6 +12,7 @@ export const VideoContainer = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
+    margin-bottom: 20px;
 `;
 
 export const UploadLabel = styled.div`
@@ -29,5 +30,22 @@ export const VideoDisplay = styled.video`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    `;
+`;
+
+export const VideoTimelineBackground = styled.div`
+    width: 100%;
+    height: 80px;
+    background-color: ${Colors.DarkGray};
+    width: 60%;
+    position: relative;
+`;
+
+//Video wvaeform canvas
+export const VideoWaveform = styled.canvas`
+    width: 100%;
+    height: 80px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+`;
 
