@@ -11,10 +11,23 @@ export const VideoContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
 `;
 
 export const UploadLabel = styled.div`
+    position: absolute;
     color: ${Colors.Text};
     font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+`;
+
+export const VideoDisplay = styled.video`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     `;
 

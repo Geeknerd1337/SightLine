@@ -13,6 +13,7 @@ export const Background = styled(motion.div)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
   `;
   
   export const Logo = styled(motion.img)`
