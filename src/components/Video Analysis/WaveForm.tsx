@@ -4,6 +4,7 @@ import WaveSurfer from "wavesurfer.js";
 
 import { WaveformContianer, Wave, PlayButton } from "../../styles/VideoStyles";
 
+//need to change to a functional component
 class WaveForm extends Component {
   state = {
     playing: false,

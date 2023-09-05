@@ -8,8 +8,9 @@ export default function HomeView() {
     <>
       <Background>
         <Video />
+        <WaveForm />
       </Background>
-      <WaveForm />
+
       {/* <Intro /> */}
     </>
   );
