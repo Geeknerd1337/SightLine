@@ -40,6 +40,15 @@ export const VideoTimelineBackground = styled.div`
     position: relative;
 `;
 
+export const VideoTimelineSeeker = styled.div`
+    height: 100%;
+    width: 4px;
+    background-color: ${Colors.Gold};
+    position: absolute;
+    top: 0px;
+    left: 0px;
+`;
+
 //Video wvaeform canvas
 export const VideoWaveform = styled.canvas`
     width: 100%;
