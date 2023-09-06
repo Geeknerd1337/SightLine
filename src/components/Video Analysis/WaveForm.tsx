@@ -1,21 +1,13 @@
-import React, { Component } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaPlay, FaPause } from "react-icons/fa";
 import WaveSurfer from "wavesurfer.js";
-
 import { WaveformContianer, Wave, PlayButton } from "../../styles/VideoStyles";
 
-//need to change to a functional component
-class WaveForm extends Component {
-  state = {
-    playing: false,
-  };
+function useWaveSurfer(url: string) {
+  const waveformRef = useRef<WaveSurfer | null>(null);
 
-  waveform: any;
-
-  componentDidMount() {
-    const track = document.querySelector("#track");
-
-    this.waveform = WaveSurfer.create({
+  useEffect(() => {
+    waveformRef.current = WaveSurfer.create({
       barWidth: 3,
       cursorWidth: 1,
       container: "#waveform",
@@ -23,28 +15,36 @@ class WaveForm extends Component {
       progressColor: "#2D5BFF",
       waveColor: "#EFEFEF",
       cursorColor: "transparent",
-      url: "https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3",
+      url: url,
     });
-  }
 
-  handlePlay = () => {
-    this.setState({ playing: !this.state.playing });
-    this.waveform.playPause();
-  };
+    return () => {
+      if (waveformRef.current) {
+        waveformRef.current.destroy();
+      }
+    };
+  }, [url]);
 
-  render() {
-    const url = "https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3";
-
-    return (
-      <WaveformContianer>
-        <PlayButton onClick={this.handlePlay}>
-          {!this.state.playing ? <FaPlay /> : <FaPause />}
-        </PlayButton>
-        <Wave id="waveform" />
-        <audio id="track" src={url} />
-      </WaveformContianer>
-    );
-  }
+  return waveformRef;
 }
 
-export default WaveForm;
+export default function WaveForm() {
+  const [playing, setPlaying] = useState(false);
+  const url = "https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3";
+  const waveformRef = useWaveSurfer(url);
+
+  const handlePlay = () => {
+    setPlaying(!playing);
+    waveformRef.current?.playPause();
+  };
+
+  return (
+    <WaveformContianer>
+      <PlayButton onClick={handlePlay}>
+        {!playing ? <FaPlay /> : <FaPause />}
+      </PlayButton>
+      <Wave id="waveform" />
+      <audio id="track" src={url} />
+    </WaveformContianer>
+  );
+}

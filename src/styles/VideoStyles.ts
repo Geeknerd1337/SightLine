@@ -55,7 +55,8 @@ export const WaveformContianer = styled.div`
   flex-direction: row;  
   align-items: center;
   justify-content: center;
-  height: 100px;  width: 100%;
+  height: 100px;  
+  width: 60%;
   background: transparent;
 `;
 
@@ -68,16 +69,17 @@ export const PlayButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60px;
-  height: 60px;
+  width: 57px;
+  height: 52px;
   background: #EFEFEF;
   border-radius: 50%;
   border: none;
   outline: none;
   cursor: pointer;
   padding-bottom: 3px;
+  margin-right: 1rem;
+  transition: background-color 0.3s ease;
   &:hover {
-    background: #DDD;
+    background: #DDDD;
   }
 `;
-
