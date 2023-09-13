@@ -38,6 +38,14 @@ export const VideoTimelineBackground = styled.div`
     background-color: ${Colors.DarkGray};
     width: 60%;
     position: relative;
+
+    & > .waveformContainer{
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+    }
 `;
 
 export const VideoTimelineSeeker = styled.div`
@@ -67,7 +75,16 @@ export const WaveformContianer = styled.div`
   height: 100px;  
   width: 60%;
   background: transparent;
+  z-index: 1;
 `;
+
+export const TimelineContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`
 
 export const Wave = styled.div`
   width: 100%;

@@ -1,8 +1,21 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import {
   VideoTimelineBackground,
   VideoTimelineSeeker,
-} from "@/styles/VideoStyles";
+  TimelineContainer,
+} from '@/styles/VideoStyles';
+import WaveSurfer from 'wavesurfer.js';
+import styled from '@emotion/styled';
+
+import { Colors } from '@/styles/colors';
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
 
 interface VideoTimelineProps {
   videoRef: React.MutableRefObject<HTMLVideoElement | null>;
@@ -13,6 +26,22 @@ export default function VideoTimeline(props: VideoTimelineProps) {
   const [seekerPosition, setSeekerPosition] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const timelineRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const videoElement = props.videoRef.current;
+
+    if (videoElement) {
+      videoElement.addEventListener('loadeddata', () => {
+        const ws = WaveSurfer.create({
+          container: '#waveform',
+          waveColor: `rgba(${Colors.DarkText},0.5)`, // 'rgb(200, 0, 200)
+          progressColor: `rgba(${Colors.DarkText},0.15)`,
+          media: videoElement, // Explicitly cast videoElement to HTMLVideoElement
+          height: 'auto',
+        });
+      });
+    }
+  }, []);
 
   const updateVideoTime = (clientX: number) => {
     if (!timelineRef.current || !props.videoRef.current) return;
@@ -36,32 +65,36 @@ export default function VideoTimeline(props: VideoTimelineProps) {
     };
 
     props.videoRef.current?.addEventListener(
-      "timeupdate",
+      'timeupdate',
       updateSeekerPosition
     );
 
     return () => {
       props.videoRef.current?.removeEventListener(
-        "timeupdate",
+        'timeupdate',
         updateSeekerPosition
       );
     };
   }, [props.videoRef]);
 
   return (
-    <VideoTimelineBackground
-      id="video-timeline"
-      ref={timelineRef}
-      onClick={(e) => !isDragging && updateVideoTime(e.clientX)}
-      onMouseDown={() => setIsDragging(true)}
-      onMouseMove={(e) => isDragging && updateVideoTime(e.clientX)}
-      onMouseUp={() => setIsDragging(false)}
-      onMouseLeave={() => setIsDragging(false)}
-    >
-      <VideoTimelineSeeker
-        style={{ left: `${seekerPosition}%` }}
-      ></VideoTimelineSeeker>
-    </VideoTimelineBackground>
+    <TimelineContainer>
+      <VideoTimelineBackground
+        id='video-timeline'
+        ref={timelineRef}
+        onClick={(e) => !isDragging && updateVideoTime(e.clientX)}
+        onMouseDown={() => setIsDragging(true)}
+        onMouseMove={(e) => isDragging && updateVideoTime(e.clientX)}
+        onMouseUp={() => setIsDragging(false)}
+        onMouseLeave={() => setIsDragging(false)}
+      >
+        <div className='waveformContainer' id='waveform'></div>
+        <VideoTimelineSeeker
+          style={{ left: `${seekerPosition}%` }}
+        ></VideoTimelineSeeker>
+      </VideoTimelineBackground>
+      <ButtonsContainer></ButtonsContainer>
+    </TimelineContainer>
   );
 }
 
