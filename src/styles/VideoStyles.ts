@@ -38,6 +38,8 @@ export const VideoTimelineBackground = styled.div`
     background-color: ${Colors.DarkGray};
     width: 60%;
     position: relative;
+    border: 1px solid ${Colors.DarkBack};
+    box-shadow: 2px 2px 10px 0px ${Colors.DarkBack};
 
     & > .waveformContainer{
         position: absolute;
@@ -50,11 +52,13 @@ export const VideoTimelineBackground = styled.div`
 
 export const VideoTimelineSeeker = styled.div`
     height: 100%;
-    width: 4px;
+    width: 2px;
     background-color: ${Colors.Gold};
     position: absolute;
     top: 0px;
+    z-index: 2;
     left: 0px;
+    opacity: 0;
 `;
 
 //Video wvaeform canvas
@@ -84,11 +88,14 @@ export const TimelineContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+  
 `
+
 
 export const Wave = styled.div`
   width: 100%;
   height: 90px;
+  
 `;
 
 export const PlayButton = styled.button`

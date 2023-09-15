@@ -15,6 +15,13 @@ const ButtonsContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  gap: 20px;
+  padding-top: 20px;
+
+  & .controlbutton {
+    width: 50px;
+    height: auto;
+  }
 `;
 
 interface VideoTimelineProps {
@@ -34,10 +41,11 @@ export default function VideoTimeline(props: VideoTimelineProps) {
       videoElement.addEventListener('loadeddata', () => {
         const ws = WaveSurfer.create({
           container: '#waveform',
-          waveColor: `rgba(${Colors.DarkText},0.5)`, // 'rgb(200, 0, 200)
-          progressColor: `rgba(${Colors.DarkText},0.15)`,
+          waveColor: `${Colors.Charcoal}`, // 'rgb(200, 0, 200)
+          progressColor: `${Colors.Charcoal}`,
           media: videoElement, // Explicitly cast videoElement to HTMLVideoElement
           height: 'auto',
+          cursorColor: `${Colors.Gold}`,
         });
       });
     }
@@ -93,7 +101,51 @@ export default function VideoTimeline(props: VideoTimelineProps) {
           style={{ left: `${seekerPosition}%` }}
         ></VideoTimelineSeeker>
       </VideoTimelineBackground>
-      <ButtonsContainer></ButtonsContainer>
+      <ButtonsContainer>
+        <img
+          className='controlbutton'
+          src='/videoplayer/back.svg'
+          alt='back 10 seconds'
+          onClick={() => {
+            if (props.videoRef.current) {
+              props.videoRef.current.currentTime -= 10;
+            }
+          }}
+        />
+        {props.videoRef.current?.paused ? (
+          <img
+            className='controlbutton'
+            src='/videoplayer/play_arrow.svg'
+            alt='play'
+            onClick={() => {
+              if (props.videoRef.current) {
+                props.videoRef.current.play();
+              }
+            }}
+          />
+        ) : (
+          <img
+            className='controlbutton'
+            src='/videoplayer/pause.svg'
+            alt='pause'
+            onClick={() => {
+              if (props.videoRef.current) {
+                props.videoRef.current.pause();
+              }
+            }}
+          />
+        )}
+        <img
+          className='controlbutton'
+          src='/videoplayer/forward.svg'
+          alt='forward 10 seconds'
+          onClick={() => {
+            if (props.videoRef.current) {
+              props.videoRef.current.currentTime += 10;
+            }
+          }}
+        />
+      </ButtonsContainer>
     </TimelineContainer>
   );
 }
