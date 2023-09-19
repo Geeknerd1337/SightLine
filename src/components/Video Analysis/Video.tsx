@@ -6,6 +6,7 @@ import {
 import { useState, useRef } from 'react';
 import styled from '@emotion/styled';
 import { Colors } from '@/styles/colors';
+import { Analyze } from '../helpers/AnalysisFunctions';
 
 const AnalyzeButton = styled.button`
   background-color: ${Colors.Gold};
@@ -28,6 +29,7 @@ import VideoTimeline from './VideoTimeline';
 
 export default function Video() {
   const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [results, setResults] = useState({});
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -67,7 +69,17 @@ export default function Video() {
         )}
       </VideoContainer>
       {videoFile && <VideoTimeline videoRef={videoRef} canvasRef={canvasRef} />}
-      {videoFile && <AnalyzeButton>Analyze Video</AnalyzeButton>}
+      {videoFile && (
+        <AnalyzeButton
+          onClick={async (e) => {
+            await Analyze(videoRef, canvasRef, (e) => {
+              setResults(e);
+            });
+          }}
+        >
+          Analyze Video
+        </AnalyzeButton>
+      )}
     </>
   );
 }

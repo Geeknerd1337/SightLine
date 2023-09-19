@@ -17,7 +17,7 @@ const RGBToHue = (r: number, g: number, b: number): number => {
 
 const getFrameBlueLight = (canvas: HTMLCanvasElement): number => {
   // get the canvas context
-  const context = canvas.getContext("2d");
+  const context = canvas.getContext('2d');
 
   let numBLpixels = 0;
 
@@ -45,7 +45,7 @@ const getFrameBlueLight = (canvas: HTMLCanvasElement): number => {
 
 const getFrameLuminance = (canvas: HTMLCanvasElement): number => {
   // get the canvas context
-  const context = canvas.getContext("2d");
+  const context = canvas.getContext('2d');
 
   if (!context) {
     return -1;
@@ -171,19 +171,10 @@ interface Flash {
 }
 
 export const Analyze = async (
-  event: React.ChangeEvent<HTMLInputElement>,
   videoRef: React.RefObject<HTMLVideoElement>,
   canvasRef: React.RefObject<HTMLCanvasElement>,
   callback: (e: any) => void
 ) => {
-  const file = event.target.files?.[0];
-
-  if (!file) return;
-
-  // load the video file
-  const videoUrl = URL.createObjectURL(file);
-  videoRef.current!.src = videoUrl;
-
   // wait for the video to be loaded
   await videoRef.current?.play();
 
@@ -219,7 +210,7 @@ export const Analyze = async (
     if (currentFrame === lastFrame) continue;
 
     // draw the current frame onto the canvas
-    canvas.getContext("2d")!.drawImage(videoRef.current!, 0, 0);
+    canvas.getContext('2d')!.drawImage(videoRef.current!, 0, 0);
 
     // get the luminance of the current frame
     const luminance = getFrameLuminance(canvas);
@@ -264,7 +255,7 @@ export const Analyze = async (
   const midpoints = getMidpoints(values);
   const flashNum = checkFlashes(values, midpoints, fps);
 
-  console.log("BLARR: " + BLvalues);
+  console.log('BLARR: ' + BLvalues);
 
   let returnObj = {
     luminanceArr: values,
@@ -281,3 +272,20 @@ export const Analyze = async (
   // update the state with the list of luminance values
   // setLuminanceValues(values);
 };
+
+// Results interface
+interface Results {
+  flashWarning: Warning[];
+  blueLightWarning: Warning[];
+  contrastWarning: Warning[];
+}
+
+interface Warning {
+  startTime: number;
+  endTime: number;
+}
+
+//A flash is a data point consisting of a second and the number of flashes in that second
+interface Flash {
+  flashes: number;
+}
