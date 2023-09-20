@@ -48,6 +48,32 @@ export const VideoTimelineBackground = styled.div`
         width: 100%;
         height: 100%;
     }
+
+    & > .warningContainer{
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        
+        
+        & > .warningRow{
+          position: relative;
+          height: 33%;
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+
+          & .warning{
+            z-index: 2;
+            opacity: 0.8;
+          }
+        }
+    }
 `;
 
 export const VideoTimelineSeeker = styled.div`

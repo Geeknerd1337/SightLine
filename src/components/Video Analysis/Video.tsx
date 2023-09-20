@@ -7,6 +7,7 @@ import { useState, useRef } from 'react';
 import styled from '@emotion/styled';
 import { Colors } from '@/styles/colors';
 import { Analyze } from '../helpers/AnalysisFunctions';
+import { Warning, Results } from '../helpers/AnalysisFunctions';
 
 const AnalyzeButton = styled.button`
   background-color: ${Colors.Gold};
@@ -32,6 +33,21 @@ export default function Video() {
   const [results, setResults] = useState({});
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const dummyResults: Results = {
+    flashWarning: [
+      { startTime: 1, endTime: 2 },
+      { startTime: 4, endTime: 5 },
+    ],
+    blueLightWarning: [
+      { startTime: 0.5, endTime: 1.2 },
+      { startTime: 3.5, endTime: 4 },
+    ],
+    contrastWarning: [
+      { startTime: 2.25, endTime: 3 },
+      { startTime: 4, endTime: 4.25 },
+    ],
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files && e.target.files[0];
@@ -68,7 +84,13 @@ export default function Video() {
           </UploadLabel>
         )}
       </VideoContainer>
-      {videoFile && <VideoTimeline videoRef={videoRef} canvasRef={canvasRef} />}
+      {videoFile && (
+        <VideoTimeline
+          videoRef={videoRef}
+          canvasRef={canvasRef}
+          results={dummyResults}
+        />
+      )}
       {videoFile && (
         <AnalyzeButton
           onClick={async (e) => {

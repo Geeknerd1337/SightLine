@@ -23,10 +23,11 @@ const ButtonsContainer = styled.div`
     height: auto;
   }
 `;
-
+import { Results } from '../helpers/AnalysisFunctions';
 interface VideoTimelineProps {
   videoRef: React.MutableRefObject<HTMLVideoElement | null>;
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
+  results: Results;
 }
 
 export default function VideoTimeline(props: VideoTimelineProps) {
@@ -100,6 +101,87 @@ export default function VideoTimeline(props: VideoTimelineProps) {
         <VideoTimelineSeeker
           style={{ left: `${seekerPosition}%` }}
         ></VideoTimelineSeeker>
+
+        <div className='warningContainer'>
+          <div className='warningRow'>
+            {/* Map all the flash warnings from results*/}
+            {props.videoRef.current &&
+              props.results.flashWarning.map((flash, index) => {
+                return (
+                  <div
+                    className='warning'
+                    style={{
+                      position: 'absolute',
+                      left: `${
+                        (flash.startTime / props.videoRef.current!.duration) *
+                        100
+                      }%`,
+                      width: `${
+                        ((flash.endTime - flash.startTime) /
+                          props.videoRef.current!.duration) *
+                        100
+                      }%`,
+                      height: '100%',
+                      backgroundColor: 'red',
+                    }}
+                    key={index}
+                  ></div>
+                );
+              })}
+          </div>
+          <div className='warningRow'>
+            {props.videoRef.current &&
+              props.results.contrastWarning.map((contrast, index) => {
+                return (
+                  <div
+                    className='warning'
+                    style={{
+                      position: 'absolute',
+                      left: `${
+                        (contrast.startTime /
+                          props.videoRef.current!.duration) *
+                        100
+                      }%`,
+                      width: `${
+                        ((contrast.endTime - contrast.startTime) /
+                          props.videoRef.current!.duration) *
+                        100
+                      }%`,
+                      height: '100%',
+                      backgroundColor: 'green',
+                    }}
+                    key={index}
+                  ></div>
+                );
+              })}
+          </div>
+          <div className='warningRow'>
+            {props.videoRef.current &&
+              props.results.blueLightWarning.map((bluelight, index) => {
+                return (
+                  <div
+                    className='warning'
+                    style={{
+                      position: 'absolute',
+                      left: `${
+                        (bluelight.startTime /
+                          props.videoRef.current!.duration) *
+                        100
+                      }%`,
+                      width: `${
+                        ((bluelight.endTime - bluelight.startTime) /
+                          props.videoRef.current!.duration) *
+                        100
+                      }%`,
+                      height: '100%',
+                      backgroundColor: 'blue',
+                    }}
+                    key={index}
+                  ></div>
+                );
+              })}
+          </div>
+        </div>
       </VideoTimelineBackground>
       <ButtonsContainer>
         <img
