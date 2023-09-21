@@ -1,6 +1,5 @@
 import { Background, Logo } from "@/styles/IntroStyles";
 import { motion } from "framer-motion";
-
 import { useState, useEffect } from "react";
 
 const backgroundVariants = {
@@ -29,27 +28,25 @@ const backgroundVariants = {
 
 const logoVariants = {
   initial: {
-    opacity: 1,
-    y: "100vh",
+    opacity: 0,
+    scale: 0.5,
     transition: {
       duration: 1,
-      delay: 0.5,
     },
   },
-  center: {
+  animate: {
     opacity: 1,
-    y: "0vh",
+    scale: 1,
     transition: {
-      duration: 1,
-      delay: 0.5,
+      type: "spring",
+      stiffness: 150,
     },
   },
   exit: {
     opacity: 0,
-    y: "-100vh",
+    scale: 0.5,
     transition: {
-      duration: 1,
-      delay: 0.5,
+      duration: 0.5,
     },
   },
 };
@@ -57,9 +54,8 @@ const logoVariants = {
 export default function Intro() {
   const [animationState, setAnimationState] = useState("initial");
   useEffect(() => {
-    setTimeout(() => setAnimationState("center"), 0);
+    setTimeout(() => setAnimationState("animate"), 0);
     setTimeout(() => setAnimationState("exit"), 2000);
-    setTimeout(() => setAnimationState("fade"), 4000);
   }, []);
 
   return (
@@ -67,7 +63,7 @@ export default function Intro() {
       variants={backgroundVariants}
       initial="initial"
       animate={
-        animationState === "initial" || animationState === "center"
+        animationState === "initial" || animationState === "animate"
           ? "animate"
           : "exit"
       }
