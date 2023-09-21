@@ -125,3 +125,5 @@ const getFrameLuminance = (canvas: HTMLCanvasElement): number => {
   interface Flash {
     flashes: number;
   }
+
+  //find areas with lots of flashes in a second

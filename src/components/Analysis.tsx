@@ -104,54 +104,9 @@ export default function Analysis(props: AnalysisProps) {
     console.log(obj);
   };
 
-  const renderLuminosity = () => {
-    return (
-      <div
-        className="flex flex-col justify-center items-center p-4"
-        style={{ height: 350 }}
-      >
-        <LineChart
-          data={
-            filteredResults?.luminosity?.[0]?.data?.length > 0
-              ? filteredResults?.luminosity
-              : [
-                  {
-                    id: "luminosity",
-                    data: [],
-                  },
-                ]
-          }
-          xAxisName=" "
-          yAxisName="Luminance"
-          yMax={255}
-        />
-      </div>
-    );
-  };
+ 
 
-  /*const renderBrightness = () => {
-    return (
-      <div
-        className="flex flex-col justify-center items-center border-2 p-4"
-        style={{ height: 350 }}
-      >
-        <LineChart
-          data={
-            filteredResults?.flashes?.[0]?.data?.length > 0
-              ? filteredResults?.flashes
-              : [
-                  {
-                    id: "flashes",
-                    data: [],
-                  },
-                ]
-          }
-          xAxisName="Time"
-          yAxisName="Flashes"
-        />
-      </div>
-    );
-  };*/
+
 
   const theme = {
     axis: {
@@ -179,71 +134,7 @@ export default function Analysis(props: AnalysisProps) {
     },
   };
 
-  const renderBlueLight = () => {
-    console.log("DATA: " + filteredResults?.bluelight?.[0]?.data);
-    return (
-      <div
-        className="flex flex-col justify-center items-center p-4"
-        style={{ height: 350 }}
-      >
-        <LineChart
-          data={
-            filteredResults?.bluelight?.[0]?.data?.length >= 0
-              ? filteredResults?.bluelight
-              : [
-                  {
-                    id: "blue light",
-                    data: [],
-                  },
-                ]
-          }
-          min={0}
-          xAxisName=" "
-          yAxisName="Blue Light"
-          yMax={255}
-        />
-      </div>
-    );
-  };
-
-  const renderFlashes = () => {
-    const data = filteredResults?.flashes[0]?.data.map(
-      (flash: any, index: any) => ({
-        id: `Second ${index + 1}`,
-        value: flash.y,
-      })
-    );
-
-    return (
-      <div className="flex flex-col justify-center items-center p-4 h-[350px]">
-        <ResponsiveBar
-          data={data}
-          keys={["value"]}
-          indexBy="id"
-          axisBottom={{
-            tickSize: 0,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: "",
-            legendOffset: 18,
-            legendPosition: "middle",
-            tickValues: [],
-          }}
-          theme={theme}
-          axisLeft={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: "Flash Hazards",
-            legendOffset: -40,
-            legendPosition: "middle",
-          }}
-          margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
-          colors={(bar: any) => (bar.value > 3 ? "red" : "green")}
-        />
-      </div>
-    );
-  };
+ 
 
   const renderResults = () => {
     let luminaceRating = () => {
@@ -290,39 +181,4 @@ export default function Analysis(props: AnalysisProps) {
       }
       return returnString;
     };
-
-    return (
-      <div className="flex flex-col justify-center items-center p-4">
-        <div className="flex flex-col text-3xl justify-center items-center m-4">
-          <b>Final Rating:</b>
-          {finalRating()}
-        </div>
-        <div className="flex flex-col text-xl justify-center items-center m-2">
-          <b>Luminosity:</b>
-          {luminaceRating()}
-        </div>
-        <div className="flex flex-col text-xl justify-center items-center m-2">
-          <b>Blue Light:</b>
-          {blueLightRating()}
-        </div>
-        <div className="flex flex-col text-xl justify-center items-center m-2">
-          <b>Flashes:</b>
-          {flashRating()}
-        </div>
-      </div>
-    );
   };
-
-  return (
-    <div className="flex flex-col w-full h-full">
-      <div className="flex-1 grid grid-cols-2 gap-4 w-full">
-        {renderLuminosity()}
-        {renderBlueLight()}
-      </div>
-      <div className="flex-1 grid grid-cols-2 gap-4 w-full">
-        {renderFlashes()}
-        {renderResults()}
-      </div>
-    </div>
-  );
-}

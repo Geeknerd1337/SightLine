@@ -1,3 +1,5 @@
+import React from "react";
+
 export const Analyze = async (
   videoRef: React.RefObject<HTMLVideoElement>,
   canvasRef: React.RefObject<HTMLCanvasElement>,
@@ -102,18 +104,18 @@ export const Analyze = async (
 };
 
 // Results interface
-export interface Results {
+interface Results {
   flashWarning: Warning[];
   blueLightWarning: Warning[];
   contrastWarning: Warning[];
 }
 
-export interface Warning {
+interface Warning {
   startTime: number;
   endTime: number;
 }
 
 //A flash is a data point consisting of a second and the number of flashes in that second
-export interface Flash {
+interface Flash {
   flashes: number;
 }
