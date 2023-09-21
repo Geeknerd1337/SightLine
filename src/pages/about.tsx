@@ -1,17 +1,17 @@
 /** @format */
 
-import Metadata from "@/components/Metadata"
-import NavigationBar from "@/components/NavigationBar"
-import AboutView from "@/views/AboutView"
+import Metadata from "@/components/Metadata";
+import NavigationBar from "@/components/NavigationBar";
+import AboutView from "@/views/AboutView";
 
 // * About page, wraps "About View"
 export default function About() {
-	return (
-		<Metadata>
-			<NavigationBar />
-			<AboutView />
-		</Metadata>
-	)
+  return (
+    <Metadata>
+      <NavigationBar />
+      <AboutView />
+    </Metadata>
+  );
 }
 
 // each entry in the "pages" folder ends up as a page with a url of "/{filename}"

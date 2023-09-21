@@ -1,8 +1,8 @@
 /** @format */
 
-import Metadata from '@/components/Metadata';
-import NavigationBar from '@/components/NavigationBar';
-import HomeView from '@/views/HomeView';
+import Metadata from "@/components/Metadata";
+import NavigationBar from "@/components/NavigationBar";
+import HomeView from "@/views/HomeView";
 
 // * Home page, wraps "Home View"
 export default function App() {
