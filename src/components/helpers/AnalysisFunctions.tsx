@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import { getFrameLuminance } from './flash';
 
 export const Analyze = async (
   videoRef: React.RefObject<HTMLVideoElement>,
@@ -22,9 +23,11 @@ export const Analyze = async (
   const values: number[] = [];
   const BLvalues: number[] = [];
   const Flashes: Flash[] = [];
+  const FlashWarnings: Warning[] = [];
 
   let lastFlash = -1;
   let currentSecond = 0;
+  let flashesPerSecond = 0;
 
   let lastSecond = 0;
 
@@ -49,27 +52,24 @@ export const Analyze = async (
     const distance = Math.abs(luminance - lastFlash);
 
     if (distance > 20) {
-      //For the current second, increment the number of flashes
-      if (currentSecond === lastSecond) {
-        //Compare the flash length to the current second length
-        if (Flashes.length === 0 || Flashes.length - 1 < currentSecond) {
-          Flashes.push({ flashes: 1 });
-        } else {
-          Flashes[Flashes.length - 1].flashes += 1;
+      if (lastSecond !== currentSecond) {
+        if (flashesPerSecond < 3) {
         }
       }
+
+      flashesPerSecond += 1;
     }
 
     lastFlash = luminance;
 
-    const numBLpixels = getFrameBlueLight(canvas);
+    // const numBLpixels = getFrameBlueLight(canvas);
 
-    BLvalues.push(Math.floor((numBLpixels / numPixels) * 100));
+    // BLvalues.push(Math.floor((numBLpixels / numPixels) * 100));
 
     // console.log("Frame: " + currentFrame + " Luminance: " + luminance);
 
     // add the luminance to the list of values
-    values.push(luminance);
+    // values.push(luminance);
 
     // set the video time to the current frame
 
@@ -80,19 +80,18 @@ export const Analyze = async (
     await new Promise((resolve) => setTimeout(resolve, 25));
   }
 
-  const fps = 30;
+  // const fps = 30;
 
-  const midpoints = getMidpoints(values);
-  const flashNum = checkFlashes(values, midpoints, fps);
+  // const midpoints = getMidpoints(values);
+  // const flashNum = checkFlashes(values, midpoints, fps);
 
   console.log('BLARR: ' + BLvalues);
 
-  let returnObj = {
-    luminanceArr: values,
-    BLarr: BLvalues,
-    FlashArray: Flashes,
+  let returnObj: Results = {
+    flashWarning: FlashWarnings,
+    blueLightWarning: [],
+    contrastWarning: [],
   };
-  console.log(returnObj);
 
   if (callback) callback(returnObj);
   return returnObj;
@@ -104,13 +103,13 @@ export const Analyze = async (
 };
 
 // Results interface
-interface Results {
+export interface Results {
   flashWarning: Warning[];
   blueLightWarning: Warning[];
   contrastWarning: Warning[];
 }
 
-interface Warning {
+export interface Warning {
   startTime: number;
   endTime: number;
 }
