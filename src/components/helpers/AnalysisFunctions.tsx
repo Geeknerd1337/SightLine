@@ -1,5 +1,8 @@
 import React from 'react';
 import { getFrameLuminance } from './flash';
+import { getMidpoints } from './flash'
+import { checkFlashes } from './flash';
+import { getFlashArr } from './flash'
 
 export const Analyze = async (
   videoRef: React.RefObject<HTMLVideoElement>,
@@ -45,33 +48,17 @@ export const Analyze = async (
     // draw the current frame onto the canvas
     canvas.getContext('2d')!.drawImage(videoRef.current!, 0, 0);
 
-    // get the luminance of the current frame
-    const luminance = getFrameLuminance(canvas);
+   
 
-    //Get the ditance between the luminance and lastflash
-    const distance = Math.abs(luminance - lastFlash);
+    //flashes
+    values[i] = getFrameLuminance(canvas);
+    const midpoints = getMidpoints(values);
+    const flashNum = checkFlashes(values, midpoints, 30);
+    const flashes = getFlashArr(values, midpoints, 30);
 
-    if (distance > 20) {
-      if (lastSecond !== currentSecond) {
-        if (flashesPerSecond < 3) {
-        }
-      }
 
-      flashesPerSecond += 1;
-    }
 
-    lastFlash = luminance;
-
-    // const numBLpixels = getFrameBlueLight(canvas);
-
-    // BLvalues.push(Math.floor((numBLpixels / numPixels) * 100));
-
-    // console.log("Frame: " + currentFrame + " Luminance: " + luminance);
-
-    // add the luminance to the list of values
-    // values.push(luminance);
-
-    // set the video time to the current frame
+    
 
     lastFrame = Math.floor(i * 20);
     lastSecond = currentSecond;
@@ -82,10 +69,9 @@ export const Analyze = async (
 
   // const fps = 30;
 
-  // const midpoints = getMidpoints(values);
-  // const flashNum = checkFlashes(values, midpoints, fps);
 
-  console.log('BLARR: ' + BLvalues);
+  
+
 
   let returnObj: Results = {
     flashWarning: FlashWarnings,
@@ -95,11 +81,7 @@ export const Analyze = async (
 
   if (callback) callback(returnObj);
   return returnObj;
-  // document.getElementById("flash")!.innerHTML =
-  //   "Number of flashes: " + flashNum.toString();
 
-  // update the state with the list of luminance values
-  // setLuminanceValues(values);
 };
 
 // Results interface
