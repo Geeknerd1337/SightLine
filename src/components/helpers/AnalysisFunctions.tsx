@@ -48,14 +48,27 @@ export const Analyze = async (
     // draw the current frame onto the canvas
     canvas.getContext('2d')!.drawImage(videoRef.current!, 0, 0);
 
-   
+    let flashNum = 0;
 
     //flashes
     for (let i = 0; i < 60; i += 1 ) {
     values[i] = getFrameLuminance(canvas);
     const midpoints = getMidpoints(values);
-    const flashNum = checkFlashes(values, midpoints, 30);
+    flashNum = checkFlashes(values, midpoints, 30);
     var flashes = getFlashArr(values, midpoints, 30);
+
+
+
+    }
+
+    if (flashNum > 6) {
+      //hai josh the interfaces hate me rn, so here's this, sorry
+      let cursecond = 1 % 60;
+      let cursecondFlash = flashNum;
+
+      //this would basically be the interface i think if i ever get it to work
+
+    }
 
 
 
