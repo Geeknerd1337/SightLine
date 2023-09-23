@@ -69,6 +69,7 @@ export const getFrameLuminance = (canvas: HTMLCanvasElement): number => {
             //if it counts as a flash
             if (Math.abs(values[midpoints[i + j]] - values[midpoints[i]]) > 20) {
               flashNum += 1;
+
             }
           } else {
             inTime = false;
@@ -120,10 +121,5 @@ export const getFrameLuminance = (canvas: HTMLCanvasElement): number => {
     return flashes;
   };
   
-  //A flash is a data point consisting of a second and the number of flashes in that second
-  interface Flash {
-    flashes: number;
-  }
-  
-  //find areas with lots of flashes in a second
+
   

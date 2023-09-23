@@ -51,10 +51,12 @@ export const Analyze = async (
    
 
     //flashes
+    for (let i = 0; i < 60; i += 1 ) {
     values[i] = getFrameLuminance(canvas);
     const midpoints = getMidpoints(values);
     const flashNum = checkFlashes(values, midpoints, 30);
-    const flashes = getFlashArr(values, midpoints, 30);
+    var flashes = getFlashArr(values, midpoints, 30);
+
 
 
 
@@ -65,9 +67,11 @@ export const Analyze = async (
 
     //Wait for the next frame
     await new Promise((resolve) => setTimeout(resolve, 25));
-  }
+  
+}
 
-  // const fps = 30;
+
+
 
 
   
@@ -96,7 +100,9 @@ export interface Warning {
   endTime: number;
 }
 
-//A flash is a data point consisting of a second and the number of flashes in that second
-interface Flash {
-  flashes: number;
-}
+  //A flash is a data point consisting of a second and the number of flashes in that second
+  interface Flash {
+    flashes: number;
+    second: number;
+  }
+
