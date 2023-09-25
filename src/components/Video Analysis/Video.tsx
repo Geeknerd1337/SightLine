@@ -31,6 +31,7 @@ import VideoTimeline from './VideoTimeline';
 export default function Video() {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [results, setResults] = useState({});
+  const [fps, setFps] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 

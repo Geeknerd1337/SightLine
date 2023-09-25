@@ -1,17 +1,16 @@
 import React from 'react';
 import { getFrameLuminance } from './flash';
-import { getMidpoints } from './flash'
+import { getMidpoints } from './flash';
 import { checkFlashes } from './flash';
-import { getFlashArr } from './flash'
+import { getFlashArr } from './flash';
+
+import { FlashAnalyzer } from './FlashAnalyzer';
 
 export const Analyze = async (
   videoRef: React.RefObject<HTMLVideoElement>,
   canvasRef: React.RefObject<HTMLCanvasElement>,
   callback: (e: any) => void
 ) => {
-  // wait for the video to be loaded
-  await videoRef.current?.play();
-
   // create a canvas element with the same dimensions as the video
   const canvas = canvasRef.current!;
   canvas.width = videoRef.current!.videoWidth;
@@ -34,6 +33,8 @@ export const Analyze = async (
 
   let lastSecond = 0;
 
+  let flashAnalyzer = new FlashAnalyzer();
+
   for (let i = 0; i < videoRef.current!.duration; i += 1 / 90) {
     const currentFrame = Math.floor(i * 20);
     videoRef.current!.currentTime = i;
@@ -51,44 +52,21 @@ export const Analyze = async (
     let flashNum = 0;
 
     //flashes
-    for (let i = 0; i < 60; i += 1 ) {
-    values[i] = getFrameLuminance(canvas);
-    const midpoints = getMidpoints(values);
-    flashNum = checkFlashes(values, midpoints, 30);
-    var flashes = getFlashArr(values, midpoints, 30);
+    // for (let i = 0; i < 60; i += 1) {
+    //   values[i] = getFrameLuminance(canvas);
+    //   const midpoints = getMidpoints(values);
+    //   flashNum = checkFlashes(values, midpoints, 30);
+    //   var flashes = getFlashArr(values, midpoints, 30);
+    // }
 
-
-
-    }
-
-    if (flashNum > 6) {
-      //hai josh the interfaces hate me rn, so here's this, sorry
-      let cursecond = 1 % 60;
-      let cursecondFlash = flashNum;
-
-      //this would basically be the interface i think if i ever get it to work
-
-    }
-
-
-
-
-    
+    await flashAnalyzer.analyze(canvas, videoRef);
 
     lastFrame = Math.floor(i * 20);
     lastSecond = currentSecond;
 
     //Wait for the next frame
-    await new Promise((resolve) => setTimeout(resolve, 25));
-  
-}
-
-
-
-
-
-  
-
+    await new Promise((resolve) => setTimeout(resolve, 50));
+  }
 
   let returnObj: Results = {
     flashWarning: FlashWarnings,
@@ -98,7 +76,6 @@ export const Analyze = async (
 
   if (callback) callback(returnObj);
   return returnObj;
-
 };
 
 // Results interface
@@ -113,9 +90,8 @@ export interface Warning {
   endTime: number;
 }
 
-  //A flash is a data point consisting of a second and the number of flashes in that second
-  interface Flash {
-    flashes: number;
-    second: number;
-  }
-
+//A flash is a data point consisting of a second and the number of flashes in that second
+interface Flash {
+  flashes: number;
+  second: number;
+}
