@@ -26,6 +26,25 @@ export const UploadLabel = styled.div`
     text-align: center;
 `;
 
+export const UploadButton = styled.button`
+  cursor: pointer;
+  border: none;
+  font: inherit;
+  min-height: 48px;
+  min-width: 48px;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  border-radius: 5px;
+  background-color: ${Colors.Gold};
+  color: ${Colors.DarkGray};
+  transition: 0.2s ease-in-out;
+  font-weight: 500;
+
+  &:hover {
+    background-color: ${Colors.Gold}cc;
+  }
+`;
+
 export const VideoDisplay = styled.video`
     width: 100%;
     height: 100%;

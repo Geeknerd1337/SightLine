@@ -1,13 +1,22 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
 import {
   VideoContainer,
   UploadLabel,
   VideoDisplay,
-} from '@/styles/VideoStyles';
-import { useState, useRef } from 'react';
-import styled from '@emotion/styled';
-import { Colors } from '@/styles/colors';
-import { Analyze } from '../helpers/AnalysisFunctions';
-import { Warning, Results } from '../helpers/AnalysisFunctions';
+  UploadButton,
+} from "@/styles/VideoStyles";
+import { useState, useRef } from "react";
+import styled from "@emotion/styled";
+import { Colors } from "@/styles/colors";
+import { Analyze } from "../helpers/AnalysisFunctions";
+import { Warning, Results } from "../helpers/AnalysisFunctions";
+import VideoTimeline from "./VideoTimeline";
+
+const hideNativeUploadButton = css({
+  display: "none",
+});
 
 const AnalyzeButton = styled.button`
   background-color: ${Colors.Gold};
@@ -26,14 +35,13 @@ const AnalyzeButton = styled.button`
   }
 `;
 
-import VideoTimeline from './VideoTimeline';
-
 export default function Video() {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [results, setResults] = useState({});
   const [fps, setFps] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const hiddenFileInput = useRef<HTMLInputElement | null>(null);
 
   const dummyResults: Results = {
     flashWarning: [
@@ -67,21 +75,34 @@ export default function Video() {
     e.preventDefault();
   };
 
+  const handleClick = (event: any) => {
+    if (hiddenFileInput.current) {
+      hiddenFileInput.current.click();
+    }
+  };
+
   return (
     <>
       <VideoContainer onDrop={handleDrop} onDragOver={handleDragOver}>
         {videoFile ? (
           <>
             <VideoDisplay ref={videoRef}>
-              <source src={URL.createObjectURL(videoFile)} type='video/mp4' />
+              <source src={URL.createObjectURL(videoFile)} type="video/mp4" />
             </VideoDisplay>
-            <canvas ref={canvasRef} style={{ display: 'none' }} />
+            <canvas ref={canvasRef} style={{ display: "none" }} />
           </>
         ) : (
           <UploadLabel>
             Drag and drop a video file here, or click to select a file to
             upload.
-            <input type='file' accept='video/mp4' onChange={handleFileChange} />
+            <UploadButton onClick={handleClick}>File Upload</UploadButton>
+            <input
+              css={hideNativeUploadButton}
+              ref={hiddenFileInput}
+              type="file"
+              accept="video/mp4"
+              onChange={handleFileChange}
+            />
           </UploadLabel>
         )}
       </VideoContainer>

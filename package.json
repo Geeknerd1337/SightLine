@@ -12,6 +12,7 @@
 		"fs": false
 	},
 	"dependencies": {
+		"@emotion/babel-preset-css-prop": "^11.11.0",
 		"@emotion/react": "^11.10.6",
 		"@emotion/styled": "^11.10.6",
 		"@google-cloud/storage": "^6.9.3",
