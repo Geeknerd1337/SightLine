@@ -38,7 +38,7 @@ export const UploadButton = styled.button`
   background-color: ${Colors.Gold};
   color: ${Colors.DarkGray};
   transition: 0.2s ease-in-out;
-  font-weight: 500;
+  font-weight: 600;
 
   &:hover {
     background-color: ${Colors.Gold}cc;
