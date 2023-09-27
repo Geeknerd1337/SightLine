@@ -42,7 +42,6 @@ export const Analyze = async (
 
   let lastSecond = 0;
 
-  let flashAnalyzer = new FlashAnalyzer();
 
   let previousFrameData: Uint8Array | null = null;
   let currentFrame = 0;
@@ -70,36 +69,15 @@ export const Analyze = async (
       if (pixelDifference > 0) {
         // Frame has changed
         // You can perform additional analysis or actions here
-        await flashAnalyzer.analyze(canvas, videoRef, currentFrame);
+          getFrameLuminance(canvas)
+          //try and run it through each function
         currentFrame++;
       }
     }
 
     previousFrameData = currentFrameData;
 
-    //console.log("Frame: " + currentFrame + "Old Frame: " + lastFrame);
-
-    // if (currentFrame === lastFrame) continue;
-
-    // // draw the current frame onto the canvas
-    // canvas.getContext('2d')!.drawImage(videoRef.current!, 0, 0);
-
-    // let flashNum = 0;
-
-    // //flashes
-    // // for (let i = 0; i < 60; i += 1) {
-    // //   values[i] = getFrameLuminance(canvas);
-    // //   const midpoints = getMidpoints(values);
-    // //   flashNum = checkFlashes(values, midpoints, 30);
-    // //   var flashes = getFlashArr(values, midpoints, 30);
-    // // }
-
-    // await flashAnalyzer.analyze(canvas, videoRef);
-
-    // lastFrame = Math.floor(i * 20);
-    // lastSecond = currentSecond;
-
-    //Wait for the next frame
+   
     await new Promise((resolve) => setTimeout(resolve, 25));
   }
 
