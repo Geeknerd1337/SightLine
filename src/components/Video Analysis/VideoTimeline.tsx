@@ -4,6 +4,7 @@ import {
   VideoTimelineSeeker,
   TimelineContainer,
 } from '@/styles/VideoStyles';
+import { WaveSurferEvents } from 'wavesurfer.js';
 import WaveSurfer from 'wavesurfer.js';
 import styled from '@emotion/styled';
 
@@ -27,7 +28,7 @@ import { Results } from '../helpers/AnalysisFunctions';
 interface VideoTimelineProps {
   videoRef: React.MutableRefObject<HTMLVideoElement | null>;
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
-  results: Results;
+  results: Results | null;
 }
 
 export default function VideoTimeline(props: VideoTimelineProps) {
@@ -40,14 +41,19 @@ export default function VideoTimeline(props: VideoTimelineProps) {
 
     if (videoElement) {
       videoElement.addEventListener('loadeddata', () => {
-        const ws = WaveSurfer.create({
-          container: '#waveform',
-          waveColor: `${Colors.Charcoal}`, // 'rgb(200, 0, 200)
-          progressColor: `${Colors.Charcoal}`,
-          media: videoElement, // Explicitly cast videoElement to HTMLVideoElement
-          height: 'auto',
-          cursorColor: `${Colors.Gold}`,
-        });
+        try {
+          const ws = WaveSurfer.create({
+            container: '#waveform',
+            waveColor: `${Colors.Charcoal}`,
+            progressColor: `${Colors.Charcoal}`,
+            media: videoElement,
+            height: 'auto',
+            cursorColor: `${Colors.Gold}`,
+          });
+        } catch (error) {
+          console.error('Error initializing WaveSurfer:', error);
+          // Handle initialization error here, e.g., display an error message to the user.
+        }
       });
     }
   }, []);
@@ -106,6 +112,7 @@ export default function VideoTimeline(props: VideoTimelineProps) {
           <div className='warningRow'>
             {/* Map all the flash warnings from results*/}
             {props.videoRef.current &&
+              props.results &&
               props.results.flashWarning.map((flash, index) => {
                 return (
                   <div
@@ -131,6 +138,7 @@ export default function VideoTimeline(props: VideoTimelineProps) {
           </div>
           <div className='warningRow'>
             {props.videoRef.current &&
+              props.results &&
               props.results.contrastWarning.map((contrast, index) => {
                 return (
                   <div
@@ -157,6 +165,7 @@ export default function VideoTimeline(props: VideoTimelineProps) {
           </div>
           <div className='warningRow'>
             {props.videoRef.current &&
+              props.results &&
               props.results.blueLightWarning.map((bluelight, index) => {
                 return (
                   <div

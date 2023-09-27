@@ -6,6 +6,15 @@ import { getFlashArr } from './flash';
 
 import { FlashAnalyzer } from './FlashAnalyzer';
 
+function pixelDataDifference(data1: Uint8Array, data2: Uint8Array): number {
+  // Compare the pixel data of two frames and return the difference
+  let difference = 0;
+  for (let i = 0; i < data1.length; i++) {
+    difference += Math.abs(data1[i] - data2[i]);
+  }
+  return difference;
+}
+
 export const Analyze = async (
   videoRef: React.RefObject<HTMLVideoElement>,
   canvasRef: React.RefObject<HTMLCanvasElement>,
@@ -35,41 +44,67 @@ export const Analyze = async (
 
   let flashAnalyzer = new FlashAnalyzer();
 
-  for (let i = 0; i < videoRef.current!.duration; i += 1 / 90) {
-    const currentFrame = Math.floor(i * 20);
+  let previousFrameData: Uint8Array | null = null;
+  let currentFrame = 0;
+
+  for (let i = 0; i < videoRef.current!.duration; i += 1 / 65) {
     videoRef.current!.currentTime = i;
     videoRef.current?.pause();
 
     currentSecond = Math.floor(i);
 
+    canvas.getContext('2d')!.drawImage(videoRef.current!, 0, 0);
+    const currentFrameData = new Uint8Array(
+      canvas
+        .getContext('2d')!
+        .getImageData(0, 0, canvas.width, canvas.height).data
+    );
+
+    if (previousFrameData) {
+      // Compare the pixel data of the two frames
+      const pixelDifference = pixelDataDifference(
+        currentFrameData,
+        previousFrameData
+      );
+
+      if (pixelDifference > 0) {
+        // Frame has changed
+        // You can perform additional analysis or actions here
+        await flashAnalyzer.analyze(canvas, videoRef, currentFrame);
+        currentFrame++;
+      }
+    }
+
+    previousFrameData = currentFrameData;
+
     //console.log("Frame: " + currentFrame + "Old Frame: " + lastFrame);
 
-    if (currentFrame === lastFrame) continue;
+    // if (currentFrame === lastFrame) continue;
 
-    // draw the current frame onto the canvas
-    canvas.getContext('2d')!.drawImage(videoRef.current!, 0, 0);
+    // // draw the current frame onto the canvas
+    // canvas.getContext('2d')!.drawImage(videoRef.current!, 0, 0);
 
-    let flashNum = 0;
+    // let flashNum = 0;
 
-    //flashes
-    // for (let i = 0; i < 60; i += 1) {
-    //   values[i] = getFrameLuminance(canvas);
-    //   const midpoints = getMidpoints(values);
-    //   flashNum = checkFlashes(values, midpoints, 30);
-    //   var flashes = getFlashArr(values, midpoints, 30);
-    // }
+    // //flashes
+    // // for (let i = 0; i < 60; i += 1) {
+    // //   values[i] = getFrameLuminance(canvas);
+    // //   const midpoints = getMidpoints(values);
+    // //   flashNum = checkFlashes(values, midpoints, 30);
+    // //   var flashes = getFlashArr(values, midpoints, 30);
+    // // }
 
-    await flashAnalyzer.analyze(canvas, videoRef);
+    // await flashAnalyzer.analyze(canvas, videoRef);
 
-    lastFrame = Math.floor(i * 20);
-    lastSecond = currentSecond;
+    // lastFrame = Math.floor(i * 20);
+    // lastSecond = currentSecond;
 
     //Wait for the next frame
-    await new Promise((resolve) => setTimeout(resolve, 50));
+    await new Promise((resolve) => setTimeout(resolve, 25));
   }
 
   let returnObj: Results = {
-    flashWarning: FlashWarnings,
+    flashWarning: flashAnalyzer.FlashWarnings,
     blueLightWarning: [],
     contrastWarning: [],
   };

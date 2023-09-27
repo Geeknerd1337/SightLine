@@ -1,21 +1,21 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { css } from '@emotion/react';
 
 import {
   VideoContainer,
   UploadLabel,
   VideoDisplay,
   UploadButton,
-} from "@/styles/VideoStyles";
-import { useState, useRef } from "react";
-import styled from "@emotion/styled";
-import { Colors } from "@/styles/colors";
-import { Analyze } from "../helpers/AnalysisFunctions";
-import { Warning, Results } from "../helpers/AnalysisFunctions";
-import VideoTimeline from "./VideoTimeline";
+} from '@/styles/VideoStyles';
+import { useState, useRef } from 'react';
+import styled from '@emotion/styled';
+import { Colors } from '@/styles/colors';
+import { Analyze } from '../helpers/AnalysisFunctions';
+import { Warning, Results } from '../helpers/AnalysisFunctions';
+import VideoTimeline from './VideoTimeline';
 
 const hideNativeUploadButton = css({
-  display: "none",
+  display: 'none',
 });
 
 const AnalyzeButton = styled.button`
@@ -37,7 +37,7 @@ const AnalyzeButton = styled.button`
 
 export default function Video() {
   const [videoFile, setVideoFile] = useState<File | null>(null);
-  const [results, setResults] = useState({});
+  const [results, setResults] = useState<Results | null>(null);
   const [fps, setFps] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -87,9 +87,9 @@ export default function Video() {
         {videoFile ? (
           <>
             <VideoDisplay ref={videoRef}>
-              <source src={URL.createObjectURL(videoFile)} type="video/mp4" />
+              <source src={URL.createObjectURL(videoFile)} type='video/mp4' />
             </VideoDisplay>
-            <canvas ref={canvasRef} style={{ display: "none" }} />
+            <canvas ref={canvasRef} style={{ display: 'none' }} />
           </>
         ) : (
           <UploadLabel>
@@ -99,8 +99,8 @@ export default function Video() {
             <input
               css={hideNativeUploadButton}
               ref={hiddenFileInput}
-              type="file"
-              accept="video/mp4"
+              type='file'
+              accept='video/mp4'
               onChange={handleFileChange}
             />
           </UploadLabel>
@@ -110,7 +110,7 @@ export default function Video() {
         <VideoTimeline
           videoRef={videoRef}
           canvasRef={canvasRef}
-          results={dummyResults}
+          results={results}
         />
       )}
       {videoFile && (
