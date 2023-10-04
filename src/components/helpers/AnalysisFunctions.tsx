@@ -5,6 +5,7 @@ import { checkFlashes } from './flash';
 import { getFlashArr } from './flash';
 
 import { FlashAnalyzer } from './FlashAnalyzer';
+import { BlueLightAnalyzer } from './BlueLightAnalyzer';
 
 function pixelDataDifference(data1: Uint8Array, data2: Uint8Array): number {
   // Compare the pixel data of two frames and return the difference
@@ -27,6 +28,7 @@ export const Analyze = async (
 
   //Flash analzyer
   let flashAnalyzer = new FlashAnalyzer();
+  let blueLightAnalyzer = new BlueLightAnalyzer();
 
   //An array representing the pixel values of the previous frame
   let previousFrameData: Uint8Array | null = null;
@@ -62,6 +64,7 @@ export const Analyze = async (
         // Frame has changed
         // You can perform additional analysis or actions here
         await flashAnalyzer.analyze(canvas, videoRef, currentFrame);
+        await blueLightAnalyzer.analyze(canvas, videoRef, currentFrame);
         currentFrame++;
       }
     }
@@ -81,7 +84,7 @@ export const Analyze = async (
 
   let returnObj: Results = {
     flashWarning: flashAnalyzer.FlashWarnings,
-    blueLightWarning: [],
+    blueLightWarning: blueLightAnalyzer.BlueLightWarnings,
     contrastWarning: [],
   };
 
