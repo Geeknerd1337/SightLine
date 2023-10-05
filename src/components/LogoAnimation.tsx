@@ -56,7 +56,7 @@ const circleVariants = {
   },
 };
 
-export default function Logo() {
+export default function LogoAnimation() {
   const [isAnimating, setIsAnimating] = useState(true);
 
   useEffect(() => {
@@ -72,7 +72,7 @@ export default function Logo() {
       xmlns="http://www.w3.org/2000/svg"
       width="400"
       height="400"
-      viewBox="0 0 468.61 201.86"
+      viewBox="0 0 468.61 10.86"
       variants={logoVariants}
       initial="initial"
       animate={isAnimating ? "animate" : "initial"}

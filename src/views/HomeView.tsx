@@ -10,7 +10,7 @@ export default function HomeView() {
         <Video />
       </Background>
 
-      {/* <Intro /> */}
+      <Intro />
     </>
   );
 }

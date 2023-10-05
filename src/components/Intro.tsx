@@ -1,5 +1,6 @@
 import { Background } from "@/styles/IntroStyles";
-import Logo from "./LogoAnimation";
+import LogoAnimation from "./LogoAnimation";
+import TextAnimation from "./TextAnimation";
 
 const backgroundVariants = {
   show: {
@@ -21,7 +22,8 @@ const backgroundVariants = {
 export default function Intro() {
   return (
     <Background variants={backgroundVariants} initial="show" animate="hide">
-      <Logo></Logo>
+      <LogoAnimation></LogoAnimation>
+      <TextAnimation text={"SightLine"}></TextAnimation>
     </Background>
   );
 }
