@@ -39,6 +39,8 @@ export class BlueLightAnalyzer {
         this.LastFrameBluePercentage = frameBlueLight;
       }
 
+      console.log('Blue Light Percentage: ' + frameBlueLight);
+
       if (frameBlueLight > 0.68 && this.StartSecond == -1) {
         this.StartSecond = videoRef.current?.currentTime;
       }
