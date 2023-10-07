@@ -58,6 +58,12 @@ export default function Video() {
     ],
   };
 
+  const setWillReadFrequently = () => {
+    if (canvasRef.current) {
+      canvasRef.current.setAttribute('willReadFrequently', 'true');
+    }
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files && e.target.files[0];
     if (selectedFile) {
@@ -116,6 +122,7 @@ export default function Video() {
       {videoFile && (
         <AnalyzeButton
           onClick={async (e) => {
+            setWillReadFrequently();
             await Analyze(videoRef, canvasRef, (e) => {
               setResults(e);
             });
