@@ -31,7 +31,7 @@ export default function TextAnimation({ text }: Props) {
   }, []);
 
   return (
-    <div style={{}}>
+    <div style={{ marginBottom: "7rem" }}>
       <motion.span
         variants={{
           visible: { transition: { staggerChildren: 0.1 } },
@@ -48,7 +48,7 @@ export default function TextAnimation({ text }: Props) {
             className="inline-block"
             style={{
               color: "#ffd167",
-              fontSize: "xxx-large",
+              fontSize: "60px",
               fontStyle: "italic",
               fontWeight: "bold",
             }}
