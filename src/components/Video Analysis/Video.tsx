@@ -35,9 +35,23 @@ const AnalyzeButton = styled.button`
   }
 `;
 
+const WarningContainer = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+
+  .warning {
+    font-size: 1.5em;
+    color: white;
+  }
+`;
+
 export default function Video() {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [results, setResults] = useState<Results | null>(null);
+  const [warnings, setWarnings] = useState<Results | null>(null);
   const [fps, setFps] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -111,12 +125,24 @@ export default function Video() {
             />
           </UploadLabel>
         )}
+        <WarningContainer>
+          {warnings && warnings.flashWarning.length > 0 && (
+            <div className='warning'>Flash Warning</div>
+          )}
+          {warnings && warnings.blueLightWarning.length > 0 && (
+            <div className='warning'>Blue Light Warning</div>
+          )}
+          {warnings && warnings.contrastWarning.length > 0 && (
+            <div className='warning'>Luminance Warning</div>
+          )}
+        </WarningContainer>
       </VideoContainer>
       {videoFile && (
         <VideoTimeline
           videoRef={videoRef}
           canvasRef={canvasRef}
           results={results}
+          setWarnings={setWarnings}
         />
       )}
       {videoFile && (

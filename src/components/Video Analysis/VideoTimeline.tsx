@@ -29,6 +29,7 @@ interface VideoTimelineProps {
   videoRef: React.MutableRefObject<HTMLVideoElement | null>;
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
   results: Results | null;
+  setWarnings?: React.Dispatch<React.SetStateAction<Results | null>>;
 }
 
 export default function VideoTimeline(props: VideoTimelineProps) {
@@ -77,6 +78,39 @@ export default function VideoTimeline(props: VideoTimelineProps) {
         (props.videoRef.current.currentTime / props.videoRef.current.duration) *
         100;
       setSeekerPosition(percentage);
+
+      // Get the warnings for the current time
+      if (props.results) {
+        const flashWarning = props.results.flashWarning.filter(
+          (warning) =>
+            warning.startTime <= props.videoRef.current!.currentTime &&
+            warning.endTime >= props.videoRef.current!.currentTime
+        );
+
+        const contrastWarnings = props.results.contrastWarning.filter(
+          (warning) =>
+            warning.startTime <= props.videoRef.current!.currentTime &&
+            warning.endTime >= props.videoRef.current!.currentTime
+        );
+
+        const blueLightWarnings = props.results.blueLightWarning.filter(
+          (warning) =>
+            warning.startTime <= props.videoRef.current!.currentTime &&
+            warning.endTime >= props.videoRef.current!.currentTime
+        );
+
+        // Set the warnings as a results object
+        const warnings: Results = {
+          flashWarning,
+          contrastWarning: contrastWarnings,
+          blueLightWarning: blueLightWarnings,
+        };
+
+        // Set the warnings
+        props.setWarnings && props.setWarnings(warnings);
+
+        console.log(warnings);
+      }
     };
 
     props.videoRef.current?.addEventListener(
