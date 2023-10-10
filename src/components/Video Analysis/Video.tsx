@@ -1,21 +1,21 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import { css } from "@emotion/react";
 
 import {
   VideoContainer,
   UploadLabel,
   VideoDisplay,
   UploadButton,
-} from '@/styles/VideoStyles.ts';
-import { useState, useRef } from 'react';
-import styled from '@emotion/styled';
-import { Colors } from '@/styles/colors';
-import { Analyze } from '../helpers/AnalysisFunctions';
-import { Warning, Results } from '../helpers/AnalysisFunctions';
-import VideoTimeline from './VideoTimeline';
+} from "@/styles/VideoStyles";
+import { useState, useRef } from "react";
+import styled from "@emotion/styled";
+import { Colors } from "@/styles/colors";
+import { Analyze } from "../helpers/AnalysisFunctions";
+import { Warning, Results } from "../helpers/AnalysisFunctions";
+import VideoTimeline from "./VideoTimeline";
 
 const hideNativeUploadButton = css({
-  display: 'none',
+  display: "none",
 });
 
 const AnalyzeButton = styled.button`
@@ -28,7 +28,7 @@ const AnalyzeButton = styled.button`
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  margin-top: 10px;
+  margin-top: 15px;
 
   &:hover {
     background-color: ${Colors.Gold}cc;
@@ -74,7 +74,7 @@ export default function Video() {
 
   const setWillReadFrequently = () => {
     if (canvasRef.current) {
-      canvasRef.current.setAttribute('willReadFrequently', 'true');
+      canvasRef.current.setAttribute("willReadFrequently", "true");
     }
   };
 
@@ -107,9 +107,9 @@ export default function Video() {
         {videoFile ? (
           <>
             <VideoDisplay ref={videoRef}>
-              <source src={URL.createObjectURL(videoFile)} type='video/mp4' />
+              <source src={URL.createObjectURL(videoFile)} type="video/mp4" />
             </VideoDisplay>
-            <canvas ref={canvasRef} style={{ display: 'none' }} />
+            <canvas ref={canvasRef} style={{ display: "none" }} />
           </>
         ) : (
           <UploadLabel>
@@ -119,21 +119,21 @@ export default function Video() {
             <input
               css={hideNativeUploadButton}
               ref={hiddenFileInput}
-              type='file'
-              accept='video/mp4'
+              type="file"
+              accept="video/mp4"
               onChange={handleFileChange}
             />
           </UploadLabel>
         )}
         <WarningContainer>
           {warnings && warnings.flashWarning.length > 0 && (
-            <div className='warning'>Flash Warning</div>
+            <div className="warning">Flash Warning</div>
           )}
           {warnings && warnings.blueLightWarning.length > 0 && (
-            <div className='warning'>Blue Light Warning</div>
+            <div className="warning">Blue Light Warning</div>
           )}
           {warnings && warnings.contrastWarning.length > 0 && (
-            <div className='warning'>Luminance Warning</div>
+            <div className="warning">Luminance Warning</div>
           )}
         </WarningContainer>
       </VideoContainer>
