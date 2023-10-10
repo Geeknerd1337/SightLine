@@ -6,7 +6,7 @@ import {
   UploadLabel,
   VideoDisplay,
   UploadButton,
-} from '@/styles/VideoStyles';
+} from '@/styles/VideoStyles.ts';
 import { useState, useRef } from 'react';
 import styled from '@emotion/styled';
 import { Colors } from '@/styles/colors';

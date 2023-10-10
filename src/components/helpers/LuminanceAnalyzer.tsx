@@ -46,7 +46,7 @@ export class LuminanceAnalyzer {
             'Time since start second: ' +
               (videoRef.current?.currentTime - this.StartSecond)
           );
-          if (videoRef.current?.currentTime - this.StartSecond >= 0.5) {
+          if (videoRef.current?.currentTime - this.StartSecond >= 5.0) {
             this.EndSecond = videoRef.current?.currentTime;
           }
         }
