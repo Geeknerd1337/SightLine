@@ -54,7 +54,7 @@ export class LuminanceAnalyzer {
 
       if (
         (this.EndSecond != -1 && this.StartSecond != -1) ||
-        (videoRef.current?.currentTime > videoRef.current?.duration - 0.5 &&
+        (videoRef.current?.currentTime > videoRef.current?.duration - 5.0 &&
           this.StartSecond != -1)
       ) {
         console.log(
