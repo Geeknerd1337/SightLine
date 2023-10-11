@@ -1,21 +1,21 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { css } from '@emotion/react';
 
 import {
   VideoContainer,
   UploadLabel,
   VideoDisplay,
   UploadButton,
-} from "@/styles/VideoStyles";
-import { useState, useRef } from "react";
-import styled from "@emotion/styled";
-import { Colors } from "@/styles/colors";
-import { Analyze } from "../helpers/AnalysisFunctions";
-import { Warning, Results } from "../helpers/AnalysisFunctions";
-import VideoTimeline from "./VideoTimeline";
+} from '@/styles/VideoStyles';
+import { useState, useRef, useEffect } from 'react';
+import styled from '@emotion/styled';
+import { Colors } from '@/styles/colors';
+import { Analyze } from '../helpers/AnalysisFunctions';
+import { Warning, Results } from '../helpers/AnalysisFunctions';
+import VideoTimeline from './VideoTimeline';
 
 const hideNativeUploadButton = css({
-  display: "none",
+  display: 'none',
 });
 
 const AnalyzeButton = styled.button`
@@ -48,6 +48,32 @@ const WarningContainer = styled.div`
   }
 `;
 
+const WarningModal = styled.div`
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(
+    196deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+
+  .warningTitle {
+    font-size: 1.4em;
+    color: white;
+  }
+
+  .warningText {
+    font-size: 1em;
+    color: white;
+  }
+`;
+
 export default function Video() {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [results, setResults] = useState<Results | null>(null);
@@ -74,7 +100,7 @@ export default function Video() {
 
   const setWillReadFrequently = () => {
     if (canvasRef.current) {
-      canvasRef.current.setAttribute("willReadFrequently", "true");
+      canvasRef.current.setAttribute('willReadFrequently', 'true');
     }
   };
 
@@ -101,15 +127,63 @@ export default function Video() {
     }
   };
 
+  useEffect(() => {
+    const handleVideoUpdate = () => {
+      console.log('HMM');
+      // Get the warnings for the current time
+      if (results) {
+        const flashWarning = results.flashWarning.filter(
+          (warning) =>
+            warning.startTime <= videoRef.current!.currentTime &&
+            warning.endTime >= videoRef.current!.currentTime
+        );
+
+        const contrastWarnings = results.contrastWarning.filter(
+          (warning) =>
+            warning.startTime <= videoRef.current!.currentTime &&
+            warning.endTime >= videoRef.current!.currentTime
+        );
+
+        const blueLightWarnings = results.blueLightWarning.filter(
+          (warning) =>
+            warning.startTime <= videoRef.current!.currentTime &&
+            warning.endTime >= videoRef.current!.currentTime
+        );
+
+        // Set the warnings as a results object
+        const warnings: Results = {
+          flashWarning,
+          contrastWarning: contrastWarnings,
+          blueLightWarning: blueLightWarnings,
+        };
+
+        // Set the warnings
+        setWarnings(warnings);
+
+        console.log(warnings);
+      }
+    };
+
+    if (videoRef.current) {
+      videoRef.current.addEventListener('timeupdate', handleVideoUpdate);
+    }
+
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.removeEventListener('timeupdate', handleVideoUpdate);
+      }
+    };
+  }, [results, videoRef.current]);
+
   return (
     <>
       <VideoContainer onDrop={handleDrop} onDragOver={handleDragOver}>
         {videoFile ? (
           <>
             <VideoDisplay ref={videoRef}>
-              <source src={URL.createObjectURL(videoFile)} type="video/mp4" />
+              <source src={URL.createObjectURL(videoFile)} type='video/mp4' />
             </VideoDisplay>
-            <canvas ref={canvasRef} style={{ display: "none" }} />
+            <canvas ref={canvasRef} style={{ display: 'none' }} />
           </>
         ) : (
           <UploadLabel>
@@ -119,23 +193,29 @@ export default function Video() {
             <input
               css={hideNativeUploadButton}
               ref={hiddenFileInput}
-              type="file"
-              accept="video/mp4"
+              type='file'
+              accept='video/mp4'
               onChange={handleFileChange}
             />
           </UploadLabel>
         )}
         <WarningContainer>
           {warnings && warnings.flashWarning.length > 0 && (
-            <div className="warning">Flash Warning</div>
+            <div className='warning'>Flash Warning</div>
           )}
           {warnings && warnings.blueLightWarning.length > 0 && (
-            <div className="warning">Blue Light Warning</div>
+            <div className='warning'>Blue Light Warning</div>
           )}
           {warnings && warnings.contrastWarning.length > 0 && (
-            <div className="warning">Luminance Warning</div>
+            <div className='warning'>Luminance Warning</div>
           )}
         </WarningContainer>
+        <WarningModal>
+          <div className='warningTitle'>Warning</div>
+          <div className='warningText'>
+            A bit of text explaining the warning
+          </div>
+        </WarningModal>
       </VideoContainer>
       {videoFile && (
         <VideoTimeline
