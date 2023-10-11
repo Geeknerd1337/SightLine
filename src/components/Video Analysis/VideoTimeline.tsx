@@ -11,6 +11,7 @@ import Hover from 'wavesurfer.js/dist/plugins/hover';
 import Timeline from 'wavesurfer.js/dist/plugins/timeline';
 
 import { Colors } from '@/styles/colors';
+import { ModalContent } from './Video';
 
 const ButtonsContainer = styled.div`
   display: flex;
@@ -32,7 +33,26 @@ interface VideoTimelineProps {
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
   results: Results | null;
   setWarnings?: React.Dispatch<React.SetStateAction<Results | null>>;
+  setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalContent?: React.Dispatch<React.SetStateAction<ModalContent | null>>;
 }
+
+//TODO: The modal content should be converted to components at some point so we can do stuff like embed links and shit
+// there is a copy of the following 3 variabls in Video.tsx, this is bad and shitty
+const LightModalContent: ModalContent = {
+  title: 'Light Warning',
+  text: 'This portion of the video contains flashing lights which can be cause seizures in those suffering from eplipsy. Be sure to include a warnings that flashing lights may be present or consider adding a setting to disable them entirely.',
+};
+
+const BlueModalContent: ModalContent = {
+  title: 'Blue Light Warning',
+  text: 'This portion of the video contains blue light which can cause eye strain and headaches. Be sure to include a warnings that blue light may be present or consider adding a setting to disable them entirely.',
+};
+
+const LuminanceModalWarning: ModalContent = {
+  title: 'Luminance Warning',
+  text: 'This portion of the video contains a large change in luminance which can cause eye strain and headaches. Be sure to include a warnings that luminance changes may be present or consider adding a setting to disable them entirely.',
+};
 
 export default function VideoTimeline(props: VideoTimelineProps) {
   const [seekerPosition, setSeekerPosition] = useState(0);
@@ -180,7 +200,7 @@ export default function VideoTimeline(props: VideoTimelineProps) {
               props.results &&
               props.results.flashWarning.map((flash, index) => {
                 return (
-                  <div
+                  <button
                     className='warning'
                     style={{
                       position: 'absolute',
@@ -197,7 +217,12 @@ export default function VideoTimeline(props: VideoTimelineProps) {
                       backgroundColor: 'red',
                     }}
                     key={index}
-                  ></div>
+                    onClick={() => {
+                      props.setModalContent &&
+                        props.setModalContent(LightModalContent);
+                      props.setModalOpen && props.setModalOpen(true);
+                    }}
+                  ></button>
                 );
               })}
           </div>
@@ -206,7 +231,7 @@ export default function VideoTimeline(props: VideoTimelineProps) {
               props.results &&
               props.results.contrastWarning.map((contrast, index) => {
                 return (
-                  <div
+                  <button
                     className='warning'
                     style={{
                       position: 'absolute',
@@ -224,7 +249,12 @@ export default function VideoTimeline(props: VideoTimelineProps) {
                       backgroundColor: 'green',
                     }}
                     key={index}
-                  ></div>
+                    onClick={() => {
+                      props.setModalContent &&
+                        props.setModalContent(LuminanceModalWarning);
+                      props.setModalOpen && props.setModalOpen(true);
+                    }}
+                  ></button>
                 );
               })}
           </div>
@@ -233,7 +263,7 @@ export default function VideoTimeline(props: VideoTimelineProps) {
               props.results &&
               props.results.blueLightWarning.map((bluelight, index) => {
                 return (
-                  <div
+                  <button
                     className='warning'
                     style={{
                       position: 'absolute',
@@ -251,7 +281,12 @@ export default function VideoTimeline(props: VideoTimelineProps) {
                       backgroundColor: 'blue',
                     }}
                     key={index}
-                  ></div>
+                    onClick={() => {
+                      props.setModalContent &&
+                        props.setModalContent(BlueModalContent);
+                      props.setModalOpen && props.setModalOpen(true);
+                    }}
+                  ></button>
                 );
               })}
           </div>

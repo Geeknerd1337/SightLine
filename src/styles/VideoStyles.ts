@@ -76,6 +76,7 @@ export const VideoTimelineBackground = styled.div`
         height: 50%;
         display: flex;
         flex-direction: column;
+
         
         
         & > .warningRow{
@@ -90,6 +91,12 @@ export const VideoTimelineBackground = styled.div`
           & .warning{
             z-index: 2;
             opacity: 0.8;
+            border: none;
+
+            &:hover{
+              border: 2px solid yellow;
+              cursor: pointer;
+            }
           }
         }
     }

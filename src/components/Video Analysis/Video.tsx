@@ -45,6 +45,13 @@ const WarningContainer = styled.div`
   .warning {
     font-size: 1.5em;
     color: white;
+    background-color: transparent;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
   }
 `;
 
@@ -59,20 +66,62 @@ const WarningModal = styled.div`
     rgba(0, 0, 0, 1) 0%,
     rgba(255, 255, 255, 0) 100%
   );
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
 
-  .warningTitle {
-    font-size: 1.4em;
-    color: white;
-  }
+  & .textHolder {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    & .warningTitle {
+      font-size: 1.4em;
+      color: white;
+    }
 
-  .warningText {
-    font-size: 1em;
-    color: white;
+    & .warningText {
+      font-size: 1em;
+      color: white;
+    }
+
+    & .exit {
+      position: absolute;
+      width: 1.1em;
+      height: 1.1em;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10%;
+      //Bold
+      font-weight: 700;
+      background-color: ${Colors.Gold};
+      color: ${Colors.DarkGray};
+      border: none;
+    }
   }
 `;
+
+//Modal content interface
+export interface ModalContent {
+  title: string;
+  text: string;
+}
+
+const LightModalContent: ModalContent = {
+  title: 'Light Warning',
+  text: 'This portion of the video contains flashing lights which can be cause seizures in those suffering from eplipsy. Be sure to include a warnings that flashing lights may be present or consider adding a setting to disable them entirely.',
+};
+
+const BlueModalContent: ModalContent = {
+  title: 'Blue Light Warning',
+  text: 'This portion of the video contains blue light which can cause eye strain and headaches. Be sure to include a warnings that blue light may be present or consider adding a setting to disable them entirely.',
+};
+
+const LuminanceModalWarning: ModalContent = {
+  title: 'Luminance Warning',
+  text: 'This portion of the video contains a large change in luminance which can cause eye strain and headaches. Be sure to include a warnings that luminance changes may be present or consider adding a setting to disable them entirely.',
+};
 
 export default function Video() {
   const [videoFile, setVideoFile] = useState<File | null>(null);
@@ -82,6 +131,8 @@ export default function Video() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const hiddenFileInput = useRef<HTMLInputElement | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState<ModalContent | null>(null);
 
   const dummyResults: Results = {
     flashWarning: [
@@ -129,7 +180,6 @@ export default function Video() {
 
   useEffect(() => {
     const handleVideoUpdate = () => {
-      console.log('HMM');
       // Get the warnings for the current time
       if (results) {
         const flashWarning = results.flashWarning.filter(
@@ -201,21 +251,59 @@ export default function Video() {
         )}
         <WarningContainer>
           {warnings && warnings.flashWarning.length > 0 && (
-            <div className='warning'>Flash Warning</div>
+            <button
+              className='warning'
+              onClick={() => {
+                setModalOpen(true);
+                setModalContent(LightModalContent);
+              }}
+            >
+              Flash Warning
+            </button>
           )}
           {warnings && warnings.blueLightWarning.length > 0 && (
-            <div className='warning'>Blue Light Warning</div>
+            <div
+              className='warning'
+              onClick={() => {
+                setModalOpen(true);
+                setModalContent(BlueModalContent);
+              }}
+            >
+              Blue Light Warning
+            </div>
           )}
           {warnings && warnings.contrastWarning.length > 0 && (
-            <div className='warning'>Luminance Warning</div>
+            <div
+              className='warning'
+              onClick={() => {
+                setModalOpen(true);
+                setModalContent(LuminanceModalWarning);
+              }}
+            >
+              Luminance Warning
+            </div>
           )}
         </WarningContainer>
-        <WarningModal>
-          <div className='warningTitle'>Warning</div>
-          <div className='warningText'>
-            A bit of text explaining the warning
-          </div>
-        </WarningModal>
+        {modalOpen && (
+          <WarningModal>
+            {modalContent && (
+              <div className='textHolder'>
+                <div className='warningTitle'>{modalContent.title}</div>
+                <div className='warningText'>{modalContent.text}</div>
+
+                <button
+                  className='exit'
+                  onClick={() => {
+                    setModalOpen(false);
+                    setModalContent(null);
+                  }}
+                >
+                  X
+                </button>
+              </div>
+            )}
+          </WarningModal>
+        )}
       </VideoContainer>
       {videoFile && (
         <VideoTimeline
@@ -223,6 +311,8 @@ export default function Video() {
           canvasRef={canvasRef}
           results={results}
           setWarnings={setWarnings}
+          setModalOpen={setModalOpen}
+          setModalContent={setModalContent}
         />
       )}
       {videoFile && (

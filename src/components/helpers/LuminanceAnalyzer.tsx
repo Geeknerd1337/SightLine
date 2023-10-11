@@ -32,9 +32,9 @@ export class LuminanceAnalyzer {
       //If the frame luminance is higher than 200
       console.log(frameLuminance);
       if (frameLuminance > 10) {
-        console.log(
-          'Frame Luminance Boundary Reached(' + this.StartSecond + ')'
-        );
+        // console.log(
+        //   'Frame Luminance Boundary Reached(' + this.StartSecond + ')'
+        // );
         if (this.StartSecond == -1) {
           this.StartSecond = videoRef.current?.currentTime;
         } else {
@@ -42,11 +42,11 @@ export class LuminanceAnalyzer {
         }
       } else {
         if (this.StartSecond != -1) {
-          console.log(
-            'Time since start second: ' +
-              (videoRef.current?.currentTime - this.StartSecond)
-          );
-          if (videoRef.current?.currentTime - this.StartSecond >= 0.5 ) {
+          //   console.log(
+          //     'Time since start second: ' +
+          //       (videoRef.current?.currentTime - this.StartSecond)
+          //   );
+          if (videoRef.current?.currentTime - this.StartSecond >= 0.5) {
             this.EndSecond = videoRef.current?.currentTime;
           }
         }
@@ -57,15 +57,15 @@ export class LuminanceAnalyzer {
         (videoRef.current?.currentTime > videoRef.current?.duration - 5.0 &&
           this.StartSecond != -1)
       ) {
-        console.log(
-          'PUSHING LUMINANCE WARNING: (' +
-            this.StartSecond +
-            ':' +
-            videoRef.current?.currentTime +
-            ' ? ' +
-            this.EndSecond +
-            ')'
-        );
+        // console.log(
+        //   'PUSHING LUMINANCE WARNING: (' +
+        //     this.StartSecond +
+        //     ':' +
+        //     videoRef.current?.currentTime +
+        //     ' ? ' +
+        //     this.EndSecond +
+        //     ')'
+        // );
         this.LuminanceWarnings.push({
           startTime: this.StartSecond,
           endTime: videoRef.current?.currentTime,
