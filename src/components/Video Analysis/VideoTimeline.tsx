@@ -84,7 +84,6 @@ export default function VideoTimeline(props: VideoTimelineProps) {
             media: videoElement,
             height: "auto",
             cursorColor: `${Colors.Gold}`,
-            minPxPerSec: 100,
             plugins: [
               Hover.create({
                 lineColor: "#ff0000",
