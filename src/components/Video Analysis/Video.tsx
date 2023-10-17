@@ -68,21 +68,6 @@ export default function Video() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState<ModalContent | null>(null);
 
-  const dummyResults: Results = {
-    flashWarning: [
-      { startTime: 1, endTime: 2 },
-      { startTime: 4, endTime: 5 },
-    ],
-    blueLightWarning: [
-      { startTime: 0.5, endTime: 1.2 },
-      { startTime: 3.5, endTime: 4 },
-    ],
-    contrastWarning: [
-      { startTime: 2.25, endTime: 3 },
-      { startTime: 4, endTime: 4.25 },
-    ],
-  };
-
   const setWillReadFrequently = () => {
     if (canvasRef.current) {
       canvasRef.current.setAttribute("willReadFrequently", "true");
@@ -157,7 +142,7 @@ export default function Video() {
         videoRef.current.removeEventListener("timeupdate", handleVideoUpdate);
       }
     };
-  }, [results, videoRef.current]);
+  }, [results]);
 
   return (
     <>
