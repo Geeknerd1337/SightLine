@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Colors } from './colors';
-import { motion } from 'framer-motion';
 
 //Video container
 export const VideoContainer = styled.div`

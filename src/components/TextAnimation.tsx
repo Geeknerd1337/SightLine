@@ -39,7 +39,6 @@ export default function TextAnimation({ text }: Props) {
         }}
         initial="hidden"
         animate={isAnimating ? "visible" : "hidden"}
-        aria-hidden
       >
         {text.split("").map((char, charIndex) => (
           <motion.span
