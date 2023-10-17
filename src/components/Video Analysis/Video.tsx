@@ -12,7 +12,7 @@ import { useState, useRef, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Colors } from "@/styles/colors";
 import { Analyze } from "../helpers/AnalysisFunctions";
-import { Warning, Results } from "../helpers/AnalysisFunctions";
+import { Results } from "../helpers/AnalysisFunctions";
 import VideoTimeline from "./VideoTimeline";
 
 const hideNativeUploadButton = css({
