@@ -1,21 +1,22 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import { css } from "@emotion/react";
 
 import {
   VideoContainer,
   UploadLabel,
   VideoDisplay,
   UploadButton,
-} from '@/styles/VideoStyles';
-import { useState, useRef, useEffect } from 'react';
-import styled from '@emotion/styled';
-import { Colors } from '@/styles/colors';
-import { Analyze } from '../helpers/AnalysisFunctions';
-import { Warning, Results } from '../helpers/AnalysisFunctions';
-import VideoTimeline from './VideoTimeline';
+} from "@/styles/VideoStyles";
+import { WarningContainer, WarningModal } from "@/styles/ModalStyles";
+import { useState, useRef, useEffect } from "react";
+import styled from "@emotion/styled";
+import { Colors } from "@/styles/colors";
+import { Analyze } from "../helpers/AnalysisFunctions";
+import { Warning, Results } from "../helpers/AnalysisFunctions";
+import VideoTimeline from "./VideoTimeline";
 
 const hideNativeUploadButton = css({
-  display: 'none',
+  display: "none",
 });
 
 const AnalyzeButton = styled.button`
@@ -35,73 +36,6 @@ const AnalyzeButton = styled.button`
   }
 `;
 
-const WarningContainer = styled.div`
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  display: flex;
-  flex-direction: column;
-
-  .warning {
-    font-size: 1.5em;
-    color: white;
-    background-color: transparent;
-    border: none;
-
-    &:hover {
-      cursor: pointer;
-      text-decoration: underline;
-    }
-  }
-`;
-
-const WarningModal = styled.div`
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  height: 100%;
-  width: 40%;
-  background: linear-gradient(
-    196deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
-
-  & .textHolder {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    width: 100%;
-    height: 100%;
-    & .warningTitle {
-      font-size: 1.4em;
-      color: white;
-    }
-
-    & .warningText {
-      font-size: 1em;
-      color: white;
-    }
-
-    & .exit {
-      position: absolute;
-      width: 1.1em;
-      height: 1.1em;
-      top: 10px;
-      right: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 10%;
-      //Bold
-      font-weight: 700;
-      background-color: ${Colors.Gold};
-      color: ${Colors.DarkGray};
-      border: none;
-    }
-  }
-`;
-
 //Modal content interface
 export interface ModalContent {
   title: string;
@@ -109,18 +43,18 @@ export interface ModalContent {
 }
 
 const LightModalContent: ModalContent = {
-  title: 'Light Warning',
-  text: 'This portion of the video contains flashing lights which can be cause seizures in those suffering from eplipsy. Be sure to include a warnings that flashing lights may be present or consider adding a setting to disable them entirely.',
+  title: "Light Warning",
+  text: "This portion of the video contains flashing lights which can be cause seizures in those suffering from eplipsy. Be sure to include a warnings that flashing lights may be present or consider adding a setting to disable them entirely.",
 };
 
 const BlueModalContent: ModalContent = {
-  title: 'Blue Light Warning',
-  text: 'This portion of the video contains blue light which can cause eye strain and headaches. Be sure to include a warnings that blue light may be present or consider adding a setting to disable them entirely.',
+  title: "Blue Light Warning",
+  text: "This portion of the video contains blue light which can cause eye strain and headaches. Be sure to include a warnings that blue light may be present or consider adding a setting to disable them entirely.",
 };
 
 const LuminanceModalWarning: ModalContent = {
-  title: 'Luminance Warning',
-  text: 'This portion of the video contains a large change in luminance which can cause eye strain and headaches. Be sure to include a warnings that luminance changes may be present or consider adding a setting to disable them entirely.',
+  title: "Luminance Warning",
+  text: "This portion of the video contains a large change in luminance which can cause eye strain and headaches. Be sure to include a warnings that luminance changes may be present or consider adding a setting to disable them entirely.",
 };
 
 export default function Video() {
@@ -151,7 +85,7 @@ export default function Video() {
 
   const setWillReadFrequently = () => {
     if (canvasRef.current) {
-      canvasRef.current.setAttribute('willReadFrequently', 'true');
+      canvasRef.current.setAttribute("willReadFrequently", "true");
     }
   };
 
@@ -215,12 +149,12 @@ export default function Video() {
     };
 
     if (videoRef.current) {
-      videoRef.current.addEventListener('timeupdate', handleVideoUpdate);
+      videoRef.current.addEventListener("timeupdate", handleVideoUpdate);
     }
 
     return () => {
       if (videoRef.current) {
-        videoRef.current.removeEventListener('timeupdate', handleVideoUpdate);
+        videoRef.current.removeEventListener("timeupdate", handleVideoUpdate);
       }
     };
   }, [results, videoRef.current]);
@@ -231,9 +165,9 @@ export default function Video() {
         {videoFile ? (
           <>
             <VideoDisplay ref={videoRef}>
-              <source src={URL.createObjectURL(videoFile)} type='video/mp4' />
+              <source src={URL.createObjectURL(videoFile)} type="video/mp4" />
             </VideoDisplay>
-            <canvas ref={canvasRef} style={{ display: 'none' }} />
+            <canvas ref={canvasRef} style={{ display: "none" }} />
           </>
         ) : (
           <UploadLabel>
@@ -243,8 +177,8 @@ export default function Video() {
             <input
               css={hideNativeUploadButton}
               ref={hiddenFileInput}
-              type='file'
-              accept='video/mp4'
+              type="file"
+              accept="video/mp4"
               onChange={handleFileChange}
             />
           </UploadLabel>
@@ -252,7 +186,7 @@ export default function Video() {
         <WarningContainer>
           {warnings && warnings.flashWarning.length > 0 && (
             <button
-              className='warning'
+              className="warning"
               onClick={() => {
                 setModalOpen(true);
                 setModalContent(LightModalContent);
@@ -263,7 +197,7 @@ export default function Video() {
           )}
           {warnings && warnings.blueLightWarning.length > 0 && (
             <div
-              className='warning'
+              className="warning"
               onClick={() => {
                 setModalOpen(true);
                 setModalContent(BlueModalContent);
@@ -274,7 +208,7 @@ export default function Video() {
           )}
           {warnings && warnings.contrastWarning.length > 0 && (
             <div
-              className='warning'
+              className="warning"
               onClick={() => {
                 setModalOpen(true);
                 setModalContent(LuminanceModalWarning);
@@ -287,12 +221,12 @@ export default function Video() {
         {modalOpen && (
           <WarningModal>
             {modalContent && (
-              <div className='textHolder'>
-                <div className='warningTitle'>{modalContent.title}</div>
-                <div className='warningText'>{modalContent.text}</div>
+              <div className="textHolder">
+                <div className="warningTitle">{modalContent.title}</div>
+                <div className="warningText">{modalContent.text}</div>
 
                 <button
-                  className='exit'
+                  className="exit"
                   onClick={() => {
                     setModalOpen(false);
                     setModalContent(null);
