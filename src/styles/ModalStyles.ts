@@ -9,10 +9,13 @@ export const WarningContainer = styled.div`
   flex-direction: column;
 
   .warning {
+    text-align: center;
     font-size: 1.5em;
     color: white;
-    background-color: transparent;
+    background-color: ${Colors.DarkGray};;
     border: none;
+    padding: 0.5rem;
+    margin-bottom: 5px;
 
     &:hover {
       cursor: pointer;

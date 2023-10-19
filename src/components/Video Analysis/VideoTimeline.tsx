@@ -69,7 +69,7 @@ export default function VideoTimeline(props: VideoTimelineProps) {
           const bottomTimline = Timeline.create({
             container: "#waveform",
             height: 20,
-            timeInterval: 0.1,
+            timeInterval: 0.2,
             primaryLabelInterval: 1,
             style: {
               fontSize: "15px",
@@ -181,7 +181,7 @@ export default function VideoTimeline(props: VideoTimelineProps) {
                         100
                       }%`,
                       height: "100%",
-                      backgroundColor: "red",
+                      backgroundColor: "#FF6B6B",
                     }}
                     key={index}
                     onClick={() => {
@@ -213,7 +213,7 @@ export default function VideoTimeline(props: VideoTimelineProps) {
                         100
                       }%`,
                       height: "100%",
-                      backgroundColor: "green",
+                      backgroundColor: "#65FFA9",
                     }}
                     key={index}
                     onClick={() => {
@@ -245,7 +245,7 @@ export default function VideoTimeline(props: VideoTimelineProps) {
                         100
                       }%`,
                       height: "100%",
-                      backgroundColor: "blue",
+                      backgroundColor: "#6B7CFF",
                     }}
                     key={index}
                     onClick={() => {
