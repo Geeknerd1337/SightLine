@@ -14,7 +14,7 @@ export const WarningContainer = styled.div`
     color: white;
     background-color: ${Colors.DarkGray};;
     border: none;
-    padding: 0.5rem;
+    padding: 0.4rem;
     margin-bottom: 5px;
 
     &:hover {
@@ -42,6 +42,7 @@ export const WarningModal = styled.div`
     padding: 10px;
     width: 100%;
     height: 100%;
+    
     & .warningTitle {
       font-size: 1.4em;
       color: white;

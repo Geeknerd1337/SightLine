@@ -57,6 +57,10 @@ const LuminanceModalWarning: ModalContent = {
   text: "This portion of the video contains a large change in luminance which can cause eye strain and headaches. Be sure to include a warnings that luminance changes may be present or consider adding a setting to disable them entirely.",
 };
 
+const breakpoints = [992, 576, 460];
+
+const mq = breakpoints.map((bp) => `@media (max-width: ${bp}px)`);
+
 export default function Video() {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [results, setResults] = useState<Results | null>(null);
@@ -168,7 +172,13 @@ export default function Video() {
             />
           </UploadLabel>
         )}
-        <WarningContainer>
+        <WarningContainer
+          css={{
+            [mq[0]]: {
+              display: "none",
+            },
+          }}
+        >
           {warnings && warnings.flashWarning.length > 0 && (
             <button
               className="warning"
@@ -204,7 +214,24 @@ export default function Video() {
           )}
         </WarningContainer>
         {modalOpen && (
-          <WarningModal>
+          // ! LOOK HERE !! ! ! ! ! ! !  ! ! ! !  ! ! ! ! !! !
+          <WarningModal
+            css={{
+              [mq[0]]: {
+                width: "100%",
+              },
+              [mq[1]]: {
+                width: "100%",
+                fontSize: "0.8em",
+                overflow: "hidden",
+                maxHeight: "100%",
+              },
+              [mq[2]]: {
+                width: "100%",
+                fontSize: "0.7em",
+              },
+            }}
+          >
             {modalContent && (
               <div className="textHolder">
                 <div className="warningTitle">{modalContent.title}</div>
