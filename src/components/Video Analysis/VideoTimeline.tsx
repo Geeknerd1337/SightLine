@@ -32,6 +32,7 @@ const ButtonsContainer = styled.div`
     height: auto;
   }
 `;
+
 import { Results } from "../helpers/AnalysisFunctions";
 interface VideoTimelineProps {
   videoRef: React.MutableRefObject<HTMLVideoElement | null>;
