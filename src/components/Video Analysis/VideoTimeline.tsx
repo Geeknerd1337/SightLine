@@ -11,7 +11,12 @@ import Hover from "wavesurfer.js/dist/plugins/hover";
 import Timeline from "wavesurfer.js/dist/plugins/timeline";
 
 import { Colors } from "@/styles/colors";
-import { ModalContent } from "./Video";
+import {
+  FlashModalContent,
+  BlueModalContent,
+  LuminanceModalContent,
+  ModalContent,
+} from "../modals/WarningModalComp";
 
 const ButtonsContainer = styled.div`
   display: flex;
@@ -37,28 +42,11 @@ interface VideoTimelineProps {
   setModalContent?: React.Dispatch<React.SetStateAction<ModalContent | null>>;
 }
 
-//TODO: The modal content should be converted to components at some point so we can do stuff like embed links and shit
-// there is a copy of the following 3 variabls in Video.tsx, this is bad and shitty
-const LightModalContent: ModalContent = {
-  title: "Light Warning",
-  text: "This portion of the video contains flashing lights which can be cause seizures in those suffering from eplipsy. Be sure to include a warnings that flashing lights may be present or consider adding a setting to disable them entirely.",
-};
-
-const BlueModalContent: ModalContent = {
-  title: "Blue Light Warning",
-  text: "This portion of the video contains blue light which can cause eye strain and headaches. Be sure to include a warnings that blue light may be present or consider adding a setting to disable them entirely.",
-};
-
-const LuminanceModalWarning: ModalContent = {
-  title: "Luminance Warning",
-  text: "This portion of the video contains a large change in luminance which can cause eye strain and headaches. Be sure to include a warnings that luminance changes may be present or consider adding a setting to disable them entirely.",
-};
-
 export default function VideoTimeline(props: VideoTimelineProps) {
   const [seekerPosition, setSeekerPosition] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const timelineRef = useRef<HTMLDivElement>(null);
-  const waveSurferRef = useRef<WaveSurfer | null>(null); // Declare the ref
+  const waveSurferRef = useRef<WaveSurfer | null>(null);
 
   useEffect(() => {
     const videoElement = props.videoRef.current;
@@ -186,7 +174,7 @@ export default function VideoTimeline(props: VideoTimelineProps) {
                     key={index}
                     onClick={() => {
                       props.setModalContent &&
-                        props.setModalContent(LightModalContent);
+                        props.setModalContent(FlashModalContent);
                       props.setModalOpen && props.setModalOpen(true);
                     }}
                   ></button>
@@ -218,7 +206,7 @@ export default function VideoTimeline(props: VideoTimelineProps) {
                     key={index}
                     onClick={() => {
                       props.setModalContent &&
-                        props.setModalContent(LuminanceModalWarning);
+                        props.setModalContent(LuminanceModalContent);
                       props.setModalOpen && props.setModalOpen(true);
                     }}
                   ></button>

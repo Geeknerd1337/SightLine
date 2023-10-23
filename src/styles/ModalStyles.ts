@@ -12,10 +12,11 @@ export const WarningContainer = styled.div`
     text-align: center;
     font-size: 1.5em;
     color: white;
-    background-color: ${Colors.DarkGray};;
+    background-color: ${Colors.DarkGrayWithTransparency};
     border: none;
     padding: 0.4rem;
     margin-bottom: 5px;
+    border-radius: 5px;
 
     &:hover {
       cursor: pointer;

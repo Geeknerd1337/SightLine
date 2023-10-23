@@ -7,6 +7,7 @@ const DarkGray = "#252525";
 const Charcoal = "#1E1E1E";
 const Text = "#F2F2F2";
 const DarkText = "#DDDDDD";
+const DarkGrayWithTransparency = "rgba(37, 37, 37, 0.95)";
 
 const BackHilight = "#2A2A2A";
 
@@ -25,5 +26,6 @@ export const Colors = {
   DarkText,
   BackHilight,
   Charcoal,
-  DarkBack
+  DarkBack,
+  DarkGrayWithTransparency
 };

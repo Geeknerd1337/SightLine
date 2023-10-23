@@ -14,6 +14,12 @@ import { Colors } from "@/styles/colors";
 import { Analyze } from "../helpers/AnalysisFunctions";
 import { Results } from "../helpers/AnalysisFunctions";
 import VideoTimeline from "./VideoTimeline";
+import {
+  FlashModalContent,
+  BlueModalContent,
+  LuminanceModalContent,
+  ModalContent,
+} from "../modals/WarningModalComp";
 
 const hideNativeUploadButton = css({
   display: "none",
@@ -35,27 +41,6 @@ const AnalyzeButton = styled.button`
     background-color: ${Colors.Gold}cc;
   }
 `;
-
-//Modal content interface
-export interface ModalContent {
-  title: string;
-  text: string;
-}
-
-const LightModalContent: ModalContent = {
-  title: "Light Warning",
-  text: "This portion of the video contains flashing lights which can be cause seizures in those suffering from eplipsy. Be sure to include a warnings that flashing lights may be present or consider adding a setting to disable them entirely.",
-};
-
-const BlueModalContent: ModalContent = {
-  title: "Blue Light Warning",
-  text: "This portion of the video contains blue light which can cause eye strain and headaches. Be sure to include a warnings that blue light may be present or consider adding a setting to disable them entirely.",
-};
-
-const LuminanceModalWarning: ModalContent = {
-  title: "Luminance Warning",
-  text: "This portion of the video contains a large change in luminance which can cause eye strain and headaches. Be sure to include a warnings that luminance changes may be present or consider adding a setting to disable them entirely.",
-};
 
 const breakpoints = [992, 576, 460];
 
@@ -143,6 +128,7 @@ export default function Video() {
 
     return () => {
       if (videoRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         videoRef.current.removeEventListener("timeupdate", handleVideoUpdate);
       }
     };
@@ -184,7 +170,7 @@ export default function Video() {
               className="warning"
               onClick={() => {
                 setModalOpen(true);
-                setModalContent(LightModalContent);
+                setModalContent(FlashModalContent);
               }}
             >
               Flash Warning
@@ -206,7 +192,7 @@ export default function Video() {
               className="warning"
               onClick={() => {
                 setModalOpen(true);
-                setModalContent(LuminanceModalWarning);
+                setModalContent(LuminanceModalContent);
               }}
             >
               Luminance Warning
@@ -214,7 +200,6 @@ export default function Video() {
           )}
         </WarningContainer>
         {modalOpen && (
-          // ! LOOK HERE !! ! ! ! ! ! !  ! ! ! !  ! ! ! ! !! !
           <WarningModal
             css={{
               [mq[0]]: {
@@ -223,8 +208,6 @@ export default function Video() {
               [mq[1]]: {
                 width: "100%",
                 fontSize: "0.8em",
-                overflow: "hidden",
-                maxHeight: "100%",
               },
               [mq[2]]: {
                 width: "100%",
