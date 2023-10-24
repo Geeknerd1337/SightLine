@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { BsExclamationCircleFill } from "react-icons/bs";
 
 import {
   VideoContainer,
@@ -173,6 +174,7 @@ export default function Video() {
                 setModalContent(FlashModalContent);
               }}
             >
+              <BsExclamationCircleFill />
               Flash Warning
             </button>
           )}
@@ -184,6 +186,7 @@ export default function Video() {
                 setModalContent(BlueModalContent);
               }}
             >
+              <BsExclamationCircleFill />
               Blue Light Warning
             </div>
           )}
@@ -195,6 +198,7 @@ export default function Video() {
                 setModalContent(LuminanceModalContent);
               }}
             >
+              <BsExclamationCircleFill />
               Luminance Warning
             </div>
           )}

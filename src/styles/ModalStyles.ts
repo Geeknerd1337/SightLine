@@ -9,6 +9,9 @@ export const WarningContainer = styled.div`
   flex-direction: column;
 
   .warning {
+    display: flex;
+    justify-content: flex-start;;
+    align-items: center;
     text-align: center;
     font-size: 1.5em;
     color: white;
@@ -17,6 +20,7 @@ export const WarningContainer = styled.div`
     padding: 0.4rem;
     margin-bottom: 5px;
     border-radius: 5px;
+    gap: 0.9rem;
 
     &:hover {
       cursor: pointer;
