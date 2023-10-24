@@ -17,12 +17,13 @@ export const VideoContainer = styled.div`
 export const UploadLabel = styled.div`
     position: absolute;
     color: ${Colors.Text};
-    font-size: 1.5rem;
+    font-size: 1.5em;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
+    padding: 1rem;
 `;
 
 export const UploadButton = styled.button`

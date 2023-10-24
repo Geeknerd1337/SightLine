@@ -146,10 +146,40 @@ export default function Video() {
             <canvas ref={canvasRef} style={{ display: "none" }} />
           </>
         ) : (
-          <UploadLabel>
+          <UploadLabel
+            css={{
+              [mq[0]]: {
+                fontSize: "1em",
+              },
+              [mq[1]]: {
+                fontSize: "0.8em",
+              },
+              [mq[2]]: {
+                fontSize: "0.6em",
+              },
+            }}
+          >
             Drag and drop a video file here, or click to select a file to
             upload.
-            <UploadButton onClick={handleClick}>File Upload</UploadButton>
+            <UploadButton
+              onClick={handleClick}
+              css={{
+                [mq[0]]: {
+                  minHeight: "45px",
+                  minWidth: "45px",
+                },
+                [mq[1]]: {
+                  minHeight: "40px",
+                  minWidth: "40px",
+                },
+                [mq[2]]: {
+                  minHeight: "30px",
+                  minWidth: "30px",
+                },
+              }}
+            >
+              File Upload
+            </UploadButton>
             <input
               css={hideNativeUploadButton}
               ref={hiddenFileInput}
