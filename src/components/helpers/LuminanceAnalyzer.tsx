@@ -30,7 +30,7 @@ export class LuminanceAnalyzer {
 
     if (currentFrame != this.LastFrame) {
       //If the frame luminance is higher than 200
-      console.log(frameLuminance);
+      //console.log(frameLuminance);
       if (frameLuminance > 10) {
         // console.log(
         //   'Frame Luminance Boundary Reached(' + this.StartSecond + ')'

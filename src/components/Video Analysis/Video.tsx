@@ -59,6 +59,72 @@ const LoadingModal = styled.div`
   color: ${Colors.Gold};
 `;
 
+const SummaryModal = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: ${Colors.DarkGray}cc;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 2rem;
+
+  & .resultsContainer {
+    background-color: ${Colors.DarkGray};
+    border-radius: 10px;
+    //Drop shadow
+    box-shadow: 5px 5px 10px 5px ${Colors.Gold}11;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    color: white;
+
+    & .title {
+      font-size: 2rem;
+    }
+
+    & .text {
+      font-size: 1.5rem;
+    }
+  }
+
+  & .exit {
+    position: absolute;
+    width: 1.1em;
+    height: 1.1em;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10%;
+    //Bold
+    font-weight: 700;
+    background-color: ${Colors.Gold};
+    color: ${Colors.DarkGray};
+    border: none;
+  }
+`;
+
+const SummaryButton = styled.button`
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 4px;
+  background-color: ${Colors.DarkGray};
+  color: white;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 const breakpoints = [992, 576, 460];
 
 const mq = breakpoints.map((bp) => `@media (max-width: ${bp}px)`);
@@ -73,9 +139,11 @@ export default function Video() {
   const hiddenFileInput = useRef<HTMLInputElement | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState<ModalContent | null>(null);
-  const [analysisState, setAnalysisState] = useState<'idle' | 'analyzing'>(
-    'idle'
-  );
+  const [analysisState, setAnalysisState] = useState<
+    'idle' | 'analyzing' | 'completed'
+  >('idle');
+
+  const [summaryModalOpen, setSummaryModalOpen] = useState(false);
 
   const setWillReadFrequently = () => {
     if (canvasRef.current) {
@@ -257,6 +325,44 @@ export default function Video() {
             </div>
           )}
         </WarningContainer>
+        {analysisState === 'completed' && (
+          <SummaryButton
+            onClick={() => {
+              setSummaryModalOpen(true);
+            }}
+          >
+            View Summary
+          </SummaryButton>
+        )}
+        {summaryModalOpen && (
+          <SummaryModal>
+            <button
+              className='exit'
+              onClick={() => {
+                setSummaryModalOpen(false);
+              }}
+            >
+              X
+            </button>
+            <div className='resultsContainer'>
+              <div className='title'> Results</div>
+              {results && (
+                <>
+                  <div className='text'>
+                    Flash Warnings: {results.flashWarning.length}
+                  </div>
+                  <div className='text'>
+                    Blue Light Warnings: {results.blueLightWarning.length}
+                  </div>
+                  <div className='text'>
+                    Luminance Warnings: {results.contrastWarning.length}
+                  </div>
+                </>
+              )}
+            </div>
+          </SummaryModal>
+        )}
+
         {modalOpen && (
           <WarningModal
             css={{
@@ -309,7 +415,7 @@ export default function Video() {
             setAnalysisState('analyzing');
             await Analyze(videoRef, canvasRef, (e) => {
               setResults(e);
-              setAnalysisState('idle');
+              setAnalysisState('completed');
             });
           }}
         >
