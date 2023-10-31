@@ -13,7 +13,7 @@ export const WarningContainer = styled.div`
     justify-content: flex-start;;
     align-items: center;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.3em;
     color: white;
     background-color: ${Colors.DarkGrayWithTransparency};
     border: none;
@@ -34,7 +34,7 @@ export const WarningModal = styled.div`
   top: 0px;
   right: 0px;
   height: 100%;
-  width: 40%;
+  width: 50%;
   background: linear-gradient(
     196deg,
     rgba(0, 0, 0, 1) 0%,
@@ -54,8 +54,23 @@ export const WarningModal = styled.div`
     }
 
     & .warningText {
-      font-size: 1em;
+      font-size: 0.98em;
       color: white;
+    }
+
+    & .urlCites {
+      font-size: 1.4em;
+      color: white;
+    }
+
+    & .warningUrls {
+      font-size: 0.98em;
+      color: white;
+      width: 100%;
+      
+      & a:hover {
+        color: ${Colors.Gold};
+      }
     }
 
     & .exit {

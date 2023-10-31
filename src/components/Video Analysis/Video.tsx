@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { BsExclamationCircleFill } from "react-icons/bs";
+import { FaTimes } from "react-icons/fa";
 
 import {
   VideoContainer,
@@ -117,16 +118,17 @@ const SummaryButton = styled.button`
   position: absolute;
   bottom: 20px;
   left: 20px;
-  padding: 4px;
+  padding: 10px;
   background-color: ${Colors.DarkGray};
   color: white;
+  border-radius: 3px;
 
   &:hover {
     text-decoration: underline;
   }
 `;
 
-const breakpoints = [992, 576, 460];
+const breakpoints = [1155, 875, 704, 604, 510];
 
 const mq = breakpoints.map((bp) => `@media (max-width: ${bp}px)`);
 
@@ -245,6 +247,9 @@ export default function Video() {
               [mq[2]]: {
                 fontSize: "0.6em",
               },
+              [mq[3]]: {
+                fontSize: "0.6em",
+              },
             }}
           >
             Drag and drop a video file here, or click to select a file to
@@ -263,6 +268,10 @@ export default function Video() {
                 [mq[2]]: {
                   minHeight: "30px",
                   minWidth: "30px",
+                },
+                [mq[3]]: {
+                  minHeight: "20px",
+                  minWidth: "20px",
                 },
               }}
             >
@@ -331,6 +340,11 @@ export default function Video() {
             onClick={() => {
               setSummaryModalOpen(true);
             }}
+            css={{
+              [mq[0]]: {
+                display: "none",
+              },
+            }}
           >
             View Summary
           </SummaryButton>
@@ -343,7 +357,7 @@ export default function Video() {
                 setSummaryModalOpen(false);
               }}
             >
-              X
+              <FaTimes />
             </button>
             <div className="resultsContainer">
               <div className="title"> Results</div>
@@ -378,12 +392,41 @@ export default function Video() {
                 width: "100%",
                 fontSize: "0.7em",
               },
+              [mq[3]]: {
+                width: "100%",
+                fontSize: "0.6em",
+              },
+              [mq[4]]: {
+                width: "100%",
+                fontSize: "0.6em",
+                overflowY: "scroll",
+                overflowX: "hidden",
+              },
             }}
           >
             {modalContent && (
               <div className="textHolder">
                 <div className="warningTitle">{modalContent.title}</div>
                 <div className="warningText">{modalContent.text}</div>
+                <br />
+                <div className="urlCites">Cites</div>
+                <div className="warningUrls">
+                  {modalContent.url?.length > 0 && (
+                    <>
+                      {modalContent.url.map((url, index) => (
+                        <a
+                          key={index}
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {modalContent.urlTitle?.[index]}
+                          <br />
+                        </a>
+                      ))}
+                    </>
+                  )}
+                </div>
 
                 <button
                   className="exit"
@@ -392,7 +435,7 @@ export default function Video() {
                     setModalContent(null);
                   }}
                 >
-                  X
+                  <FaTimes />
                 </button>
               </div>
             )}
