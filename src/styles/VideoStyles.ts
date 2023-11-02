@@ -3,7 +3,7 @@ import { Colors } from './colors';
 
 //Video container
 export const VideoContainer = styled.div`
-    width: 60%;
+    width: 55%;
     background-color: ${Colors.Gray};
     aspect-ratio: 16/9;
     display: flex;
@@ -55,7 +55,7 @@ export const VideoTimelineBackground = styled.div`
     width: 100%;
     height: 80px;
     background-color: ${Colors.DarkGray};
-    width: 60%;
+    width: 100%;
     position: relative;
     border: 1px solid ${Colors.DarkBack};
     box-shadow: 2px 2px 10px 0px ${Colors.DarkBack};
@@ -113,58 +113,11 @@ export const VideoTimelineSeeker = styled.div`
     opacity: 0;
 `;
 
-//Video wvaeform canvas
-export const VideoWaveform = styled.canvas`
-    width: 100%;
-    height: 80px;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-`;
-
-//WaveForm.js styles
-export const WaveformContianer = styled.div`
-  display: flex;  
-  flex-direction: row;  
-  align-items: center;
-  justify-content: center;
-  height: 100px;  
-  width: 60%;
-  background: transparent;
-  z-index: 1;
-`;
-
 export const TimelineContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 55%;
   
 `
-
-
-export const Wave = styled.div`
-  width: 100%;
-  height: 90px;
-  
-`;
-
-export const PlayButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 57px;
-  height: 52px;
-  background: #EFEFEF;
-  border-radius: 50%;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding-bottom: 3px;
-  margin-right: 1rem;
-  transition: background-color 0.3s ease;
-  &:hover {
-    background: #DDDD;
-  }
-`;
