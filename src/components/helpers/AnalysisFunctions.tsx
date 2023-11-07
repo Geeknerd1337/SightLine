@@ -3,6 +3,7 @@ import { getFrameLuminance } from './flash';
 import { getMidpoints } from './flash';
 import { checkFlashes } from './flash';
 import { getFlashArr } from './flash';
+//comment for github
 
 import { FlashAnalyzer } from './FlashAnalyzer';
 import { BlueLightAnalyzer } from './BlueLightAnalyzer';
