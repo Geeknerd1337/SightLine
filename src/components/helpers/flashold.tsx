@@ -1,6 +1,6 @@
 export const getFrameLuminance = (canvas: HTMLCanvasElement): number => {
   // get the canvas context
-  const context = canvas.getContext('2d');
+  const context = canvas.getContext('2d', { willReadFrequently: true });
 
   if (!context) {
     return -1;

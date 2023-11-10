@@ -16,7 +16,7 @@ const RGBToHue = (r: number, g: number, b: number): number => {
 
 const getFrameBlueLight = (canvas: HTMLCanvasElement): number => {
   // get the canvas context
-  const context = canvas.getContext('2d');
+  const context = canvas.getContext('2d', { willReadFrequently: true });
 
   let numBLpixels = 0;
 

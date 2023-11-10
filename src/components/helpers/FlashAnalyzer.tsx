@@ -20,10 +20,11 @@ export class FlashAnalyzer {
   async analyze(
     canvas: HTMLCanvasElement,
     videoRef: React.RefObject<HTMLVideoElement>,
-    currentFrame: number
+    currentFrame: number,
+    context: CanvasRenderingContext2D | null
   ) {
     //Log the frame luminance
-    const frameLuminance = await getFrameLuminance(canvas);
+    const frameLuminance = await getFrameLuminance(canvas, context);
     //Get the current second
     const currentSecond = Math.floor(videoRef.current!.currentTime);
     //Check if the current second is different from the last second

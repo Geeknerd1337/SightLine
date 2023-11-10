@@ -44,14 +44,14 @@ export const Analyze = async (
     videoRef.current!.currentTime = i;
     videoRef.current?.pause();
 
+    const context = canvas.getContext('2d', { willReadFrequently: true });
+
     //Drawing the videos current frame to the canvas
-    canvas.getContext('2d')!.drawImage(videoRef.current!, 0, 0);
+    context!.drawImage(videoRef.current!, 0, 0);
 
     //Converting the canvas into an array of pixel data
     const currentFrameData = new Uint8Array(
-      canvas
-        .getContext('2d')!
-        .getImageData(0, 0, canvas.width, canvas.height).data
+      context!.getImageData(0, 0, canvas.width, canvas.height).data
     );
 
     //If there is a previous frame to compare to
@@ -66,9 +66,19 @@ export const Analyze = async (
       if (pixelDifference > 0) {
         // Frame has changed
         // You can perform additional analysis or actions here
-        await flashAnalyzer.analyze(canvas, videoRef, currentFrame);
-        await blueLightAnalyzer.analyze(canvas, videoRef, currentFrame);
-        await luminanceAnalyzer.analyze(canvas, videoRef, currentFrame);
+        await flashAnalyzer.analyze(canvas, videoRef, currentFrame, context);
+        await blueLightAnalyzer.analyze(
+          canvas,
+          videoRef,
+          currentFrame,
+          context
+        );
+        await luminanceAnalyzer.analyze(
+          canvas,
+          videoRef,
+          currentFrame,
+          context
+        );
         currentFrame++;
       }
     }
@@ -83,7 +93,7 @@ export const Analyze = async (
     // //   var flashes = getFlashArr(values, midpoints, 30);
     // // }
 
-    await new Promise((resolve) => setTimeout(resolve, 25));
+    await new Promise((resolve) => setTimeout(resolve, 5));
   }
 
   let returnObj: Results = {

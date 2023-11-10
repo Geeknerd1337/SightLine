@@ -1,9 +1,9 @@
 export const getFrameLuminance = async (
-  canvas: HTMLCanvasElement
+  canvas: HTMLCanvasElement,
+  context: CanvasRenderingContext2D | null
 ): Promise<number> => {
   return new Promise<number>((resolve, reject) => {
     // get the canvas context
-    const context = canvas.getContext('2d');
 
     if (!context) {
       reject(new Error('Canvas context not available.'));

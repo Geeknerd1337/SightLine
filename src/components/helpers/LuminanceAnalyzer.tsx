@@ -15,10 +15,11 @@ export class LuminanceAnalyzer {
   async analyze(
     canvas: HTMLCanvasElement,
     videoRef: React.RefObject<HTMLVideoElement>,
-    currentFrame: number
+    currentFrame: number,
+    context: CanvasRenderingContext2D | null
   ) {
     //Log the frame luminance
-    const frameLuminance = await getFrameLuminance(canvas);
+    const frameLuminance = await getFrameLuminance(canvas, context);
     //Get the current second
     const currentSecond = Math.floor(videoRef.current!.currentTime);
     //Check if the current second is different from the last second
@@ -30,33 +31,30 @@ export class LuminanceAnalyzer {
 
     if (currentFrame != this.LastFrame) {
       //If the frame luminance is higher than 200
-      //console.log(frameLuminance);
-      if (frameLuminance > 10) {
+      console.log(frameLuminance);
+      if (frameLuminance > 150) {
         // console.log(
         //   'Frame Luminance Boundary Reached(' + this.StartSecond + ')'
         // );
         if (this.StartSecond == -1) {
+          // console.log('SETTING START SECOND');
           this.StartSecond = videoRef.current?.currentTime;
         } else {
           //If the time between the current video time and the start second is > 5 seconds
         }
       } else {
         if (this.StartSecond != -1) {
-          //   console.log(
-          //     'Time since start second: ' +
-          //       (videoRef.current?.currentTime - this.StartSecond)
-          //   );
+          // console.log(
+          //   'Time since start second: ' +
+          //     (videoRef.current?.currentTime - this.StartSecond)
+          // );
           if (videoRef.current?.currentTime - this.StartSecond >= 0.5) {
             this.EndSecond = videoRef.current?.currentTime;
           }
         }
       }
 
-      if (
-        (this.EndSecond != -1 && this.StartSecond != -1) ||
-        (videoRef.current?.currentTime > videoRef.current?.duration - 5.0 &&
-          this.StartSecond != -1)
-      ) {
+      if (this.EndSecond != -1 && this.StartSecond != -1) {
         // console.log(
         //   'PUSHING LUMINANCE WARNING: (' +
         //     this.StartSecond +
