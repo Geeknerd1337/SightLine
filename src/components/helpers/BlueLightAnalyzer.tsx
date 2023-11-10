@@ -21,10 +21,11 @@ export class BlueLightAnalyzer {
     canvas: HTMLCanvasElement,
     videoRef: React.RefObject<HTMLVideoElement>,
     currentFrame: number,
-    context: CanvasRenderingContext2D | null
+    context: CanvasRenderingContext2D | null,
+    imageData: ImageData
   ) {
     //Log the frame luminance
-    const frameBlueLight = await getFrameBlueLight(canvas, context);
+    const frameBlueLight = await getFrameBlueLight(canvas, context, imageData);
     //Get the current second
     const currentSecond = Math.floor(videoRef.current!.currentTime);
     //Check if the current second is different from the last second
@@ -70,7 +71,8 @@ export class BlueLightAnalyzer {
 //Async method to get the percentage of blue in each pixel as an average accross a whole frame
 export const getFrameBlueLight = async (
   canvas: HTMLCanvasElement,
-  context: CanvasRenderingContext2D | null
+  context: CanvasRenderingContext2D | null,
+  imageData: ImageData
 ): Promise<number> => {
   return new Promise<number>((resolve, reject) => {
     // get the canvas context

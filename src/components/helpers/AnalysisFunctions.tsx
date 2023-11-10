@@ -12,9 +12,13 @@ import { LuminanceAnalyzer } from './LuminanceAnalyzer';
 function pixelDataDifference(data1: Uint8Array, data2: Uint8Array): number {
   // Compare the pixel data of two frames and return the difference
   let difference = 0;
-  for (let i = 0; i < data1.length; i++) {
-    difference += Math.abs(data1[i] - data2[i]);
+  const length = data1.length;
+
+  for (let i = 0; i < length; i++) {
+    const pixelDiff = data1[i] - data2[i];
+    difference += pixelDiff < 0 ? -pixelDiff : pixelDiff;
   }
+
   return difference;
 }
 
@@ -39,7 +43,7 @@ export const Analyze = async (
   //The current frame of the video
   let currentFrame = 0;
 
-  for (let i = 0; i < videoRef.current!.duration; i += 1 / 65) {
+  for (let i = 0; i < videoRef.current!.duration; i += 1 / 30) {
     //Move through the video very slowly and pausing it
     videoRef.current!.currentTime = i;
     videoRef.current?.pause();
@@ -49,10 +53,10 @@ export const Analyze = async (
     //Drawing the videos current frame to the canvas
     context!.drawImage(videoRef.current!, 0, 0);
 
+    const imageData = context!.getImageData(0, 0, canvas.width, canvas.height);
+
     //Converting the canvas into an array of pixel data
-    const currentFrameData = new Uint8Array(
-      context!.getImageData(0, 0, canvas.width, canvas.height).data
-    );
+    const currentFrameData = new Uint8Array(imageData.data);
 
     //If there is a previous frame to compare to
     if (previousFrameData) {
@@ -66,18 +70,26 @@ export const Analyze = async (
       if (pixelDifference > 0) {
         // Frame has changed
         // You can perform additional analysis or actions here
-        await flashAnalyzer.analyze(canvas, videoRef, currentFrame, context);
+        await flashAnalyzer.analyze(
+          canvas,
+          videoRef,
+          currentFrame,
+          context,
+          imageData
+        );
         await blueLightAnalyzer.analyze(
           canvas,
           videoRef,
           currentFrame,
-          context
+          context,
+          imageData
         );
         await luminanceAnalyzer.analyze(
           canvas,
           videoRef,
           currentFrame,
-          context
+          context,
+          imageData
         );
         currentFrame++;
       }

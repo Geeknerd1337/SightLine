@@ -16,10 +16,11 @@ export class LuminanceAnalyzer {
     canvas: HTMLCanvasElement,
     videoRef: React.RefObject<HTMLVideoElement>,
     currentFrame: number,
-    context: CanvasRenderingContext2D | null
+    context: CanvasRenderingContext2D | null,
+    imageData: ImageData
   ) {
     //Log the frame luminance
-    const frameLuminance = await getFrameLuminance(canvas, context);
+    const frameLuminance = await getFrameLuminance(canvas, context, imageData);
     //Get the current second
     const currentSecond = Math.floor(videoRef.current!.currentTime);
     //Check if the current second is different from the last second

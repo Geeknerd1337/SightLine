@@ -1,6 +1,7 @@
 export const getFrameLuminance = async (
   canvas: HTMLCanvasElement,
-  context: CanvasRenderingContext2D | null
+  context: CanvasRenderingContext2D | null,
+  imageData: ImageData
 ): Promise<number> => {
   return new Promise<number>((resolve, reject) => {
     // get the canvas context
@@ -9,9 +10,6 @@ export const getFrameLuminance = async (
       reject(new Error('Canvas context not available.'));
       return;
     }
-
-    // get the pixel data for the canvas
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
     // calculate the average luminance of the frame
     let sum = 0;
