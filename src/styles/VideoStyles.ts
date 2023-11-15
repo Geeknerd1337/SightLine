@@ -12,6 +12,10 @@ export const VideoContainer = styled.div`
     justify-content: center;
     position: relative;
     margin-bottom: 20px;
+
+    //Box shadow
+    border: 2px solid ${Colors.DarkBack};
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.5);
 `;
 
 export const UploadLabel = styled.div`
@@ -24,6 +28,9 @@ export const UploadLabel = styled.div`
     justify-content: center;
     text-align: center;
     padding: 1rem;
+    //Text shadow
+    text-shadow: 2px 2px 5px ${Colors.DarkBack};
+    
 `;
 
 export const UploadButton = styled.button`
@@ -39,9 +46,11 @@ export const UploadButton = styled.button`
   color: ${Colors.DarkGray};
   transition: 0.2s ease-in-out;
   font-weight: 600;
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.5);
 
   &:hover {
     background-color: ${Colors.Gold}cc;
+    transform: scale(1.05);
   }
 `;
 

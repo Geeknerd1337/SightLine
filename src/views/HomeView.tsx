@@ -1,6 +1,6 @@
-import { Background } from "@/styles/HomeViewStyles";
-import Intro from "@/components/Intro";
-import Video from "@/components/Video Analysis/Video";
+import { Background } from '@/styles/HomeViewStyles';
+import Intro from '@/components/Intro';
+import Video from '@/components/Video Analysis/Video';
 
 // * home page
 export default function HomeView() {

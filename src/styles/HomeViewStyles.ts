@@ -10,5 +10,6 @@ export const Background = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  font-family: 'Roboto', sans-serif;
   `;
 

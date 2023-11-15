@@ -3,8 +3,10 @@
 @tailwind utilities;
 
 * {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+
+
