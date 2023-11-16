@@ -91,3 +91,15 @@ export const WarningModal = styled.div`
     }
   }
 `;
+
+export const BackDrop = styled.div`
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 100%;
+  width: 100%;
+  background: #000000e1;
+  display: flex;
+  justify-content: center;
+
+`
