@@ -1,12 +1,14 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { FaInfoCircle } from "react-icons/fa";
+import InfoModal from "./modals/InfoModal";
 
 export default function InfoButton() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const close = () => setModalOpen(false);
   const open = () => setModalOpen(true);
+
   return (
     <div>
       <motion.button
@@ -17,6 +19,10 @@ export default function InfoButton() {
       >
         <FaInfoCircle size="2rem" color="white" />
       </motion.button>
+
+      {modalOpen && (
+        <InfoModal modalOpen={modalOpen} handleClose={close} text="Lorem" />
+      )}
     </div>
   );
 }
