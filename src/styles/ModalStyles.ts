@@ -20,7 +20,7 @@ export const WarningContainer = styled.div`
     padding: 0.4rem;
     margin-bottom: 5px;
     border-radius: 5px;
-    gap: 0.9rem;
+    gap: 0.5rem;
 
     &:hover {
       cursor: pointer;

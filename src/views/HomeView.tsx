@@ -8,8 +8,8 @@ export default function HomeView() {
   return (
     <>
       <Background>
-        <Video />
         <InfoButton />
+        <Video />
       </Background>
 
       <Intro />

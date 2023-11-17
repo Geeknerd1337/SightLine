@@ -23,7 +23,7 @@ const dropIn = {
     },
   },
   exit: {
-    y: "100vh",
+    y: "15vh",
     opacity: 0,
   },
 };
@@ -39,11 +39,20 @@ export default function InfoModal({ handleClose, text }: InfoModalProps) {
         animate="visible"
         exit="exit"
       >
-        <div className="info-text">
-          <h1>Hello</h1>
-          <h3>{text}</h3>
+        <div className="info-modal-text">
+          <h3>Hello</h3>
+          <h5>{text}</h5>
         </div>
-        <button onClick={handleClose}>Close</button>
+
+        <motion.button
+          className="close-button"
+          type="button"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handleClose}
+        >
+          Close
+        </motion.button>
       </motion.div>
     </Backdrop>
   );

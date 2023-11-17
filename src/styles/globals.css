@@ -8,32 +8,3 @@
   margin: 0;
   padding: 0;
 }
-
-.backdrop {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  height: 100%;
-  width: 100%;
-  background: #000000e1;
-  display: flex;
-  justify-content: center;
-}
-
-.info-modal {
-  width: clamp(50%, 700px, 90%);
-  height: min(50%, 300px);
-
-  margin: auto;
-  padding: 0 2rem;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: linear-gradient(10deg, #fa0, #ff6a00);
-}
-
-.info-text {
-  display: flex;
-  flex-direction: column;
-}
