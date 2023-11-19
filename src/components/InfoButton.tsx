@@ -35,7 +35,7 @@ export default function InfoButton() {
           <InfoModal
             modalOpen={modalOpen}
             handleClose={close}
-            text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius laboriosam labore, totam expedita voluptates tempore asperiores sequi, alias cum veritatis, minima dolor iste similique eos id. Porro, culpa? Officiis, placeat?"
+            text="Analyses videos for flashing lights, luminance, and blue light accessibility by collecting the image data for the individual frames and using them in formulas from WCAG"
           />
         )}
       </AnimatePresence>
