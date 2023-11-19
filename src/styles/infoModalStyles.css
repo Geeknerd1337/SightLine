@@ -31,7 +31,7 @@ h5 {
 
 .info-modal {
   width: clamp(50%, 700px, 90%);
-  height: min(50%, 300px);
+  height: min(50%, 400px);
 
   margin: auto;
   padding: 0 2rem;

@@ -3,7 +3,7 @@ import Backdrop from "../Backdrop";
 
 interface InfoModalProps {
   handleClose: () => void;
-  text: string;
+  text: React.ReactNode;
   modalOpen: boolean;
 }
 
@@ -40,7 +40,7 @@ export default function InfoModal({ handleClose, text }: InfoModalProps) {
         exit="exit"
       >
         <div className="info-modal-text">
-          <h3>Hello</h3>
+          <h3>About Sight-Line</h3>
           <h5>{text}</h5>
         </div>
 

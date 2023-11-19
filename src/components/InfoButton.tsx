@@ -35,7 +35,18 @@ export default function InfoButton() {
           <InfoModal
             modalOpen={modalOpen}
             handleClose={close}
-            text="Analyses videos for flashing lights, luminance, and blue light accessibility by collecting the image data for the individual frames and using them in formulas from WCAG."
+            text={
+              <>
+                This website was created to analyze videos with a focus on
+                enhancing accessibility awareness for a wide range of users,
+                including game developers and content creators. It assesses
+                videos based on three key aspects of accessibility:
+                Seizure-Inducing Flashing, Blue Light Impact, and Luminance
+                Levels. <br />
+                <br /> By addressing these aspects, the website aims to make
+                videos more inclusive and considerate of diverse user needs.
+              </>
+            }
           />
         )}
       </AnimatePresence>
