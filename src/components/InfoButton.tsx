@@ -35,7 +35,7 @@ export default function InfoButton() {
           <InfoModal
             modalOpen={modalOpen}
             handleClose={close}
-            text="Analyses videos for flashing lights, luminance, and blue light accessibility by collecting the image data for the individual frames and using them in formulas from WCAG"
+            text="Analyses videos for flashing lights, luminance, and blue light accessibility by collecting the image data for the individual frames and using them in formulas from WCAG."
           />
         )}
       </AnimatePresence>
