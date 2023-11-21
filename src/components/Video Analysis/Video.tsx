@@ -312,7 +312,7 @@ export default function Video() {
               justifyContent: "center",
               paddingTop: "15rem"
             
-            }}> Analysing </p>
+            }}> Analyzing </p>
           </LoadingModal>
         )}
         <WarningContainer
