@@ -304,6 +304,15 @@ export default function Video() {
         {analysisState === "analyzing" && (
           <LoadingModal>
             <ThreeDotsWave />
+            <p css = {{
+              position: "fixed",
+              display:"flex",
+              width:"100%",
+              alignItems: "center",
+              justifyContent: "center",
+              paddingTop: "15rem"
+            
+            }}> Analysing </p>
           </LoadingModal>
         )}
         <WarningContainer
