@@ -39,7 +39,7 @@ h5 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(10deg, #ffd166, #de8342);
+  background: #ffd166;
 }
 
 .info-modal-text {
