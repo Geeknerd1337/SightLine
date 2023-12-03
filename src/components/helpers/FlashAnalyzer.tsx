@@ -42,7 +42,7 @@ export class FlashAnalyzer {
       }
 
       //If the distance between the last frame luminance and the current frame luminance is greater than 100, increase the flashes per second
-      if (Math.abs(this.LastFrameLuminance - frameLuminance) > 40) {
+      if (Math.abs(this.LastFrameLuminance - frameLuminance) > 100) {
         this.FlashesPerSecond++;
       }
 
@@ -51,7 +51,7 @@ export class FlashAnalyzer {
 
     if (this.LastSecond != currentSecond) {
       //If the flashes per second is greater than 3, set the start second to the current second
-      if (this.FlashesPerSecond > 2 && this.StartSecond == -1) {
+      if (this.FlashesPerSecond > 3 && this.StartSecond == -1) {
         this.StartSecond = videoRef.current?.currentTime;
         //console.log('SETTING START SECOND');
       }

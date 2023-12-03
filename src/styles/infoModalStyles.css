@@ -24,7 +24,7 @@ h5 {
   right: 0px;
   height: 100%;
   width: 100%;
-  background: #131212e1;
+  background: #121212e1;
   display: flex;
   justify-content: center;
 }
@@ -32,7 +32,7 @@ h5 {
 .info-modal {
   width: clamp(50%, 700px, 90%);
   height: min(50%, 400px);
-
+  z-index: 6;
   margin: auto;
   padding: 0 2rem;
   border-radius: 12px;
@@ -43,6 +43,7 @@ h5 {
 }
 
 .info-modal-text {
+  z-index: 7;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -64,4 +65,5 @@ h5 {
   font-weight: 600;
   font-size: 1.25rem;
   letter-spacing: 1.25px;
+  margin-top: 2.5rem;
 }
