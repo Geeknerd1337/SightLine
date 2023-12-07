@@ -30,8 +30,8 @@ h5 {
 }
 
 .info-modal {
-  width: clamp(50%, 700px, 90%);
-  height: min(50%, 400px);
+  width: clamp(50%, 675px, 90%);
+  height: min(50%, 450px);
   z-index: 6;
   margin: auto;
   padding: 0 2rem;
@@ -47,6 +47,7 @@ h5 {
   display: flex;
   flex-direction: column;
   text-align: center;
+  font-size: 0.75em;
 }
 
 .close-button {
