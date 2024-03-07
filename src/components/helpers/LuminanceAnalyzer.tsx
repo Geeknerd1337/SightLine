@@ -1,9 +1,9 @@
-import { Warning } from './AnalysisFunctions';
+import { LumWarning } from './AnalysisFunctions';
 import { getFrameLuminance } from './flash';
 //flash analyzer class
 export class LuminanceAnalyzer {
   //The flash warnings
-  LuminanceWarnings: Warning[] = [];
+  LuminanceWarnings: LumWarning[] = [];
 
   LastFrame: number = 0;
 

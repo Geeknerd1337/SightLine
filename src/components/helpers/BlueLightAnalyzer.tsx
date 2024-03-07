@@ -1,9 +1,9 @@
-import { Warning } from './AnalysisFunctions';
+import { BlueWarning } from './AnalysisFunctions';
 import { getFrameLuminance } from './flash';
 //flash analyzer class
 export class BlueLightAnalyzer {
   //The flash warnings
-  BlueLightWarnings: Warning[] = [];
+  BlueLightWarnings: BlueWarning[] = [];
   //Last frame blue percentage
   LastFrameBluePercentage: number = 0;
 
@@ -56,6 +56,7 @@ export class BlueLightAnalyzer {
         this.BlueLightWarnings.push({
           startTime: this.StartSecond,
           endTime: this.EndSecond,
+          difference: (frameBlueLight - 0.68)
         });
 
         this.StartSecond = -1;

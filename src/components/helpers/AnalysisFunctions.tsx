@@ -120,12 +120,23 @@ export const Analyze = async (
 
 // Results interface
 export interface Results {
-  flashWarning: Warning[];
-  blueLightWarning: Warning[];
-  contrastWarning: Warning[];
+  flashWarning: FlashWarning[];
+  blueLightWarning: BlueWarning[];
+  contrastWarning: LumWarning[];
 }
 
-export interface Warning {
+export interface FlashWarning {
+  startTime: number;
+  endTime: number;
+}
+
+export interface BlueWarning {
+  startTime: number;
+  endTime: number;
+  difference: number;
+}
+
+export interface LumWarning {
   startTime: number;
   endTime: number;
 }
