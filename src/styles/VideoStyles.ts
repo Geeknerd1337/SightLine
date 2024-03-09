@@ -3,7 +3,7 @@ import { Colors } from './colors';
 
 //Video container
 export const VideoContainer = styled.div`
-    width: 55%;
+    height: 50vh;
     background-color: ${Colors.Gray};
     aspect-ratio: 16/9;
     display: flex;
@@ -58,6 +58,7 @@ export const VideoDisplay = styled.video`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    
 `;
 
 export const VideoTimelineBackground = styled.div`
