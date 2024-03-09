@@ -1,9 +1,9 @@
-import { LumWarning } from './AnalysisFunctions';
+import { Warning } from './AnalysisFunctions';
 import { getFrameLuminance } from './flash';
 //flash analyzer class
 export class LuminanceAnalyzer {
   //The flash warnings
-  LuminanceWarnings: LumWarning[] = [];
+  LuminanceWarnings: Warning[] = [];
 
   LastFrame: number = 0;
 
@@ -68,6 +68,7 @@ export class LuminanceAnalyzer {
         this.LuminanceWarnings.push({
           startTime: this.StartSecond,
           endTime: videoRef.current?.currentTime,
+          difference: (frameLuminance - 150)
         });
         this.StartSecond = -1;
         this.EndSecond = -1;

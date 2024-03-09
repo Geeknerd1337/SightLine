@@ -120,29 +120,22 @@ export const Analyze = async (
 
 // Results interface
 export interface Results {
-  flashWarning: FlashWarning[];
-  blueLightWarning: BlueWarning[];
-  contrastWarning: LumWarning[];
+  flashWarning: Warning[];
+  blueLightWarning: Warning[];
+  contrastWarning: Warning[];
 }
 
-export interface FlashWarning {
-  startTime: number;
-  endTime: number;
-}
 
-export interface BlueWarning {
+export interface Warning {
   startTime: number;
   endTime: number;
   difference: number;
 }
 
-export interface LumWarning {
-  startTime: number;
-  endTime: number;
-}
 
 //A flash is a data point consisting of a second and the number of flashes in that second
 interface Flash {
   flashes: number;
   second: number;
+
 }
