@@ -26,7 +26,7 @@ const Modal = styled.div`
   position: absolute;
   top: 0px;
 
-  background-color: ${Colors.DarkerBack};
+  background-color: ${Colors.Gold};
   padding: 10px;
   transform: translateX(-50%) translateY(-110%);
   opacity: 1;
@@ -34,7 +34,7 @@ const Modal = styled.div`
   box-shadow: 2px 2px 10px 0px ${Colors.DarkBack};
   white-space: nowrap;
   .text {
-    color: ${Colors.White};
+    color: ${Colors.DarkerBack};
     font-size: 1.5vh;
     font-family: 'Roboto', sans-serif;
   }
@@ -82,7 +82,7 @@ export default function WarningButton(props: WarningButtonProps) {
               {formatTimestamp(props.warning.startTime)} -{' '}
               {formatTimestamp(props.warning.endTime)}
             </div>
-            <div>Difference</div>
+            <div>Reduce by this amount in area(Number of flashes, Amount of Blue Light, or Amount of Luminance)</div>
             <div>{props.warning.difference.toFixed(2)}</div>
           </div>
         </Modal>
