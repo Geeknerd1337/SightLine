@@ -19,7 +19,7 @@ h5 {
 
 .backdrop {
   z-index: 5;
-  position: absolute;
+  position: fixed;
   top: 0px;
   right: 0px;
   height: 100%;

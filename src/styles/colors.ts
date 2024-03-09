@@ -1,4 +1,5 @@
 const DarkBack = '#1C1C1C';
+const DarkerBack = '#1A1A1A';
 const Back = '#1E1E1E';
 const Gold = "#FFD166";
 const White = "#FFFFFF";
@@ -27,5 +28,6 @@ export const Colors = {
   BackHilight,
   Charcoal,
   DarkBack,
+  DarkerBack,
   DarkGrayWithTransparency
 };

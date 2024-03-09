@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import React, { MouseEvent } from "react";
+import { motion } from 'framer-motion';
+import React, { MouseEvent } from 'react';
 
 interface BackdropProps {
   children: React.ReactNode;
@@ -10,7 +10,7 @@ export default function Backdrop({ children, onClick }: BackdropProps) {
   return (
     <motion.div
       onClick={onClick}
-      className="backdrop"
+      className='backdrop'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
