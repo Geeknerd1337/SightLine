@@ -34,7 +34,7 @@ const LogoHolder = styled.div`
   }
 `;
 
-export default function () {
+export default function NavBar() {
   return (
     <Background>
       <LogoHolder>
