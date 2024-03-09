@@ -14,7 +14,7 @@ import { WarningContainer, WarningModal } from '@/styles/ModalStyles';
 import { useState, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Colors } from '@/styles/colors';
-import { Analyze } from '../helpers/AnalysisFunctions';
+import { Analyze, Warning } from '../helpers/AnalysisFunctions';
 import { Results } from '../helpers/AnalysisFunctions';
 import VideoTimeline from './VideoTimeline';
 import {
@@ -153,6 +153,8 @@ export default function Video() {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [results, setResults] = useState<Results | null>(null);
   const [warnings, setWarnings] = useState<Results | null>(null);
+
+  const [hoveredWarning, setHoveredWarning] = useState<Warning | null>(null);
   const [fps, setFps] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);

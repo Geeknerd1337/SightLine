@@ -17,6 +17,7 @@ import {
   LuminanceModalContent,
   ModalContent,
 } from '../modals/WarningModalComp';
+import WarningButton from '../WarningButton';
 
 const ButtonsContainer = styled.div`
   display: flex;
@@ -160,8 +161,7 @@ export default function VideoTimeline(props: VideoTimelineProps) {
               props.results &&
               props.results.flashWarning.map((flash, index) => {
                 return (
-                  <button
-                    className='warning'
+                  <WarningButton
                     style={{
                       position: 'absolute',
                       left: `${
@@ -182,7 +182,8 @@ export default function VideoTimeline(props: VideoTimelineProps) {
                         props.setModalContent(FlashModalContent);
                       props.setModalOpen && props.setModalOpen(true);
                     }}
-                  ></button>
+                    warning={flash}
+                  ></WarningButton>
                 );
               })}
           </div>
@@ -191,8 +192,7 @@ export default function VideoTimeline(props: VideoTimelineProps) {
               props.results &&
               props.results.contrastWarning.map((contrast, index) => {
                 return (
-                  <button
-                    className='warning'
+                  <WarningButton
                     style={{
                       position: 'absolute',
                       left: `${
@@ -214,7 +214,8 @@ export default function VideoTimeline(props: VideoTimelineProps) {
                         props.setModalContent(LuminanceModalContent);
                       props.setModalOpen && props.setModalOpen(true);
                     }}
-                  ></button>
+                    warning={contrast}
+                  ></WarningButton>
                 );
               })}
           </div>
@@ -223,8 +224,7 @@ export default function VideoTimeline(props: VideoTimelineProps) {
               props.results &&
               props.results.blueLightWarning.map((bluelight, index) => {
                 return (
-                  <button
-                    className='warning'
+                  <WarningButton
                     style={{
                       position: 'absolute',
                       left: `${
@@ -246,7 +246,8 @@ export default function VideoTimeline(props: VideoTimelineProps) {
                         props.setModalContent(BlueModalContent);
                       props.setModalOpen && props.setModalOpen(true);
                     }}
-                  ></button>
+                    warning={bluelight}
+                  ></WarningButton>
                 );
               })}
           </div>
