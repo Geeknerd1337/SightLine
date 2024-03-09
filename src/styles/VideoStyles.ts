@@ -63,7 +63,7 @@ export const VideoDisplay = styled.video`
 
 export const VideoTimelineBackground = styled.div`
     width: 100%;
-    height: 80px;
+    height: 7vh;
     background-color: ${Colors.DarkGray};
     width: 100%;
     position: relative;
@@ -128,6 +128,6 @@ export const TimelineContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 55%;
+  width: 100%;
   
 `
