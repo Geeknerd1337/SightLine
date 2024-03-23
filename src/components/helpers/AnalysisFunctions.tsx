@@ -130,6 +130,7 @@ export interface Warning {
   startTime: number;
   endTime: number;
   difference: number;
+  type: string;
 }
 
 

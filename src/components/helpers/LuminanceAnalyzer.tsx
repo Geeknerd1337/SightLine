@@ -68,7 +68,8 @@ export class LuminanceAnalyzer {
         this.LuminanceWarnings.push({
           startTime: this.StartSecond,
           endTime: videoRef.current?.currentTime,
-          difference: (frameLuminance - 150)
+          difference: frameLuminance - 150,
+          type: 'Luminance',
         });
         this.StartSecond = -1;
         this.EndSecond = -1;

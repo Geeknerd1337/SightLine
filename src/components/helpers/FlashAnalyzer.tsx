@@ -68,7 +68,8 @@ export class FlashAnalyzer {
         this.FlashWarnings.push({
           startTime: this.StartSecond,
           endTime: this.EndSecond,
-          difference: (this.FlashesPerSecond - 3)
+          difference: this.FlashesPerSecond - 3,
+          type: 'Flash',
         });
 
         this.StartSecond = -1;

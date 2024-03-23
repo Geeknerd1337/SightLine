@@ -56,7 +56,8 @@ export class BlueLightAnalyzer {
         this.BlueLightWarnings.push({
           startTime: this.StartSecond,
           endTime: this.EndSecond,
-          difference: (frameBlueLight - 0.68)
+          difference: frameBlueLight - 0.68,
+          type: 'Blue Light',
         });
 
         this.StartSecond = -1;
