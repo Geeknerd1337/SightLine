@@ -14,8 +14,8 @@ import { WarningContainer, WarningModal } from '@/styles/ModalStyles';
 import { useState, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Colors } from '@/styles/colors';
-import { Analyze, Warning } from '../helpers/AnalysisFunctions';
-import { Results } from '../helpers/AnalysisFunctions';
+import { Analyze, Warning } from '../helpers/Analysis';
+import { Results } from '../helpers/Analysis';
 import VideoTimeline from './VideoTimeline';
 import {
   FlashModalContent,

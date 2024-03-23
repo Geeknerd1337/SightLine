@@ -1,7 +1,7 @@
 import React from 'react';
-import { FlashAnalyzer } from './FlashAnalyzer';
-import { BlueLightAnalyzer } from './BlueLightAnalyzer';
-import { LuminanceAnalyzer } from './LuminanceAnalyzer';
+import { FlashAnalyzer } from './analyzers/FlashAnalyzer';
+import { BlueLightAnalyzer } from './analyzers/BlueLightAnalyzer';
+import { LuminanceAnalyzer } from './analyzers/LuminanceAnalyzer';
 
 function pixelDataDifference(data1: Uint8Array, data2: Uint8Array): number {
   // Compare the pixel data of two frames and return the difference
@@ -90,14 +90,6 @@ export const Analyze = async (
     }
 
     previousFrameData = currentFrameData;
-
-    // //flashes
-    // // for (let i = 0; i < 60; i += 1) {
-    // //   values[i] = getFrameLuminance(canvas);
-    // //   const midpoints = getMidpoints(values);
-    // //   flashNum = checkFlashes(values, midpoints, 30);
-    // //   var flashes = getFlashArr(values, midpoints, 30);
-    // // }
 
     await new Promise((resolve) => setTimeout(resolve, 5));
   }

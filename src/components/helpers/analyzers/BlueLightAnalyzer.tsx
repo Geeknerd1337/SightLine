@@ -1,5 +1,4 @@
-import { Warning } from './AnalysisFunctions';
-import { getFrameLuminance } from './flash';
+import { Warning } from '../Analysis';
 //flash analyzer class
 export class BlueLightAnalyzer {
   //The flash warnings

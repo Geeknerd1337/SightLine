@@ -38,7 +38,7 @@ const ButtonsContainer = styled.div`
   }
 `;
 
-import { Results } from '../helpers/AnalysisFunctions';
+import { Results } from '../helpers/Analysis';
 interface VideoTimelineProps {
   videoRef: React.MutableRefObject<HTMLVideoElement | null>;
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;

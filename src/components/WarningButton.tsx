@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Colors } from '@/styles/colors';
-import { Warning } from './helpers/AnalysisFunctions';
+import { Warning } from './helpers/Analysis';
 import { useState } from 'react';
 interface WarningButtonProps {
   warning: Warning;
@@ -82,7 +82,10 @@ export default function WarningButton(props: WarningButtonProps) {
               {formatTimestamp(props.warning.startTime)} -{' '}
               {formatTimestamp(props.warning.endTime)}
             </div>
-            <div>Reduce by this amount in area(Number of flashes, Amount of Blue Light, or Amount of Luminance)</div>
+            <div>
+              Reduce by this amount in area(Number of flashes, Amount of Blue
+              Light, or Amount of Luminance)
+            </div>
             <div>{props.warning.difference.toFixed(2)}</div>
           </div>
         </Modal>
