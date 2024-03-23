@@ -1,10 +1,4 @@
 import React from 'react';
-import { getFrameLuminance } from './flash';
-import { getMidpoints } from './flash';
-import { checkFlashes } from './flash';
-import { getFlashArr } from './flash';
-//comment for github
-
 import { FlashAnalyzer } from './FlashAnalyzer';
 import { BlueLightAnalyzer } from './BlueLightAnalyzer';
 import { LuminanceAnalyzer } from './LuminanceAnalyzer';
@@ -125,18 +119,9 @@ export interface Results {
   contrastWarning: Warning[];
 }
 
-
 export interface Warning {
   startTime: number;
   endTime: number;
   difference: number;
   type: string;
-}
-
-
-//A flash is a data point consisting of a second and the number of flashes in that second
-interface Flash {
-  flashes: number;
-  second: number;
-
 }
