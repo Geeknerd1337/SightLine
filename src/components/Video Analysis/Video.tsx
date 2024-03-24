@@ -29,11 +29,44 @@ const hideNativeUploadButton = css({
   display: 'none',
 });
 
+const WarningTitle = styled.h1`
+  color: ${Colors.Gold};
+  font-size: 2rem;
+  margin-bottom: 10px;
+`;
+
 const AnalyzeButton = styled.button`
   background-color: ${Colors.Gold};
   color: ${Colors.DarkGray};
   border: none;
   border-radius: 5px;
+  padding: 10px;
+  font-size: 2vh;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-top: 15px;
+
+  //Diabled state
+  &:disabled {
+    background-color: ${Colors.DarkGray};
+    color: ${Colors.Gold};
+    cursor: not-allowed;
+    opacity: 0.5;
+    transform: scale(0.98);
+  }
+
+  &:hover {
+    background-color: ${Colors.Gold}cc;
+    transform: scale(1.05);
+  }
+`;
+const ResetButton = styled.button`
+  background-color: ${Colors.White};
+  color: ${Colors.DarkGray};
+  border: none;
+  border-radius: 5px;
+  width:120px;
   padding: 10px;
   font-size: 2vh;
   font-weight: 700;
@@ -166,7 +199,12 @@ export default function Video() {
   >('idle');
 
   const [summaryModalOpen, setSummaryModalOpen] = useState(false);
-
+  const handleSetInitial = () => {
+    setAnalysisState('idle');
+    setResults(null);
+    setWarnings(null);
+    setVideoFile(null);
+  }
   const setWillReadFrequently = () => {
     if (canvasRef.current) {
       canvasRef.current.setAttribute('willReadFrequently', 'true');
@@ -227,6 +265,8 @@ export default function Video() {
 
         // Set the warnings
         setWarnings(warnings);
+        console.log("warings==", warnings)
+
 
         console.log(warnings);
       }
@@ -246,263 +286,299 @@ export default function Video() {
 
   return (
     <>
-      <TotalHolder>
-        <VideoContainer onDrop={handleDrop} onDragOver={handleDragOver}>
-          {videoFile ? (
-            <>
-              <VideoDisplay ref={videoRef}>
-                <source src={URL.createObjectURL(videoFile)} type='video/mp4' />
-              </VideoDisplay>
-              <canvas ref={canvasRef} style={{ display: 'none' }} />
-            </>
-          ) : (
-            <UploadLabel
-              css={{
-                [mq[0]]: {
-                  fontSize: '1em',
-                },
-                [mq[1]]: {
-                  fontSize: '0.8em',
-                },
-                [mq[2]]: {
-                  fontSize: '0.6em',
-                },
-                [mq[3]]: {
-                  fontSize: '0.6em',
-                },
-              }}
-            >
-              Drag and drop a video file here, or click to select a file to
-              upload.
-              <UploadButton
-                onClick={handleClick}
+      <TotalHolder className='w-full flex gap-2 p-2'>
+        <div className='w-full flex justify-center flex-col border py-2 rounded'>
+
+
+          <VideoContainer onDrop={handleDrop} onDragOver={handleDragOver}>
+            {videoFile ? (
+              <>
+                <VideoDisplay ref={videoRef}>
+                  <source src={URL.createObjectURL(videoFile)} type='video/mp4' />
+                </VideoDisplay>
+                <canvas ref={canvasRef} style={{ display: 'none' }} />
+              </>
+            ) : (
+              <UploadLabel
                 css={{
                   [mq[0]]: {
-                    minHeight: '45px',
-                    minWidth: '45px',
+                    fontSize: '1em',
                   },
                   [mq[1]]: {
-                    minHeight: '40px',
-                    minWidth: '40px',
+                    fontSize: '0.8em',
                   },
                   [mq[2]]: {
-                    minHeight: '30px',
-                    minWidth: '30px',
+                    fontSize: '0.6em',
                   },
                   [mq[3]]: {
-                    minHeight: '20px',
-                    minWidth: '20px',
+                    fontSize: '0.6em',
                   },
                 }}
               >
-                File Upload
-              </UploadButton>
-              <input
-                css={hideNativeUploadButton}
-                ref={hiddenFileInput}
-                type='file'
-                accept='video/mp4'
-                onChange={handleFileChange}
-              />
-            </UploadLabel>
-          )}
-          {analysisState === 'analyzing' && (
-            <LoadingModal>
-              <ThreeDotsWave />
-              <p
-                css={{
-                  position: 'fixed',
-                  display: 'flex',
-                  width: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  paddingTop: '15rem',
-                }}
-              >
-                {' '}
-                Analyzing{' '}
-              </p>
-            </LoadingModal>
-          )}
-          <WarningContainer
-            css={{
-              [mq[0]]: {
-                display: 'none',
-              },
-            }}
-          >
-            {warnings && warnings.flashWarning.length > 0 && (
-              <button
-                className='warning'
-                onClick={() => {
-                  setModalOpen(true);
-                  setModalContent(FlashModalContent);
-                }}
-              >
-                <IoIosWarning size='2rem' />
-                Flash Warning
-              </button>
+                Drag and drop a video file here, or click to select a file to
+                upload.
+                <UploadButton
+                  onClick={handleClick}
+                  css={{
+                    [mq[0]]: {
+                      minHeight: '45px',
+                      minWidth: '45px',
+                    },
+                    [mq[1]]: {
+                      minHeight: '40px',
+                      minWidth: '40px',
+                    },
+                    [mq[2]]: {
+                      minHeight: '30px',
+                      minWidth: '30px',
+                    },
+                    [mq[3]]: {
+                      minHeight: '20px',
+                      minWidth: '20px',
+                    },
+                  }}
+                >
+                  File Upload
+                </UploadButton>
+                <input
+                  css={hideNativeUploadButton}
+                  ref={hiddenFileInput}
+                  type='file'
+                  accept='video/mp4'
+                  onChange={handleFileChange}
+                />
+              </UploadLabel>
             )}
-            {warnings && warnings.blueLightWarning.length > 0 && (
-              <div
-                className='warning'
-                onClick={() => {
-                  setModalOpen(true);
-                  setModalContent(BlueModalContent);
-                }}
-              >
-                <IoIosWarning size='2rem' />
-                Blue Light Warning
-              </div>
+            {analysisState === 'analyzing' && (
+              <LoadingModal>
+                <ThreeDotsWave />
+                <p
+                  css={{
+                    position: 'fixed',
+                    display: 'flex',
+                    width: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    paddingTop: '15rem',
+                  }}
+                >
+                  {' '}
+                  Analyzing{' '}
+                </p>
+              </LoadingModal>
             )}
-            {warnings && warnings.contrastWarning.length > 0 && (
-              <div
-                className='warning'
-                onClick={() => {
-                  setModalOpen(true);
-                  setModalContent(LuminanceModalContent);
-                }}
-              >
-                <IoIosWarning size='2rem' />
-                Luminance Warning
-              </div>
-            )}
-          </WarningContainer>
-          {analysisState === 'completed' && (
-            <SummaryButton
-              onClick={() => {
-                setSummaryModalOpen(true);
-              }}
+            <WarningContainer
               css={{
                 [mq[0]]: {
                   display: 'none',
                 },
               }}
             >
-              View Summary
-            </SummaryButton>
-          )}
-          {summaryModalOpen && (
-            <SummaryModal>
-              <button
-                className='exit'
-                onClick={() => {
-                  setSummaryModalOpen(false);
-                }}
-              >
-                <FaTimes />
-              </button>
-              <div className='resultsContainer'>
-                <div className='title'> Results</div>
-                {results && (
-                  <>
-                    <div className='text'>
-                      Flash Warnings: {results.flashWarning.length}
-                    </div>
-                    <div className='text'>
-                      Blue Light Warnings: {results.blueLightWarning.length}
-                    </div>
-                    <div className='text'>
-                      Luminance Warnings: {results.contrastWarning.length}
-                    </div>
-                  </>
-                )}
-              </div>
-            </SummaryModal>
-          )}
-
-          {modalOpen && (
-            <WarningModal
-              css={{
-                [mq[0]]: {
-                  width: '100%',
-                },
-                [mq[1]]: {
-                  width: '100%',
-                  fontSize: '0.8em',
-                },
-                [mq[2]]: {
-                  width: '100%',
-                  fontSize: '0.7em',
-                },
-                [mq[3]]: {
-                  width: '100%',
-                  fontSize: '0.6em',
-                },
-                [mq[4]]: {
-                  width: '100%',
-                  fontSize: '0.6em',
-                  overflowY: 'scroll',
-                  overflowX: 'hidden',
-                },
-              }}
-            >
-              {modalContent && (
-                <div className='textHolder'>
-                  <div className='warningTitle'>{modalContent.title}</div>
-                  <div className='warningText'>{modalContent.text}</div>
-                  <br />
-                  <div className='urlCites'>Cites</div>
-                  <div className='warningUrls'>
-                    {modalContent.url?.length > 0 && (
-                      <>
-                        {modalContent.url.map((url, index) => (
-                          <a
-                            key={index}
-                            href={url}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                          >
-                            {modalContent.urlTitle?.[index]}
-                            <br />
-                          </a>
-                        ))}
-                      </>
-                    )}
-                  </div>
-
-                  <button
-                    className='exit'
-                    onClick={() => {
-                      setModalOpen(false);
-                      setModalContent(null);
-                    }}
-                  >
-                    <FaTimes />
-                  </button>
+              {warnings && warnings.flashWarning.length > 0 && (
+                <button
+                  className='warning'
+                  onClick={() => {
+                    setModalOpen(true);
+                    setModalContent(FlashModalContent);
+                  }}
+                >
+                  <IoIosWarning size='2rem' />
+                  Flash Warning
+                </button>
+              )}
+              {warnings && warnings.blueLightWarning.length > 0 && (
+                <div
+                  className='warning'
+                  onClick={() => {
+                    setModalOpen(true);
+                    setModalContent(BlueModalContent);
+                  }}
+                >
+                  <IoIosWarning size='2rem' />
+                  Blue Light Warning
                 </div>
               )}
-            </WarningModal>
-          )}
-        </VideoContainer>
+              {warnings && warnings.contrastWarning.length > 0 && (
+                <div
+                  className='warning'
+                  onClick={() => {
+                    setModalOpen(true);
+                    setModalContent(LuminanceModalContent);
+                  }}
+                >
+                  <IoIosWarning size='2rem' />
+                  Luminance Warning
+                </div>
+              )}
+            </WarningContainer>
+            {analysisState === 'completed' && (
+              <SummaryButton
+                onClick={() => {
+                  setSummaryModalOpen(true);
+                }}
+                css={{
+                  [mq[0]]: {
+                    display: 'none',
+                  },
+                }}
+              >
+                View Summary
+              </SummaryButton>
+            )}
+            {summaryModalOpen && (
+              <SummaryModal>
+                <button
+                  className='exit'
+                  onClick={() => {
+                    setSummaryModalOpen(false);
+                  }}
+                >
+                  <FaTimes />
+                </button>
+                <div className='resultsContainer'>
+                  <div className='title'> Results</div>
+                  {results && (
+                    <>
+                      <div className='text'>
+                        Flash Warnings: {results.flashWarning.length}
+                      </div>
+                      <div className='text'>
+                        Blue Light Warnings: {results.blueLightWarning.length}
+                      </div>
+                      <div className='text'>
+                        Luminance Warnings: {results.contrastWarning.length}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </SummaryModal>
+            )}
 
-        {videoFile && (
-          <VideoTimeline
-            videoRef={videoRef}
-            canvasRef={canvasRef}
-            results={results}
-            setWarnings={setWarnings}
-            setModalOpen={setModalOpen}
-            setModalContent={setModalContent}
-          />
-        )}
+            {modalOpen && (
+              <WarningModal
+                css={{
+                  [mq[0]]: {
+                    width: '100%',
+                  },
+                  [mq[1]]: {
+                    width: '100%',
+                    fontSize: '0.8em',
+                  },
+                  [mq[2]]: {
+                    width: '100%',
+                    fontSize: '0.7em',
+                  },
+                  [mq[3]]: {
+                    width: '100%',
+                    fontSize: '0.6em',
+                  },
+                  [mq[4]]: {
+                    width: '100%',
+                    fontSize: '0.6em',
+                    overflowY: 'scroll',
+                    overflowX: 'hidden',
+                  },
+                }}
+              >
+                {modalContent && (
+                  <div className='textHolder'>
+                    <div className='warningTitle'>{modalContent.title}</div>
+                    <div className='warningText'>{modalContent.text}</div>
+                    <br />
+                    <div className='urlCites'>Cites</div>
+                    <div className='warningUrls'>
+                      {modalContent.url?.length > 0 && (
+                        <>
+                          {modalContent.url.map((url, index) => (
+                            <a
+                              key={index}
+                              href={url}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                            >
+                              {modalContent.urlTitle?.[index]}
+                              <br />
+                            </a>
+                          ))}
+                        </>
+                      )}
+                    </div>
+
+                    <button
+                      className='exit'
+                      onClick={() => {
+                        setModalOpen(false);
+                        setModalContent(null);
+                      }}
+                    >
+                      <FaTimes />
+                    </button>
+                  </div>
+                )}
+              </WarningModal>
+            )}
+          </VideoContainer>
+
+          {videoFile && (
+            <VideoTimeline
+              videoRef={videoRef}
+              canvasRef={canvasRef}
+              results={results}
+              setWarnings={setWarnings}
+              setModalOpen={setModalOpen}
+              setModalContent={setModalContent}
+            />
+          )}
+          {videoFile && (
+            <div className='flex gap-2 justify-center'>
+              <ResetButton onClick={handleSetInitial}>
+                Go Back
+              </ResetButton>
+              <AnalyzeButton
+                onClick={async (e) => {
+                  setWillReadFrequently();
+                  setAnalysisState('analyzing');
+                  await Analyze(videoRef, canvasRef, (e) => {
+                    setResults(e);
+                    console.log("results==", e);
+
+                    setAnalysisState('completed');
+                  });
+                }}
+                disabled={analysisState === 'analyzing'}
+              >
+                Analyze Video
+              </AnalyzeButton>
+            </div>
+
+          )}
+        </div>
+        <div className='w-full  text-white  flex flex-col border py-2 rounded'>
+          <div className='h-full'>
+            <WarningTitle>
+              Blue Light Warning
+            </WarningTitle>
+
+
+          </div>
+          <div className='h-full'>
+            <WarningTitle>
+              Contrast Warning
+            </WarningTitle>
+          </div>
+
+          <div className='h-full'>
+            <WarningTitle>
+              Flash Warning
+            </WarningTitle>
+          </div>
+
+        </div>
+
+
       </TotalHolder>
 
-      {videoFile && (
-        <AnalyzeButton
-          onClick={async (e) => {
-            setWillReadFrequently();
-            setAnalysisState('analyzing');
-            await Analyze(videoRef, canvasRef, (e) => {
-              setResults(e);
-              setAnalysisState('completed');
-            });
-          }}
-          disabled={analysisState === 'analyzing'}
-        >
-          Analyze Video
-        </AnalyzeButton>
-      )}
+
     </>
   );
 }
