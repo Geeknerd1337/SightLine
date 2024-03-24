@@ -10,6 +10,7 @@ import {
   VideoDisplay,
   UploadButton,
 } from '@/styles/VideoStyles';
+// import PieChart from '@/components/Charts/Piecharts';
 import { WarningContainer, WarningModal } from '@/styles/ModalStyles';
 import { useState, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
@@ -24,6 +25,7 @@ import {
   ModalContent,
 } from '../modals/WarningModalComp';
 import ThreeDotsWave from '../ThreeDotsWave';
+import { BiChevronDown, BiChevronUp } from 'react-icons/bi'; // Import the icons
 
 const hideNativeUploadButton = css({
   display: 'none',
@@ -32,6 +34,13 @@ const hideNativeUploadButton = css({
 const WarningTitle = styled.h1`
   color: ${Colors.Gold};
   font-size: 2rem;
+  margin-bottom: 10px;
+  display: flex;  
+  align-items: center;
+`;
+const WarningSubtitle = styled.h2`
+  color: ${Colors.White};
+  font-size: 1.5rem;
   margin-bottom: 10px;
 `;
 
@@ -186,7 +195,7 @@ export default function Video() {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [results, setResults] = useState<Results | null>(null);
   const [warnings, setWarnings] = useState<Results | null>(null);
-
+  const [currentWarning, setCurrentWarning] = useState<Warning | null>(null);
   const [hoveredWarning, setHoveredWarning] = useState<Warning | null>(null);
   const [fps, setFps] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -197,7 +206,14 @@ export default function Video() {
   const [analysisState, setAnalysisState] = useState<
     'idle' | 'analyzing' | 'completed'
   >('idle');
+  const [selectedWarning, setSelectedWarning] = useState<string | null>(null);
 
+  const handleRowClick = (warning: string) => {
+    setSelectedWarning(prev => { return prev === warning ? "" : warning });
+  };
+  const handleCurrentWarning = (warning: Warning | null) => {
+    setCurrentWarning(warning);
+  };
   const [summaryModalOpen, setSummaryModalOpen] = useState(false);
   const handleSetInitial = () => {
     setAnalysisState('idle');
@@ -287,7 +303,7 @@ export default function Video() {
   return (
     <>
       <TotalHolder className='w-full flex gap-2 p-2'>
-        <div className='w-full flex justify-center flex-col border py-2 rounded'>
+        <div className='w-full flex justify-center flex-col p-2 rounded'>
 
 
           <VideoContainer onDrop={handleDrop} onDragOver={handleDragOver}>
@@ -411,7 +427,7 @@ export default function Video() {
                 </div>
               )}
             </WarningContainer>
-            {analysisState === 'completed' && (
+            {/* {analysisState === 'completed' && (
               <SummaryButton
                 onClick={() => {
                   setSummaryModalOpen(true);
@@ -424,7 +440,7 @@ export default function Video() {
               >
                 View Summary
               </SummaryButton>
-            )}
+            )} */}
             {summaryModalOpen && (
               <SummaryModal>
                 <button
@@ -527,6 +543,7 @@ export default function Video() {
               setWarnings={setWarnings}
               setModalOpen={setModalOpen}
               setModalContent={setModalContent}
+              handleCurrentWarning={handleCurrentWarning}
             />
           )}
           {videoFile && (
@@ -553,24 +570,81 @@ export default function Video() {
 
           )}
         </div>
-        <div className='w-full  text-white  flex flex-col border py-2 rounded'>
-          <div className='h-full'>
+        <div className='w-full flex flex-col p-2 rounded'>
+          <div onClick={() => handleRowClick('blueLight')}>
             <WarningTitle>
-              Blue Light Warning
+              <span className='w-5/6'>Blue Light Warning</span>
+              {selectedWarning === 'blueLight' ? <BiChevronUp size={34} color="white" /> : <BiChevronDown size={34} color="white" />} {/* Conditional rendering of the icon */}
             </WarningTitle>
-
+            <WarningSubtitle>
+              {results?.blueLightWarning !== undefined ? `Warning ${results?.blueLightWarning.length}` : "No Warning Found"}
+            </WarningSubtitle>
+            {selectedWarning === 'blueLight' && (
+              <div className='text-white'>
+                {BlueModalContent.text}
+                {currentWarning !== null && currentWarning.type === "Blue Light" && (
+                  <div>
+                    <h1>Warning Details</h1>
+                    <p>Start Time: {currentWarning.startTime}</p>
+                    <p>End Time: {currentWarning.endTime}</p>
+                    <p>Difference: {currentWarning.difference}</p>
+                  </div>
+                )
+                }
+              </div>
+            )}
 
           </div>
-          <div className='h-full'>
+
+          <div onClick={() => handleRowClick('contrast')}>
             <WarningTitle>
-              Contrast Warning
+              <span className='w-5/6'>Contrast Warning</span>
+
+              {selectedWarning === 'contrast' ? <BiChevronUp size={34} color="white" /> : <BiChevronDown size={34} color="white" />} {/* Conditional rendering of the icon */}
+
             </WarningTitle>
+            <WarningSubtitle>
+              {results?.contrastWarning !== undefined ? `Warning ${results?.contrastWarning.length}` : "No Warning Found"}
+            </WarningSubtitle>
+            {selectedWarning === 'contrast' && (
+              <div className='text-white'>
+                {LuminanceModalContent.text}
+                {currentWarning !== null && currentWarning.type === "Luminance" && (
+                  <div>
+                    <h1>Warning Details</h1>
+                    <p>Start Time: {currentWarning.startTime}</p>
+                    <p>End Time: {currentWarning.endTime}</p>
+                    <p>Difference: {currentWarning.difference}</p>
+                  </div>
+                )
+                }
+              </div>
+            )}
           </div>
 
-          <div className='h-full'>
+          <div className='h-full' onClick={() => handleRowClick('flash')}>
             <WarningTitle>
-              Flash Warning
+              <span className='w-5/6'>Flash Warning</span>
+              {selectedWarning === 'flash' ? <BiChevronUp size={34} color="white" /> : <BiChevronDown size={34} color="white" />} {/* Conditional rendering of the icon */}
+
             </WarningTitle>
+            <WarningSubtitle>
+              {results?.flashWarning !== undefined ? `Warning ${results?.flashWarning.length}` : "No Warning Found"}
+            </WarningSubtitle>
+            {selectedWarning === 'flash' && (
+              <div className='text-white'>
+                {FlashModalContent.text}
+                {currentWarning !== null && currentWarning.type === "Flash" && (
+                  <div>
+                    <h1>Warning Details</h1>
+                    <p>Start Time: {currentWarning.startTime}</p>
+                    <p>End Time: {currentWarning.endTime}</p>
+                    <p>Difference: {currentWarning.difference}</p>
+                  </div>
+                )
+                }
+              </div>
+            )}
           </div>
 
         </div>

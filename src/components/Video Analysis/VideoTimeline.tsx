@@ -38,7 +38,7 @@ const ButtonsContainer = styled.div`
   }
 `;
 
-import { Results } from '../helpers/Analysis';
+import { Results, Warning } from '../helpers/Analysis';
 interface VideoTimelineProps {
   videoRef: React.MutableRefObject<HTMLVideoElement | null>;
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
@@ -46,6 +46,7 @@ interface VideoTimelineProps {
   setWarnings?: React.Dispatch<React.SetStateAction<Results | null>>;
   setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   setModalContent?: React.Dispatch<React.SetStateAction<ModalContent | null>>;
+  handleCurrentWarning?: (warning: Warning) => void;
 }
 
 export default function VideoTimeline(props: VideoTimelineProps) {
@@ -164,25 +165,27 @@ export default function VideoTimeline(props: VideoTimelineProps) {
                   <WarningButton
                     style={{
                       position: 'absolute',
-                      left: `${
-                        (flash.startTime / props.videoRef.current!.duration) *
+                      left: `${(flash.startTime / props.videoRef.current!.duration) *
                         100
-                      }%`,
-                      width: `${
-                        ((flash.endTime - flash.startTime) /
-                          props.videoRef.current!.duration) *
+                        }%`,
+                      width: `${((flash.endTime - flash.startTime) /
+                        props.videoRef.current!.duration) *
                         100
-                      }%`,
+                        }%`,
                       height: '100%',
                       backgroundColor: '#FF6B6B',
                     }}
                     key={index}
                     onClick={() => {
+                      props.handleCurrentWarning &&
+                        props.handleCurrentWarning(flash);
                       props.setModalContent &&
                         props.setModalContent(FlashModalContent);
                       props.setModalOpen && props.setModalOpen(true);
+
                     }}
                     warning={flash}
+
                   ></WarningButton>
                 );
               })}
@@ -195,21 +198,21 @@ export default function VideoTimeline(props: VideoTimelineProps) {
                   <WarningButton
                     style={{
                       position: 'absolute',
-                      left: `${
-                        (contrast.startTime /
-                          props.videoRef.current!.duration) *
+                      left: `${(contrast.startTime /
+                        props.videoRef.current!.duration) *
                         100
-                      }%`,
-                      width: `${
-                        ((contrast.endTime - contrast.startTime) /
-                          props.videoRef.current!.duration) *
+                        }%`,
+                      width: `${((contrast.endTime - contrast.startTime) /
+                        props.videoRef.current!.duration) *
                         100
-                      }%`,
+                        }%`,
                       height: '100%',
                       backgroundColor: '#65FFA9',
                     }}
                     key={index}
                     onClick={() => {
+                      props.handleCurrentWarning &&
+                        props.handleCurrentWarning(contrast);
                       props.setModalContent &&
                         props.setModalContent(LuminanceModalContent);
                       props.setModalOpen && props.setModalOpen(true);
@@ -227,21 +230,21 @@ export default function VideoTimeline(props: VideoTimelineProps) {
                   <WarningButton
                     style={{
                       position: 'absolute',
-                      left: `${
-                        (bluelight.startTime /
-                          props.videoRef.current!.duration) *
+                      left: `${(bluelight.startTime /
+                        props.videoRef.current!.duration) *
                         100
-                      }%`,
-                      width: `${
-                        ((bluelight.endTime - bluelight.startTime) /
-                          props.videoRef.current!.duration) *
+                        }%`,
+                      width: `${((bluelight.endTime - bluelight.startTime) /
+                        props.videoRef.current!.duration) *
                         100
-                      }%`,
+                        }%`,
                       height: '100%',
                       backgroundColor: '#6B7CFF',
                     }}
                     key={index}
                     onClick={() => {
+                      props.handleCurrentWarning &&
+                        props.handleCurrentWarning(bluelight);
                       props.setModalContent &&
                         props.setModalContent(BlueModalContent);
                       props.setModalOpen && props.setModalOpen(true);
