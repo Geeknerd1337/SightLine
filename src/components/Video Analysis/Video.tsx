@@ -55,6 +55,7 @@ const AnalyzeButton = styled.button`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   margin-top: 15px;
+  width:180px;
 
   //Diabled state
   &:disabled {
@@ -82,6 +83,7 @@ const ResetButton = styled.button`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   margin-top: 15px;
+  width:180px;
 
   //Diabled state
   &:disabled {
@@ -303,7 +305,7 @@ export default function Video() {
   return (
     <>
       <TotalHolder className='w-full flex gap-2 p-2'>
-        <div className='w-full flex justify-center flex-col p-2 rounded'>
+        <div className='w-full flex justify-center flex-col p-2 rounded '>
 
 
           <VideoContainer onDrop={handleDrop} onDragOver={handleDragOver}>
@@ -549,7 +551,7 @@ export default function Video() {
           {videoFile && (
             <div className='flex gap-2 justify-center'>
               <ResetButton onClick={handleSetInitial}>
-                Go Back
+                Upload New Video
               </ResetButton>
               <AnalyzeButton
                 onClick={async (e) => {
