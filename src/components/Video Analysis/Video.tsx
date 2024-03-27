@@ -304,7 +304,7 @@ export default function Video() {
 
   return (
     <>
-      <TotalHolder className='w-full flex gap-2 p-2'>
+      <TotalHolder className='w-full flex gap-2 p-2 lg:flex-row sm:flex-col'>
         <div className='w-full flex justify-center flex-col p-2 rounded '>
 
 
@@ -575,7 +575,7 @@ export default function Video() {
         <div className='w-full flex flex-col p-2 rounded'>
           <div onClick={() => handleRowClick('blueLight')}>
             <WarningTitle>
-              <span className='w-5/6'>Blue Light Warning</span>
+              <span className='w-full'>Blue Light Warning</span>
               {selectedWarning === 'blueLight' ? <BiChevronUp size={34} color="white" /> : <BiChevronDown size={34} color="white" />} {/* Conditional rendering of the icon */}
             </WarningTitle>
             <WarningSubtitle>
@@ -600,7 +600,7 @@ export default function Video() {
 
           <div onClick={() => handleRowClick('contrast')}>
             <WarningTitle>
-              <span className='w-5/6'>Contrast Warning</span>
+              <span className='w-full'>Contrast Warning</span>
 
               {selectedWarning === 'contrast' ? <BiChevronUp size={34} color="white" /> : <BiChevronDown size={34} color="white" />} {/* Conditional rendering of the icon */}
 
@@ -626,7 +626,7 @@ export default function Video() {
 
           <div className='h-full' onClick={() => handleRowClick('flash')}>
             <WarningTitle>
-              <span className='w-5/6'>Flash Warning</span>
+              <span className='w-full'>Flash Warning</span>
               {selectedWarning === 'flash' ? <BiChevronUp size={34} color="white" /> : <BiChevronDown size={34} color="white" />} {/* Conditional rendering of the icon */}
 
             </WarningTitle>

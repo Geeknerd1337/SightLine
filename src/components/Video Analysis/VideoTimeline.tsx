@@ -31,7 +31,6 @@ const ButtonsContainer = styled.div`
   & .controlbutton {
     height: 5vh;
     width: auto;
-
     &:hover {
       cursor: pointer;
     }

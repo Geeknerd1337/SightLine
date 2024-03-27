@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import {Colors } from './colors';
+import { Colors } from './colors';
 
 export const Background = styled.div`
   background-color: ${Colors.Back};
