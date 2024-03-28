@@ -37,11 +37,13 @@ const WarningTitle = styled.h1`
   margin-bottom: 10px;
   display: flex;  
   align-items: center;
+  width:100%;
 `;
 const WarningSubtitle = styled.h2`
   color: ${Colors.White};
   font-size: 1.5rem;
   margin-bottom: 10px;
+  width:100%;
 `;
 
 const AnalyzeButton = styled.button`
@@ -187,8 +189,18 @@ const SummaryButton = styled.button`
   }
 `;
 
-const TotalHolder = styled.div``;
-
+const TotalHolder = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  @media (max-width: 875px) { /* Adjust the breakpoint as needed */
+    flex-direction: column;
+  }
+`;
 const breakpoints = [1155, 875, 704, 604, 510];
 
 const mq = breakpoints.map((bp) => `@media (max-width: ${bp}px)`);
@@ -251,6 +263,68 @@ export default function Video() {
       hiddenFileInput.current.click();
     }
   };
+  const formatTime = (timeInSeconds: any) => {
+    const hours = Math.floor(timeInSeconds / 3600);
+    const minutes = Math.floor((timeInSeconds % 3600) / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
+  const TableContainer = styled.div`
+  max-height: 250px;
+  overflow-x: auto;
+  overflow-y: scroll;
+`;
+
+  const ResponsiveTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+`;
+
+  const Th = styled.th`
+  color: black;
+  padding: 10px;
+  text-align: left;
+`;
+  const Thead = styled.thead`
+  background: ${Colors.Gold};
+  padding: 10px;
+  text-align: left;
+`;
+
+  const Td = styled.td`
+  padding: 10px;
+  border-bottom: 1px solid ${Colors.DarkGray};
+  text-align: left;
+  color: white;
+`;
+  const ResultsPage = styled.div`
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:10px;
+  width:100%;
+  height:100%;
+`;
+  const WarningCard = styled.div`
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:10px;
+  width:100%;
+  height:100%;
+  background-color:${Colors.DarkGray};
+  color:${Colors.White};
+  border-radius:10px;
+  margin:10px;
+  cursor:pointer;
+  transition: all 0.2s ease-in-out;
+  &:hover{
+    box-shadow: 5px 5px 10px 5px ${Colors.Gold}11;
+
+  }
+`;
 
   useEffect(() => {
     const handleVideoUpdate = () => {
@@ -283,10 +357,6 @@ export default function Video() {
 
         // Set the warnings
         setWarnings(warnings);
-        console.log("warings==", warnings)
-
-
-        console.log(warnings);
       }
     };
 
@@ -301,10 +371,25 @@ export default function Video() {
       }
     };
   }, [results]);
+  useEffect(() => {
+    if (warnings) {
+      console.log("warnings==", warnings);
+      if (warnings.blueLightWarning.length > 0) {
+        setSelectedWarning('blueLight');
+      } else if (warnings.contrastWarning.length > 0) {
+        setSelectedWarning('contrast');
+      }
+      else if (warnings.flashWarning.length > 0) {
+        setSelectedWarning('flash');
+      }
+    }
+
+  }
+    , [warnings]);
 
   return (
     <>
-      <TotalHolder className='w-full flex gap-2 p-2 lg:flex-row sm:flex-col'>
+      <TotalHolder>
         <div className='w-full flex justify-center flex-col p-2 rounded '>
 
 
@@ -395,10 +480,10 @@ export default function Video() {
               {warnings && warnings.flashWarning.length > 0 && (
                 <button
                   className='warning'
-                  onClick={() => {
-                    setModalOpen(true);
-                    setModalContent(FlashModalContent);
-                  }}
+                // onClick={() => {
+                //   setModalOpen(true);
+                //   setModalContent(FlashModalContent);
+                // }}
                 >
                   <IoIosWarning size='2rem' />
                   Flash Warning
@@ -407,10 +492,10 @@ export default function Video() {
               {warnings && warnings.blueLightWarning.length > 0 && (
                 <div
                   className='warning'
-                  onClick={() => {
-                    setModalOpen(true);
-                    setModalContent(BlueModalContent);
-                  }}
+                // onClick={() => {
+                //   setModalOpen(true);
+                //   setModalContent(BlueModalContent);
+                // }}
                 >
                   <IoIosWarning size='2rem' />
                   Blue Light Warning
@@ -419,10 +504,10 @@ export default function Video() {
               {warnings && warnings.contrastWarning.length > 0 && (
                 <div
                   className='warning'
-                  onClick={() => {
-                    setModalOpen(true);
-                    setModalContent(LuminanceModalContent);
-                  }}
+                // onClick={() => {
+                //   setModalOpen(true);
+                //   setModalContent(LuminanceModalContent);
+                // }}
                 >
                   <IoIosWarning size='2rem' />
                   Luminance Warning
@@ -524,10 +609,10 @@ export default function Video() {
 
                     <button
                       className='exit'
-                      onClick={() => {
-                        setModalOpen(false);
-                        setModalContent(null);
-                      }}
+                    // onClick={() => {
+                    //   setModalOpen(false);
+                    //   setModalContent(null);
+                    // }}
                     >
                       <FaTimes />
                     </button>
@@ -543,8 +628,8 @@ export default function Video() {
               canvasRef={canvasRef}
               results={results}
               setWarnings={setWarnings}
-              setModalOpen={setModalOpen}
-              setModalContent={setModalContent}
+              // setModalOpen={setModalOpen}
+              // setModalContent={setModalContent}
               handleCurrentWarning={handleCurrentWarning}
             />
           )}
@@ -572,87 +657,153 @@ export default function Video() {
 
           )}
         </div>
-        <div className='w-full flex flex-col p-2 rounded'>
-          <div onClick={() => handleRowClick('blueLight')}>
+        <ResultsPage>
+          <WarningCard onClick={() => handleRowClick('blueLight')}>
             <WarningTitle>
               <span className='w-full'>Blue Light Warning</span>
-              {selectedWarning === 'blueLight' ? <BiChevronUp size={34} color="white" /> : <BiChevronDown size={34} color="white" />} {/* Conditional rendering of the icon */}
+              {(selectedWarning === 'blueLight') ? <BiChevronUp size={34} color="white" /> : <BiChevronDown size={34} color="white" />}
             </WarningTitle>
             <WarningSubtitle>
               {results?.blueLightWarning !== undefined ? `Warning ${results?.blueLightWarning.length}` : "No Warning Found"}
             </WarningSubtitle>
-            {selectedWarning === 'blueLight' && (
+            {(selectedWarning === 'blueLight') && (
               <div className='text-white'>
                 {BlueModalContent.text}
                 {currentWarning !== null && currentWarning.type === "Blue Light" && (
-                  <div>
-                    <h1>Warning Details</h1>
-                    <p>Start Time: {currentWarning.startTime}</p>
-                    <p>End Time: {currentWarning.endTime}</p>
-                    <p>Difference: {currentWarning.difference}</p>
+                  <div className='flex justify-between border p-1'>
+                    <p><b>Start Time:</b> {formatTime(currentWarning.startTime)}</p>
+                    <p><b>End Time:</b> {formatTime(currentWarning.endTime)}</p>
                   </div>
                 )
                 }
               </div>
             )}
+            {(selectedWarning === 'blueLight') && <div onClick={() => handleRowClick('blueLight')} className='w-full'>
+              <table style={{ width: '100%' }}>
+                <Thead>
+                  <Th>Event Type</Th>
+                  <Th>Start Time</Th>
+                  <Th>End Time</Th>
+                </Thead>
+              </table>
+              <TableContainer>
+                <ResponsiveTable>
+                  <tbody >
+                    {results?.blueLightWarning.map((warning, index) => (
+                      <tr key={index} onClick={() => handleCurrentWarning(warning)} className={warning?.startTime === currentWarning?.startTime ? `bg-[gray]` : ''}>
+                        <Td>{warning.type}</Td>
+                        <Td>{formatTime(warning.startTime)}</Td>
+                        <Td>{formatTime(warning.endTime)}</Td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </ResponsiveTable>
+              </TableContainer>
+            </div>
+            }
+          </WarningCard>
 
-          </div>
-
-          <div onClick={() => handleRowClick('contrast')}>
+          <WarningCard onClick={() => handleRowClick('contrast')}>
             <WarningTitle>
               <span className='w-full'>Contrast Warning</span>
 
-              {selectedWarning === 'contrast' ? <BiChevronUp size={34} color="white" /> : <BiChevronDown size={34} color="white" />} {/* Conditional rendering of the icon */}
+              {(selectedWarning === 'contrast') ? <BiChevronUp size={34} color="white" /> : <BiChevronDown size={34} color="white" />} {/* Conditional rendering of the icon */}
 
             </WarningTitle>
             <WarningSubtitle>
               {results?.contrastWarning !== undefined ? `Warning ${results?.contrastWarning.length}` : "No Warning Found"}
             </WarningSubtitle>
-            {selectedWarning === 'contrast' && (
+            {(selectedWarning === 'contrast') && (
               <div className='text-white'>
                 {LuminanceModalContent.text}
                 {currentWarning !== null && currentWarning.type === "Luminance" && (
-                  <div>
-                    <h1>Warning Details</h1>
-                    <p>Start Time: {currentWarning.startTime}</p>
-                    <p>End Time: {currentWarning.endTime}</p>
-                    <p>Difference: {currentWarning.difference}</p>
+                  <div className='flex justify-between border p-1'>
+                    <p><b>Start Time:</b> {formatTime(currentWarning.startTime)}</p>
+                    <p><b>End Time:</b> {formatTime(currentWarning.endTime)}</p>
                   </div>
                 )
                 }
               </div>
             )}
-          </div>
+            {(selectedWarning === 'contrast') && <div onClick={() => handleRowClick('contrast')} className='w-full'>
+              <table style={{ width: '100%' }}>
+                <Thead>
+                  <tr>
+                    <Th>Event Type</Th>
+                    <Th>Start Time</Th>
+                    <Th>End Time</Th>
+                  </tr>
+                </Thead>
+              </table>
+              <TableContainer>
+                <ResponsiveTable>
+                  <tbody >
+                    {results?.contrastWarning.map((warning, index) => (
+                      <tr key={index} onClick={() => handleCurrentWarning(warning)} className={warning?.startTime === currentWarning?.startTime ? `bg-[gray]` : ''}>
+                        <Td>{warning.type}</Td>
+                        <Td>{formatTime(warning.startTime)}</Td>
+                        <Td>{formatTime(warning.endTime)}</Td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </ResponsiveTable>
+              </TableContainer>
+            </div>
+            }
+          </WarningCard>
 
-          <div className='h-full' onClick={() => handleRowClick('flash')}>
+          <WarningCard className='h-full' onClick={() => handleRowClick('flash')}>
             <WarningTitle>
               <span className='w-full'>Flash Warning</span>
-              {selectedWarning === 'flash' ? <BiChevronUp size={34} color="white" /> : <BiChevronDown size={34} color="white" />} {/* Conditional rendering of the icon */}
+              {(selectedWarning === 'flash') ? <BiChevronUp size={34} color="white" /> : <BiChevronDown size={34} color="white" />} {/* Conditional rendering of the icon */}
 
             </WarningTitle>
             <WarningSubtitle>
               {results?.flashWarning !== undefined ? `Warning ${results?.flashWarning.length}` : "No Warning Found"}
             </WarningSubtitle>
-            {selectedWarning === 'flash' && (
+            {(selectedWarning === 'flash') && (
               <div className='text-white'>
                 {FlashModalContent.text}
                 {currentWarning !== null && currentWarning.type === "Flash" && (
-                  <div>
-                    <h1>Warning Details</h1>
-                    <p>Start Time: {currentWarning.startTime}</p>
-                    <p>End Time: {currentWarning.endTime}</p>
-                    <p>Difference: {currentWarning.difference}</p>
+                  <div className='flex justify-between border p-1'>
+                    <p><b>Start Time:</b> {formatTime(currentWarning.startTime)}</p>
+                    <p><b>End Time:</b> {formatTime(currentWarning.endTime)}</p>
                   </div>
                 )
                 }
               </div>
             )}
-          </div>
+            {(selectedWarning === 'flash') && <div onClick={() => handleRowClick('flash')} className='w-full'>
+              <table style={{ width: '100%' }}>
+                <Thead>
+                  <tr>
+                    <Th>Event Type</Th>
+                    <Th>Start Time</Th>
+                    <Th>End Time</Th>
+                  </tr>
+                </Thead>
+              </table>
+              <TableContainer>
+                <ResponsiveTable>
+                  <tbody >
+                    {results?.flashWarning.map((warning, index) => (
+                      <tr key={index} onClick={() => handleCurrentWarning(warning)} className={warning?.startTime === currentWarning?.startTime ? `bg-[gray]` : ''}>
+                        <Td>{warning.type}</Td>
+                        <Td>{formatTime(warning.startTime)}</Td>
+                        <Td>{formatTime(warning.endTime)}</Td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </ResponsiveTable>
+              </TableContainer>
+            </div>
+            }
+          </WarningCard>
 
-        </div>
+        </ResultsPage>
 
 
-      </TotalHolder>
+      </TotalHolder >
 
 
     </>
